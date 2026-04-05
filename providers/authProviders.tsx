@@ -1,0 +1,234 @@
+import { supabase } from "@/utils/supabase";
+import { AuthContextType, User } from "@/utils/types";
+import { useRouter } from "expo-router";
+import React from "react";
+
+export const AuthContext = React.createContext<AuthContextType | undefined>(
+  undefined,
+);
+
+export const useAuth = () => {
+  const context = React.useContext(AuthContext);
+  if (!context) {
+    throw new Error("useAuth must be used within an AuthProvider");
+  }
+  return context;
+};
+
+export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
+  //states used as global states in the app
+  const [user, setUser] = React.useState<User | null>(null);
+  const router = useRouter();
+  const [userAvatar, setUserAvatar] = React.useState<string | null>(null);
+
+  //global states from the zustand stores
+  const {
+    first_name,
+    last_name,
+    user_email,
+    date_of_birth,
+    description,
+    selected_option,
+    avatar_url,
+    getUserData,
+    getAvatar,
+    getAge,
+    moveAvatarToPictures,
+    updateUser,
+  } = useUserStore();
+
+  //keep user logged in with supabase on/off state feature
+  React.useEffect(() => {
+    const { data: authData } = supabase.auth.onAuthStateChange(
+      (event, session) => {
+        //if there is no active user session return to sign in page
+        if (!session) return router.push("/(auth)");
+        //else call the getUser function with the session id
+        getUser(session?.user.id);
+      },
+    );
+    //clean up function  that terminates the subscription I.E the user session
+    return () => {
+      authData?.subscription.unsubscribe();
+    };
+  }, []);
+
+  //context functions
+  const getUser = async (id: string) => {
+    //get all the user data from the profiles table
+    const { data, error } = await supabase
+      .from("profiles")
+      .select("*")
+      .eq("id", id)
+      .single();
+    if (error) return console.error(error);
+
+    const updatedUser: User = {
+      ...data,
+    };
+
+    //set the user to the updated user
+    setUser(updatedUser);
+
+    if (data?.first_time) {
+      //redirect to the special onboarding route thats only getting renderd once the first time the user logs in
+      router.push("/onboarding");
+    } else {
+      //fetch avatar if avatar_url exists
+      await getAvatar(data.avatar_url);
+      setUser(updatedUser);
+      router.push("/(tabs)");
+    }
+  };
+
+  const signIn = async (email: string, password: string) => {
+    const { data, error } = await supabase.auth.signInWithPassword({
+      email: email,
+      password: password,
+    });
+
+    if (error) return console.error(error);
+    getUser(data.user.id);
+    getUserData(data.user.id);
+  };
+
+  const signUp = async (
+    firstname: string,
+    lastname: string,
+    email: string,
+    password: string,
+  ) => {
+    //trimming the input fields to remove any white spaces to avoid issues with supabases not accepting the emails
+    const trimmedEmail = email.trim();
+    const trimmedFirstname = firstname.trim();
+    const trimmedLastname = lastname.trim();
+
+    const { data, error } = await supabase.auth.signUp({
+      email: trimmedEmail,
+      password: password,
+    });
+    if (error) return console.error(error);
+
+    const { data: profileData, error: profileError } = await supabase
+      .from("profiles")
+      .insert({
+        id: data.user?.id,
+        user_id: data.user?.id,
+        first_name: trimmedFirstname,
+        last_name: trimmedLastname,
+        email: trimmedEmail,
+      });
+    if (profileError) return console.error(profileError);
+
+    //set the user object in the context and redirect to the homepage
+    setUser(profileData);
+    router.back();
+    router.push("/(tabs)");
+    //finally set the global user state
+    if (data?.user) {
+      getUser(data?.user?.id);
+    }
+  };
+
+  const signOut = async () => {
+    const { error } = await supabase.auth.signOut();
+    if (error) return console.error(error);
+    setUser(null);
+    setUserAvatar(null);
+    router.push("/(auth)/index");
+  };
+
+  const editUser = async (
+    id: string,
+    firstname: string,
+    lastname: string,
+    email: string,
+    dateOfBirth: Date,
+    avatarUrl: string,
+    userDescription: string,
+    selectedOption: number,
+  ) => {
+    //if there is no changes made to a property then dont update that property in the db
+    const updates: any = {};
+    if (firstname !== first_name) updates.first_name = firstname;
+    if (lastname !== last_name) updates.last_name = lastname;
+    if (email !== user_email) updates.email = email;
+    if (dateOfBirth !== date_of_birth) updates.date_of_birth = dateOfBirth;
+    if (userDescription !== description) updates.description = userDescription;
+    if (selectedOption !== selected_option)
+      updates.selected_version = selectedOption;
+    if (avatarUrl !== avatar_url) updates.avatar_url = avatarUrl;
+
+    //compare the new url to the globally stored avatar url
+    if (avatarUrl && avatarUrl !== avatar_url) {
+      // if there is a new url move old avatar to the 'pictures' bucket instead of avatar buckets.
+      if (avatar_url) {
+        await moveAvatarToPictures(avatar_url);
+      }
+
+      //save the photo
+      const saveAvatar = async () => {
+        const formData = new FormData();
+        const PicturefileName =
+          avatarUrl?.split("/").pop() || "default-avatar-name.jpg";
+        formData.append("file", {
+          uri: avatarUrl,
+          type: `image/${PicturefileName?.split(".").pop()}`,
+          name: PicturefileName,
+        } as any);
+
+        //save to the avatar bucket
+        const { data, error } = await supabase.storage
+          .from("avatars")
+          .upload(PicturefileName, formData, {
+            cacheControl: "3600000000",
+            upsert: false,
+          });
+
+        if (error) {
+          console.error(error);
+          return null;
+        }
+
+        return data?.path;
+      };
+
+      //upload the image and get the new URL from the storage
+      const uploadedImagePath = await saveAvatar();
+      if (uploadedImagePath) {
+        const uploadedFileName = uploadedImagePath.split("/").pop();
+        avatarUrl = uploadedFileName as string;
+        updates.avatar_url = avatarUrl;
+        console.log("uploadedImagePath:", avatarUrl);
+
+        await getAvatar(avatarUrl);
+      }
+    }
+
+    //only update the database if there are changes
+    if (Object.keys(updates).length > 0) {
+      const { data, error } = await supabase
+        .from("profiles")
+        .update(updates)
+        .eq("id", id);
+
+      if (error) {
+        console.error("Profile update error:", error);
+        return;
+      }
+      //update the user in the global state
+      updateUser(updates);
+      console.log("User updated");
+    } else {
+      console.log("No changes detected, skipping update.");
+    }
+  };
+
+  return (
+    <AuthContext.Provider
+      value={{ user, setUser, signIn, signOut, signUp, editUser }}
+    >
+      {children}
+    </AuthContext.Provider>
+  );
+};
