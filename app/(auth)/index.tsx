@@ -1,10 +1,10 @@
 import { Button, Typography } from "@/components";
-import { useAuth } from "@/providers/AuthProvider";
+import { useAuth } from "@/providers/authProviders";
 import { Link } from "expo-router";
 import React, { useState } from "react";
 import { Image, TextInput, View } from "react-native";
 
-export default function () {
+export default function Auth() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const { signIn } = useAuth();
@@ -23,7 +23,7 @@ export default function () {
 
       <View className="flex-1 flex-col items-center justify-center w-full p-4">
         <Typography weight="700" variant="white" className="text-2xl mb-4">
-          Välkommen till Hälsokollen
+          Välkommen till Trappa Ner
         </Typography>
         <TextInput
           placeholder="Email"

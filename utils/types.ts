@@ -6,12 +6,6 @@ export type User = {
   last_name: string;
   email: string;
   first_time: boolean;
-  selected_option: string | null;
-  avatar_url?: string | null;
-  description?: string;
-  date_of_birth?: Date | null;
-  selected_version: number | null;
-  events?: EventSource[] | null;
 };
 
 export type EventSource = {
@@ -50,17 +44,16 @@ export interface UserStore {
   user_email: string;
   first_time: boolean;
   selected_option: number | null;
-  avatar_url?: string;
+
   description?: string;
   date_of_birth?: Date | null;
   selected_version: number | null;
-  userAvatar: string | null;
+
   userAge: number | null;
   getUserData: (id: string) => Promise<void>;
-  getAvatar: (url: string) => Promise<void>;
+
   getAge: (dateOfBirth: Date) => void;
   updateUser: (updates: Partial<UserStore>) => void;
-  moveAvatarToPictures: (oldAvatarUrl: string) => Promise<void>;
 }
 
 export interface FullViewModalProps {
@@ -85,10 +78,6 @@ export type AuthContextType = {
     firstname: string,
     lastname: string,
     email: string,
-    dateOfBirth: Date,
-    avatarUrl: string,
-    userDescription: string,
-    selectedOption: number,
   ) => Promise<void>;
   /* fetchUserEntries: (limitEntries: boolean, id: string | null) => Promise<DiaryEntry[] | undefined>; */
 };

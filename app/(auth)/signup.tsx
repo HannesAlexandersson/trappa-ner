@@ -1,10 +1,10 @@
 import { Button, Typography } from "@/components";
-import { useAuth } from "@/providers/AuthProvider";
+import { useAuth } from "@/providers/authProviders";
 import { Link } from "expo-router";
 import React, { useState } from "react";
 import { Image, TextInput, View } from "react-native";
 
-export default function () {
+export default function SignUp() {
   const [firstname, setFirstname] = useState("");
   const [lastname, setLastname] = useState("");
   const [email, setEmail] = useState("");
@@ -64,7 +64,7 @@ export default function () {
         <Typography variant="white" size="md" className="mt-2">
           Har du redan ett konto?
         </Typography>
-        <Link className="text-blue-300 underline" href="/(auth)/">
+        <Link className="text-blue-300 underline" href="/(auth)/index">
           Logga in
         </Link>
       </View>

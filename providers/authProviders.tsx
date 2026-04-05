@@ -1,3 +1,4 @@
+import { useUserStore } from "@/stores";
 import { supabase } from "@/utils/supabase";
 import { AuthContextType, User } from "@/utils/types";
 import { useRouter } from "expo-router";
@@ -19,7 +20,6 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   //states used as global states in the app
   const [user, setUser] = React.useState<User | null>(null);
   const router = useRouter();
-  const [userAvatar, setUserAvatar] = React.useState<string | null>(null);
 
   //global states from the zustand stores
   const {
@@ -29,11 +29,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     date_of_birth,
     description,
     selected_option,
-    avatar_url,
     getUserData,
-    getAvatar,
-    getAge,
-    moveAvatarToPictures,
     updateUser,
   } = useUserStore();
 
@@ -42,7 +38,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     const { data: authData } = supabase.auth.onAuthStateChange(
       (event, session) => {
         //if there is no active user session return to sign in page
-        if (!session) return router.push("/(auth)");
+        if (!session) return router.push("/(auth)/index");
         //else call the getUser function with the session id
         getUser(session?.user.id);
       },
@@ -74,8 +70,6 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
       //redirect to the special onboarding route thats only getting renderd once the first time the user logs in
       router.push("/onboarding");
     } else {
-      //fetch avatar if avatar_url exists
-      await getAvatar(data.avatar_url);
       setUser(updatedUser);
       router.push("/(tabs)");
     }
@@ -134,7 +128,6 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     const { error } = await supabase.auth.signOut();
     if (error) return console.error(error);
     setUser(null);
-    setUserAvatar(null);
     router.push("/(auth)/index");
   };
 
@@ -143,67 +136,12 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     firstname: string,
     lastname: string,
     email: string,
-    dateOfBirth: Date,
-    avatarUrl: string,
-    userDescription: string,
-    selectedOption: number,
   ) => {
     //if there is no changes made to a property then dont update that property in the db
     const updates: any = {};
     if (firstname !== first_name) updates.first_name = firstname;
     if (lastname !== last_name) updates.last_name = lastname;
     if (email !== user_email) updates.email = email;
-    if (dateOfBirth !== date_of_birth) updates.date_of_birth = dateOfBirth;
-    if (userDescription !== description) updates.description = userDescription;
-    if (selectedOption !== selected_option)
-      updates.selected_version = selectedOption;
-    if (avatarUrl !== avatar_url) updates.avatar_url = avatarUrl;
-
-    //compare the new url to the globally stored avatar url
-    if (avatarUrl && avatarUrl !== avatar_url) {
-      // if there is a new url move old avatar to the 'pictures' bucket instead of avatar buckets.
-      if (avatar_url) {
-        await moveAvatarToPictures(avatar_url);
-      }
-
-      //save the photo
-      const saveAvatar = async () => {
-        const formData = new FormData();
-        const PicturefileName =
-          avatarUrl?.split("/").pop() || "default-avatar-name.jpg";
-        formData.append("file", {
-          uri: avatarUrl,
-          type: `image/${PicturefileName?.split(".").pop()}`,
-          name: PicturefileName,
-        } as any);
-
-        //save to the avatar bucket
-        const { data, error } = await supabase.storage
-          .from("avatars")
-          .upload(PicturefileName, formData, {
-            cacheControl: "3600000000",
-            upsert: false,
-          });
-
-        if (error) {
-          console.error(error);
-          return null;
-        }
-
-        return data?.path;
-      };
-
-      //upload the image and get the new URL from the storage
-      const uploadedImagePath = await saveAvatar();
-      if (uploadedImagePath) {
-        const uploadedFileName = uploadedImagePath.split("/").pop();
-        avatarUrl = uploadedFileName as string;
-        updates.avatar_url = avatarUrl;
-        console.log("uploadedImagePath:", avatarUrl);
-
-        await getAvatar(avatarUrl);
-      }
-    }
 
     //only update the database if there are changes
     if (Object.keys(updates).length > 0) {

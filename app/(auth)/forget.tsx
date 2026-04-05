@@ -1,5 +1,5 @@
 import { Button, Typography } from "@/components";
-import { useAuth } from "@/providers/AuthProvider";
+import { useAuth } from "@/providers/authProviders";
 import { supabase } from "@/utils/supabase";
 import { Link } from "expo-router";
 import React, { useState } from "react";
@@ -11,7 +11,7 @@ import {
   View,
 } from "react-native";
 
-export default function () {
+export default function ForgetPassword() {
   const { user } = useAuth();
 
   const [email, setEmail] = useState("");
@@ -89,7 +89,7 @@ export default function () {
               <Typography variant="white" size="md">
                 Har du redan konto?
               </Typography>
-              <Link href="/(auth)/">
+              <Link href="/(auth)/index">
                 <Typography
                   size="md"
                   weight="700"
