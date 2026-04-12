@@ -42,18 +42,9 @@ export interface UserStore {
   first_name: string;
   last_name: string;
   user_email: string;
-  first_time: boolean;
-  selected_option: number | null;
-
-  description?: string;
-  date_of_birth?: Date | null;
-  selected_version: number | null;
-
-  userAge: number | null;
   getUserData: (id: string) => Promise<void>;
-
-  getAge: (dateOfBirth: Date) => void;
   updateUser: (updates: Partial<UserStore>) => void;
+  clearUser: () => void;
 }
 
 export interface FullViewModalProps {

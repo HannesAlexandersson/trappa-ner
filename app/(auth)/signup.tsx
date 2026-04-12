@@ -2,23 +2,24 @@ import { Button, Typography } from "@/components";
 import { useAuth } from "@/providers/authProviders";
 import { Link } from "expo-router";
 import React, { useState } from "react";
-import { Image, TextInput, View } from "react-native";
+import { TextInput, View } from "react-native";
 
 export default function SignUp() {
+  //local states for the form inputs
   const [firstname, setFirstname] = useState("");
   const [lastname, setLastname] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-
+  // global states and functions from the auth context
   const { signUp } = useAuth();
 
   return (
     <View className="flex-1 items-center justify-center  bg-vgrBlue">
-      <Image
+      {/*  <Image
         source={require("@/assets/images/vgrLong.png")}
         className="mb-2"
         style={{ width: 300, height: 150, resizeMode: "contain" }}
-      />
+      /> */}
 
       <View className="flex-1 items-center justify-center w-full p-4">
         <Typography variant="white" weight="700" className="text-2xl mb-4">
@@ -64,7 +65,7 @@ export default function SignUp() {
         <Typography variant="white" size="md" className="mt-2">
           Har du redan ett konto?
         </Typography>
-        <Link className="text-blue-300 underline" href="/(auth)/index">
+        <Link className="text-blue-300 underline" href="/(auth)">
           Logga in
         </Link>
       </View>

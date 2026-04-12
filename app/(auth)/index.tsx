@@ -2,11 +2,14 @@ import { Button, Typography } from "@/components";
 import { useAuth } from "@/providers/authProviders";
 import { Link } from "expo-router";
 import React, { useState } from "react";
-import { Image, TextInput, View } from "react-native";
+import { TextInput, View } from "react-native";
+import "../global.css";
 
 export default function Auth() {
+  //local states for the form inputs
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  // global states and functions from the auth context
   const { signIn } = useAuth();
 
   const handleLogin = async () => {
@@ -15,14 +18,8 @@ export default function Auth() {
 
   return (
     <View className="flex-1 items-center justify-between bg-vgrBlue">
-      <Image
-        source={require("@/assets/images/vgrLong.png")}
-        className=""
-        style={{ width: 300, height: 150, resizeMode: "contain" }}
-      />
-
       <View className="flex-1 flex-col items-center justify-center w-full p-4">
-        <Typography weight="700" variant="white" className="text-2xl mb-4">
+        <Typography weight="700" variant="black" className="text-2xl mb-4">
           Välkommen till Trappa Ner
         </Typography>
         <TextInput

@@ -4,10 +4,11 @@ import { AuthContextType, User } from "@/utils/types";
 import { useRouter } from "expo-router";
 import React from "react";
 
+// Create the AuthContext
 export const AuthContext = React.createContext<AuthContextType | undefined>(
   undefined,
 );
-
+// Custom hook to use the AuthContext
 export const useAuth = () => {
   const context = React.useContext(AuthContext);
   if (!context) {
@@ -15,22 +16,19 @@ export const useAuth = () => {
   }
   return context;
 };
-
+// AuthProvider component that wraps the app and provides authentication state and functions
 export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
-  //states used as global states in the app
   const [user, setUser] = React.useState<User | null>(null);
   const router = useRouter();
 
-  //global states from the zustand stores
+  //global user states & functions from the zustand stores
   const {
     first_name,
     last_name,
     user_email,
-    date_of_birth,
-    description,
-    selected_option,
     getUserData,
     updateUser,
+    clearUser,
   } = useUserStore();
 
   //keep user logged in with supabase on/off state feature
@@ -38,20 +36,19 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     const { data: authData } = supabase.auth.onAuthStateChange(
       (event, session) => {
         //if there is no active user session return to sign in page
-        if (!session) return router.push("/(auth)/index");
+        if (!session) return router.push("/(auth)");
         //else call the getUser function with the session id
         getUser(session?.user.id);
       },
     );
-    //clean up function  that terminates the subscription I.E the user session
+    //clean up function  that terminates the subscription I.E the session
     return () => {
       authData?.subscription.unsubscribe();
     };
   }, []);
 
-  //context functions
+  //Get ALL user data
   const getUser = async (id: string) => {
-    //get all the user data from the profiles table
     const { data, error } = await supabase
       .from("profiles")
       .select("*")
@@ -63,14 +60,19 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
       ...data,
     };
 
-    //set the user to the updated user
+    //set the user to the updated user in context
     setUser(updatedUser);
-
+    // and in the zustand store
+    updateUser({
+      id: updatedUser.id,
+      first_name: updatedUser.first_name,
+      last_name: updatedUser.last_name,
+      user_email: updatedUser.email,
+    });
+    // if the its the users first time, send them to onboarding, else to the main app
     if (data?.first_time) {
-      //redirect to the special onboarding route thats only getting renderd once the first time the user logs in
       router.push("/onboarding");
     } else {
-      setUser(updatedUser);
       router.push("/(tabs)");
     }
   };
@@ -83,7 +85,6 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
 
     if (error) return console.error(error);
     getUser(data.user.id);
-    getUserData(data.user.id);
   };
 
   const signUp = async (
@@ -92,43 +93,58 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     email: string,
     password: string,
   ) => {
-    //trimming the input fields to remove any white spaces to avoid issues with supabases not accepting the emails
     const trimmedEmail = email.trim();
     const trimmedFirstname = firstname.trim();
     const trimmedLastname = lastname.trim();
 
+    // 1. Create the Auth User
     const { data, error } = await supabase.auth.signUp({
       email: trimmedEmail,
       password: password,
     });
-    if (error) return console.error(error);
 
+    if (error) {
+      console.error("Signup Error:", error.message);
+      return;
+    }
+
+    // 2. Create the Profile and RETURN the data
     const { data: profileData, error: profileError } = await supabase
       .from("profiles")
       .insert({
         id: data.user?.id,
-        user_id: data.user?.id,
         first_name: trimmedFirstname,
         last_name: trimmedLastname,
         email: trimmedEmail,
-      });
-    if (profileError) return console.error(profileError);
+      })
+      .select() // get the row back
+      .single(); // expecting a single row back
 
-    //set the user object in the context and redirect to the homepage
-    setUser(profileData);
-    router.back();
-    router.push("/(tabs)");
-    //finally set the global user state
-    if (data?.user) {
-      getUser(data?.user?.id);
+    if (profileError) {
+      console.error("Profile Creation Error:", profileError.message);
+      return;
     }
+
+    // 3a. Update state
+    setUser(profileData);
+    // 3b. Set the Zustand store with the new user data
+    updateUser({
+      id: profileData.id,
+      first_name: profileData.first_name,
+      last_name: profileData.last_name,
+      user_email: profileData.email,
+    });
+
+    // Use replace instead of push for Auth flows
+    router.replace("/onboarding");
   };
 
   const signOut = async () => {
     const { error } = await supabase.auth.signOut();
     if (error) return console.error(error);
     setUser(null);
-    router.push("/(auth)/index");
+    clearUser();
+    router.push("/(auth)");
   };
 
   const editUser = async (
@@ -137,7 +153,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     lastname: string,
     email: string,
   ) => {
-    //if there is no changes made to a property then dont update that property in the db
+    //if no changes, dont update
     const updates: any = {};
     if (firstname !== first_name) updates.first_name = firstname;
     if (lastname !== last_name) updates.last_name = lastname;

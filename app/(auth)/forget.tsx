@@ -4,7 +4,6 @@ import { supabase } from "@/utils/supabase";
 import { Link } from "expo-router";
 import React, { useState } from "react";
 import {
-  Image,
   KeyboardAvoidingView,
   ScrollView,
   TextInput,
@@ -33,11 +32,11 @@ export default function ForgetPassword() {
   return (
     <KeyboardAvoidingView behavior="height" enabled className="flex-1">
       <View className="flex-1 items-center justify-between bg-vgrBlue">
-        <Image
+        {/*  <Image
           source={require("@/assets/images/vgrLong.png")}
           className=""
           style={{ width: 300, height: 150, resizeMode: "contain" }}
-        />
+        /> */}
         <ScrollView>
           <View className="px-4">
             <Typography
@@ -89,7 +88,7 @@ export default function ForgetPassword() {
               <Typography variant="white" size="md">
                 Har du redan konto?
               </Typography>
-              <Link href="/(auth)/index">
+              <Link href="/">
                 <Typography
                   size="md"
                   weight="700"
