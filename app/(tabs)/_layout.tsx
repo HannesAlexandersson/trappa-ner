@@ -50,7 +50,7 @@ export default function TabLayout() {
         name="diary"
         options={{
           title: "",
-          headerTitle: `Min dagbok`,
+          headerTitle: `ABSTINENT`,
           tabBarIcon: () => (
             <View className="absolute">
               <Ionicons name="add-circle" size={75} color="#005b89" />
@@ -74,12 +74,12 @@ export default function TabLayout() {
       <Tabs.Screen
         name="empty"
         options={{
-          title: "Kamera",
+          title: "ABSTINENT",
           tabBarIcon: ({ focused }) => (
             <Ionicons
               name={focused ? "camera-sharp" : "camera-outline"}
               size={24}
-              color="black"
+              color="red"
             />
           ),
         }}

@@ -1,0 +1,49 @@
+{
+  "auth": {
+    "welcome": "Welcome",
+    "welcome_to": "Welcome to Trappa Ner",
+    "login": "Log in",
+    "email_placeholder": "Email",
+    "password_placeholder": "Password",
+    "forget": {
+      "successMessage": "Check your email to reset your password",
+      "errorMessage": "An error occurred, please try again later",
+      "pageHeader": "Forgot password?",
+      "pageInstruction": "Enter your email address below and we'll send you instructions to reset your password.",
+      "email_placeholder": "Enter your email here",
+      "alreadyGotAnAccount": "Already have an account? ",
+      "loginHere": "Log in here",
+      "recoverPassword": "Recover password"
+    },
+    "signup": {
+      "pageHeader": "Create an account",
+      "pageInstruction": "Fill out the form below to create an account.",
+      "email_placeholder": "Email",
+      "password_placeholder": "Password",
+      "confirmPassword_placeholder": "Confirm password",
+      "alreadyHaveAnAccount": "Already have an account? ",
+      "loginHere": "Log in here",
+      "registerAccount": "Create an account"
+    },
+    "dontHaveAnAccount": "Don't have an account? ",
+    "registerAccount": "Create an account"
+  },
+  "home": {
+    "greeting": "Welcome back, %{name}!"
+  },
+  "utilities": {
+    "loading": "Loading...",
+    "error": "An error occurred, please try again later",
+    "send": "Send",
+    "create": "Create"
+  },
+  "not-found": {
+    "message": "This page does not exist.",
+    "goHome": "Go back to the home page!"
+  },
+  "tabs": {
+    "panic": "ABSTINENT",
+    "diary": "My diary",
+    "profile": "Profile"
+  }
+}

@@ -1,4 +1,5 @@
 import { Button, Typography } from "@/components";
+import i18n from "@/constants/dictonarys/i18n";
 import { useAuth } from "@/providers/authProviders";
 import { Link } from "expo-router";
 import React, { useState } from "react";
@@ -20,17 +21,17 @@ export default function Auth() {
     <View className="flex-1 items-center justify-between bg-vgrBlue">
       <View className="flex-1 flex-col items-center justify-center w-full p-4">
         <Typography weight="700" variant="black" className="text-2xl mb-4">
-          Välkommen till Trappa Ner
+          {i18n.t("auth.welcome_to")}
         </Typography>
         <TextInput
-          placeholder="Email"
+          placeholder={i18n.t("auth.email_placeholder")}
           className="bg-white rounded-lg p-4 mb-4 border-gray-300 w-full text-vgrBlue"
           value={email}
           onChangeText={setEmail}
         />
         <TextInput
           secureTextEntry={true}
-          placeholder="Lösenord"
+          placeholder={i18n.t("auth.password_placeholder")}
           className="bg-white rounded-lg p-4 mb-4 border-gray-300 w-full text-vgrBlue"
           value={password}
           onChangeText={setPassword}
@@ -47,22 +48,22 @@ export default function Auth() {
             weight="700"
             className="text-lg"
           >
-            Logga in
+            {i18n.t("auth.login")}
           </Typography>
         </Button>
 
         <Typography variant="white" size="md" className="mt-8">
-          Glömt lösenord?
+          {i18n.t("auth.forget.pageHeader")}
         </Typography>
         <Link className="text-blue-300 underline" href="/(auth)/forget">
-          Återställ lösenord
+          {i18n.t("auth.forget.recoverPassword")}
         </Link>
 
         <Typography variant="white" size="md" className="mt-8">
-          Har du inget konto?
+          {i18n.t("auth.dontHaveAnAccount")}
         </Typography>
         <Link className="text-blue-300 underline" href="/(auth)/signup">
-          Skapa ett konto
+          {i18n.t("auth.registerAccount")}
         </Link>
       </View>
     </View>

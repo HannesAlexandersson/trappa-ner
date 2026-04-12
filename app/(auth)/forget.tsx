@@ -1,4 +1,5 @@
 import { Button, Typography } from "@/components";
+import i18n from "@/constants/dictonarys/i18n";
 import { useAuth } from "@/providers/authProviders";
 import { supabase } from "@/utils/supabase";
 import { Link } from "expo-router";
@@ -21,11 +22,11 @@ export default function ForgetPassword() {
     const { data, error } = await supabase.auth.resetPasswordForEmail(email);
     if (!error) {
       setLoading(false);
-      alert("Kolla din email för att återställa ditt lösenord");
+      alert(i18n.t("auth.forget.successMessage"));
     }
     if (error) {
       setLoading(false);
-      alert(error.message);
+      alert(i18n.t("auth.forget.errorMessage"));
     }
   }
 
@@ -45,7 +46,7 @@ export default function ForgetPassword() {
               weight="700"
               className="self-center p-8"
             >
-              Glömt lösenord?
+              {i18n.t("auth.forget.pageHeader")}
             </Typography>
             <Typography
               variant="white"
@@ -53,11 +54,11 @@ export default function ForgetPassword() {
               weight="400"
               className="self-center"
             >
-              Fyll i din mail för att få återställnings instruktioner
+              {i18n.t("auth.forget.pageInstruction")}
             </Typography>
             <TextInput
               className="bg-white rounded-lg p-2 mt-4 border-gray-300 w-full text-vgrBlue"
-              placeholder="Fyll i din email här"
+              placeholder={i18n.t("auth.forget.email_placeholder")}
               value={email}
               autoCapitalize="none"
               autoCorrect={false}
@@ -75,18 +76,18 @@ export default function ForgetPassword() {
             >
               {loading ? (
                 <Typography variant="black" weight="700" className="text-lg">
-                  Laddar...
+                  {i18n.t("utilities.loading")}
                 </Typography>
               ) : (
                 <Typography variant="black" weight="700" className="text-lg">
-                  Skicka
+                  {i18n.t("utilities.skicka")}
                 </Typography>
               )}
             </Button>
 
             <View className="flex-col items-center justify-center mt-4">
               <Typography variant="white" size="md">
-                Har du redan konto?
+                {i18n.t("auth.forget.alreadyGotAnAccount")}
               </Typography>
               <Link href="/">
                 <Typography
@@ -94,7 +95,7 @@ export default function ForgetPassword() {
                   weight="700"
                   className="ml-2 text-blue-300 underline"
                 >
-                  Logga in här
+                  {i18n.t("auth.forget.loginHere")}
                 </Typography>
               </Link>
             </View>
