@@ -1,0 +1,49 @@
+{
+  "auth": {
+    "welcome": "Velkommen",
+    "welcome_to": "Velkommen til Trappa Ner",
+    "login": "Logg inn",
+    "email_placeholder": "E-post",
+    "password_placeholder": "Passord",
+    "forget": {
+      "successMessage": "Sjekk e-posten din for å tilbakestille passordet ditt",
+      "errorMessage": "En feil oppsto, prøv igjen senere",
+      "pageHeader": "Glemt passord?",
+      "pageInstruction": "Skriv inn e-postadressen din nedenfor, så sender vi deg instruksjoner for å tilbakestille passordet ditt.",
+      "email_placeholder": "Skriv inn e-postadressen din her",
+      "alreadyGotAnAccount": "Har du allerede en konto? ",
+      "loginHere": "Logg inn her",
+      "recoverPassword": "Tilbakestill passord"
+    },
+    "signup": {
+      "pageHeader": "Opprett en konto",
+      "pageInstruction": "Fyll ut skjemaet nedenfor for å opprette en konto.",
+      "email_placeholder": "E-post",
+      "password_placeholder": "Passord",
+      "confirmPassword_placeholder": "Bekreft passord",
+      "alreadyHaveAnAccount": "Har du allerede en konto? ",
+      "loginHere": "Logg inn her",
+      "registerAccount": "Opprett konto"
+    },
+    "dontHaveAnAccount": "Har du ikke en konto? ",
+    "registerAccount": "Opprett konto"
+  },
+  "home": {
+    "greeting": "Velkommen tilbake, %{name}!"
+  },
+  "utilities": {
+    "loading": "Laster...",
+    "error": "En feil oppsto, prøv igjen senere",
+    "send": "Send",
+    "create": "Opprett"
+  },
+  "not-found": {
+    "message": "Denne siden finnes ikke.",
+    "goHome": "Gå tilbake til hjemmesiden!"
+  },
+  "tabs": {
+    "panic": "ABSTINENT",
+    "diary": "Min dagbok",
+    "profile": "Profil"
+  }
+}

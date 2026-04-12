@@ -1,0 +1,49 @@
+{
+  "auth": {
+    "welcome": "Välkommen",
+    "welcome_to": "Välkommen till Trappa Ner",
+    "login": "Logga in",
+    "email_placeholder": "E-post",
+    "password_placeholder": "Lösenord",
+    "forget": {
+      "successMessage": "Kolla din email för att återställa ditt lösenord",
+      "errorMessage": "Ett fel uppstod, försök igen senare",
+      "pageHeader": "Glömt lösenord?",
+      "pageInstruction": "Ange din e-postadress nedan så skickar vi instruktioner för att återställa ditt lösenord.",
+      "email_placeholder": "Fyll i din email här",
+      "alreadyGotAnAccount": "Har du redan ett konto? ",
+      "loginHere": "Logga in här",
+      "recoverPassword": "Återställ lösenord"
+    },
+    "signup": {
+      "pageHeader": "Skapa ett konto",
+      "pageInstruction": "Fyll i formuläret nedan för att skapa ett konto.",
+      "email_placeholder": "E-post",
+      "password_placeholder": "Lösenord",
+      "confirmPassword_placeholder": "Bekräfta lösenord",
+      "alreadyHaveAnAccount": "Har du redan ett konto? ",
+      "loginHere": "Logga in här",
+      "registerAccount": "Skapa ett konto"
+    },
+    "dontHaveAnAccount": "Har du inte ett konto? ",
+    "registerAccount": "Skapa ett konto"
+  },
+  "home": {
+    "greeting": "Välkommen tillbaka, %{name}!"
+  },
+  "utilities": {
+    "loading": "Laddar...",
+    "error": "Ett fel uppstod, försök igen senare",
+    "send": "Skicka",
+    "create": "Skapa"
+  },
+  "not-found": {
+    "message": "Den här sidan finns inte.",
+    "goHome": "Gå tillbaka till hemsidan!"
+  },
+  "tabs": {
+    "panic": "ABSTINENT",
+    "diary": "Min dagbok",
+    "profile": "Profil"
+  }
+}

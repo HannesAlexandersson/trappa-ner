@@ -1,0 +1,49 @@
+{
+  "auth": {
+    "welcome": "Willkommen",
+    "welcome_to": "Willkommen bei Trappa Ner",
+    "login": "Anmelden",
+    "email_placeholder": "E-Mail",
+    "password_placeholder": "Passwort",
+    "forget": {
+      "successMessage": "Überprüfen Sie Ihre E-Mail, um Ihr Passwort zurückzusetzen",
+      "errorMessage": "Ein Fehler ist aufgetreten, bitte versuchen Sie es später erneut",
+      "pageHeader": "Passwort vergessen?",
+      "pageInstruction": "Geben Sie Ihre E-Mail-Adresse unten ein und wir senden Ihnen Anweisungen zum Zurücksetzen Ihres Passworts.",
+      "email_placeholder": "Geben Sie Ihre E-Mail-Adresse hier ein",
+      "alreadyGotAnAccount": "Haben Sie bereits ein Konto? ",
+      "loginHere": "Hier anmelden",
+      "recoverPassword": "Passwort zurücksetzen"
+    },
+    "signup": {
+      "pageHeader": "Ein Konto erstellen",
+      "pageInstruction": "Füllen Sie das Formular unten aus, um ein Konto zu erstellen.",
+      "email_placeholder": "E-Mail",
+      "password_placeholder": "Passwort",
+      "confirmPassword_placeholder": "Passwort bestätigen",
+      "alreadyHaveAnAccount": "Haben Sie bereits ein Konto? ",
+      "loginHere": "Hier anmelden",
+      "registerAccount": "Konto erstellen"
+    },
+    "dontHaveAnAccount": "Haben Sie kein Konto? ",
+    "registerAccount": "Konto erstellen"
+  },
+  "home": {
+    "greeting": "Willkommen zurück, %{name}!"
+  },
+  "utilities": {
+    "loading": "Lädt...",
+    "error": "Ein Fehler ist aufgetreten, bitte versuchen Sie es später erneut",
+    "send": "Senden",
+    "create": "Erstellen"
+  },
+  "not-found": {
+    "message": "Diese Seite existiert nicht.",
+    "goHome": "Gehen Sie zurück zur Startseite!"
+  },
+  "tabs": {
+    "panic": "ABSTINENT",
+    "diary": "Mein Tagebuch",
+    "profile": "Profil"
+  }
+}

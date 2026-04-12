@@ -1,0 +1,49 @@
+{
+  "auth": {
+    "welcome": "Tervetuloa",
+    "welcome_to": "Tervetuloa Trappa Neriin",
+    "login": "Kirjaudu sisään",
+    "email_placeholder": "Sähköposti",
+    "password_placeholder": "Salasana",
+    "forget": {
+      "successMessage": "Tarkista sähköpostisi salasanan nollaukseen",
+      "errorMessage": "Tapahtui virhe, yritä myöhemmin uudelleen",
+      "pageHeader": "Unohditko salasanasi?",
+      "pageInstruction": "Syötä sähköpostiosoitteesi alla ja lähetämme sinulle ohjeet salasanan nollaukseen.",
+      "email_placeholder": "Syötä sähköpostiosoitteesi tänne",
+      "alreadyGotAnAccount": "Onko sinulla jo tili? ",
+      "loginHere": "Kirjaudu tänne",
+      "recoverPassword": "Palauta salasana"
+    },
+    "signup": {
+      "pageHeader": "Luo tili",
+      "pageInstruction": "Täytä lomake alla luodaksesi tilin.",
+      "email_placeholder": "Sähköposti",
+      "password_placeholder": "Salasana",
+      "confirmPassword_placeholder": "Vahvista salasana",
+      "alreadyHaveAnAccount": "Onko sinulla jo tili? ",
+      "loginHere": "Kirjaudu tänne",
+      "registerAccount": "Luo tili"
+    },
+    "dontHaveAnAccount": "Eikö sinulla ole tiliä? ",
+    "registerAccount": "Luo tili"
+  },
+  "home": {
+    "greeting": "Tervetuloa takaisin, %{name}!"
+  },
+  "utilities": {
+    "loading": "Ladataan...",
+    "error": "Tapahtui virhe, yritä myöhemmin uudelleen",
+    "send": "Lähetä",
+    "create": "Luo"
+  },
+  "not-found": {
+    "message": "Tätä sivua ei löydy.",
+    "goHome": "Palaa kotisivulle!"
+  },
+  "tabs": {
+    "panic": "ABSTINENT",
+    "diary": "Päiväkirjani",
+    "profile": "Profiili"
+  }
+}

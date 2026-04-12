@@ -1,0 +1,49 @@
+{
+  "auth": {
+    "welcome": "Velkommen",
+    "welcome_to": "Velkommen til Trappa Ner",
+    "login": "Log ind",
+    "email_placeholder": "Email",
+    "password_placeholder": "Password",
+    "forget": {
+      "successMessage": "Tjek din email for at nulstille dit password",
+      "errorMessage": "Der opstod en fejl, prøv igen senere",
+      "pageHeader": "Glemt password?",
+      "pageInstruction": "Indtast din emailadresse nedenfor, så sender vi dig instruktioner til at nulstille dit password.",
+      "email_placeholder": "Indtast din email her",
+      "alreadyGotAnAccount": "Har du allerede en konto? ",
+      "loginHere": "Log ind her",
+      "recoverPassword": "Nulstil password"
+    },
+    "signup": {
+      "pageHeader": "Opret en konto",
+      "pageInstruction": "Udfyld formularen nedenfor for at oprette en konto.",
+      "email_placeholder": "Email",
+      "password_placeholder": "Password",
+      "confirmPassword_placeholder": "Bekræft password",
+      "alreadyHaveAnAccount": "Har du allerede en konto? ",
+      "loginHere": "Log ind her",
+      "registerAccount": "Opret en konto"
+    },
+    "dontHaveAnAccount": "Har du ikke en konto? ",
+    "registerAccount": "Opret en konto"
+  },
+  "home": {
+    "greeting": "Velkommen tilbage, %{name}!"
+  },
+  "utilities": {
+    "loading": "Indlæser...",
+    "error": "Der opstod en fejl, prøv igen senere",
+    "send": "Send",
+    "create": "Opret"
+  },
+  "not-found": {
+    "message": "Denne side findes ikke.",
+    "goHome": "Gå tilbage til hjemmesiden!"
+  },
+  "tabs": {
+    "panic": "ABSTINENT",
+    "diary": "Min dagbog",
+    "profile": "Profil"
+  }
+}
