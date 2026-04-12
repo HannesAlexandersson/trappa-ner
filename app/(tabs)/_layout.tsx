@@ -1,33 +1,87 @@
-import { Tabs } from 'expo-router';
-import React from 'react';
-
-import { HapticTab } from '@/components/haptic-tab';
-import { IconSymbol } from '@/components/ui/icon-symbol';
-import { Colors } from '@/constants/theme';
-import { useColorScheme } from '@/hooks/use-color-scheme';
+import { useAuth } from "@/providers/authProviders";
+import Ionicons from "@expo/vector-icons/Ionicons";
+import { Tabs } from "expo-router";
+import React from "react";
+import { View } from "react-native";
 
 export default function TabLayout() {
-  const colorScheme = useColorScheme();
-
+  const { user } = useAuth();
   return (
     <Tabs
       screenOptions={{
-        tabBarActiveTintColor: Colors[colorScheme ?? 'light'].tint,
-        headerShown: false,
-        tabBarButton: HapticTab,
-      }}>
+        tabBarActiveTintColor: "#000",
+        headerShown: true,
+        headerTitleAlign: "center",
+        headerTitleStyle: {
+          color: "white",
+          fontSize: 30,
+          fontWeight: "bold",
+          fontFamily: "Roboto",
+        },
+      }}
+    >
       <Tabs.Screen
         name="index"
         options={{
-          title: 'Home',
-          tabBarIcon: ({ color }) => <IconSymbol size={28} name="house.fill" color={color} />,
+          title: "Hem",
+          tabBarIcon: ({ focused }) => (
+            <Ionicons
+              name={focused ? "home-sharp" : "home-outline"}
+              size={24}
+              color="black"
+            />
+          ),
         }}
       />
       <Tabs.Screen
-        name="explore"
+        name="account"
         options={{
-          title: 'Explore',
-          tabBarIcon: ({ color }) => <IconSymbol size={28} name="paperplane.fill" color={color} />,
+          title: "Konto",
+          tabBarIcon: ({ focused }) => (
+            <Ionicons
+              name={focused ? "settings" : "settings-outline"}
+              size={24}
+              color="black"
+            />
+          ),
+        }}
+      />
+      <Tabs.Screen
+        name="diary"
+        options={{
+          title: "",
+          headerTitle: `Min dagbok`,
+          tabBarIcon: () => (
+            <View className="absolute">
+              <Ionicons name="add-circle" size={75} color="#005b89" />
+            </View>
+          ),
+        }}
+      />
+      <Tabs.Screen
+        name="people"
+        options={{
+          title: "Vården",
+          tabBarIcon: ({ focused }) => (
+            <Ionicons
+              name={focused ? "medkit" : "medkit-outline"}
+              size={24}
+              color="black"
+            />
+          ),
+        }}
+      />
+      <Tabs.Screen
+        name="empty"
+        options={{
+          title: "Kamera",
+          tabBarIcon: ({ focused }) => (
+            <Ionicons
+              name={focused ? "camera-sharp" : "camera-outline"}
+              size={24}
+              color="black"
+            />
+          ),
         }}
       />
     </Tabs>

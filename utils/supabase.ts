@@ -13,3 +13,4 @@ export const supabase = createClient(
     },
   },
 );
+export const supabaseUrl: string = process.env.EXPO_PUBLIC_SUPABASE_URL || "";
