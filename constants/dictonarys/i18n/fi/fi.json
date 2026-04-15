@@ -42,8 +42,10 @@
     "goHome": "Palaa kotisivulle!"
   },
   "tabs": {
-    "panic": "ABSTINENT",
-    "diary": "Päiväkirjani",
-    "profile": "Profiili"
+    "panic": "ABSTINENCE",
+    "help": "Tuki",
+    "account": "Profiili",
+    "settings": "Asetukset",
+    "home": "Koti"
   }
 }

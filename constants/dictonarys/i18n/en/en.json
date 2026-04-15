@@ -42,8 +42,10 @@
     "goHome": "Go back to the home page!"
   },
   "tabs": {
-    "panic": "ABSTINENT",
-    "diary": "My diary",
-    "profile": "Profile"
+    "panic": "ABSTINENCE",
+    "help": "Support",
+    "account": "Profile",
+    "settings": "Settings",
+    "home": "Home"
   }
 }
