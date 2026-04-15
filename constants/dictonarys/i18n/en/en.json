@@ -29,7 +29,12 @@
     "registerAccount": "Create an account"
   },
   "home": {
-    "greeting": "Welcome back, %{name}!"
+    "greeting": "Welcome back, %{name}!",
+    "alerts": {
+      "backWarning": "Warning! You are trying to return to processes that you have already completed. You have already completed the onboarding process, so you can safely ignore this warning. If you want to go back to the onboarding process, are you trying to close the app?",
+      "no": "No, please bring me back to the app.",
+      "yes": "Yes, I want to exit the app."
+    }
   },
   "utilities": {
     "loading": "Loading...",

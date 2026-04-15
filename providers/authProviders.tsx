@@ -69,11 +69,12 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
       last_name: updatedUser.last_name,
       user_email: updatedUser.email,
     });
-    // if the its the users first time, send them to onboarding, else to the main app
-    if (data?.first_time) {
-      router.push("/onboarding");
+
+    // THE GATEKEEPER LOGIC:
+    if (data?.needs_setup) {
+      router.replace("/onboarding");
     } else {
-      router.push("/(tabs)");
+      router.replace("/(tabs)");
     }
   };
 
