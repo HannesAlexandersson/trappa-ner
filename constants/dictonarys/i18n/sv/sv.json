@@ -42,8 +42,10 @@
     "goHome": "Gå tillbaka till hemsidan!"
   },
   "tabs": {
-    "panic": "ABSTINENT",
-    "diary": "Min dagbok",
-    "profile": "Profil"
+    "panic": "ABSTINENS",
+    "help": "Tips&Tricks",
+    "account": "Profil",
+    "settings": "Inställningar",
+    "home": "Hem"
   }
 }

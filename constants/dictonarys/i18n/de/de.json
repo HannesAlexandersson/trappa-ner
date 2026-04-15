@@ -42,8 +42,10 @@
     "goHome": "Gehen Sie zurück zur Startseite!"
   },
   "tabs": {
-    "panic": "ABSTINENT",
-    "diary": "Mein Tagebuch",
-    "profile": "Profil"
+    "panic": "ABSTINENZ",
+    "help": "Unterstützung",
+    "account": "Profil",
+    "settings": "Einstellungen",
+    "home": "Startseite"
   }
 }
