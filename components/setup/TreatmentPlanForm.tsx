@@ -1,9 +1,10 @@
 import { Button, Typography } from "@/components";
 import i18n from "@/constants/dictonarys/i18n";
+import Ionicons from "@expo/vector-icons/Ionicons";
 import Slider from "@react-native-community/slider";
 import { useRouter } from "expo-router";
 import React, { useState } from "react";
-import { ScrollView, Switch, View } from "react-native";
+import { ScrollView, Switch, TouchableOpacity, View } from "react-native";
 
 export default function TreatmentPlanForm({
   isNewUser,
@@ -69,7 +70,11 @@ export default function TreatmentPlanForm({
           </Typography>
 
           {/* Question 1 */}
-          <Typography variant="black" weight="300" className="text-lg">
+          <Typography
+            variant="black"
+            weight="300"
+            className="text-xl text-center mb-6"
+          >
             {i18n.t("onboarding.step2Subtitle")}
           </Typography>
           <View className="flex-row justify-around mb-6">
@@ -100,7 +105,6 @@ export default function TreatmentPlanForm({
               </Typography>
             </Button>
           </View>
-          <View className="my-4 h-px w-[90%] bg-vgrBlue " />
 
           {/* MG NICOTINE SLIDER - DATA CENTERED */}
           <View className="mb-12 bg-gray-50 p-6 rounded-3xl border border-gray-100">
@@ -119,7 +123,7 @@ export default function TreatmentPlanForm({
                   : formData.mgNicotinePerDay}
               </Typography>
               <Typography variant="blue" weight="400" size="lg">
-                mg / dag
+                mg / {i18n.t("onboarding.day")}
               </Typography>
             </View>
 
@@ -139,7 +143,7 @@ export default function TreatmentPlanForm({
 
             <View className="flex-row justify-between mt-2">
               <Typography size="sm" className="text-gray-400">
-                5 mg
+                5 mg ({i18n.t("onboarding.or less")})
               </Typography>
               <Typography size="sm" className="text-gray-400">
                 100+ mg
@@ -149,7 +153,12 @@ export default function TreatmentPlanForm({
 
           {/* UNITS PER DAY STEPPER */}
           <View className="mb-10">
-            <Typography className="mb-2">
+            <Typography
+              className="mb-2 text-center"
+              size="lg"
+              variant="black"
+              weight="400"
+            >
               {i18n.t("onboarding.step2unitsPerDay")}
             </Typography>
             <View className="flex-row items-center justify-between bg-gray-100 p-2 rounded-xl">
@@ -168,7 +177,9 @@ export default function TreatmentPlanForm({
 
               <Typography weight="700" className="text-xl">
                 {formData.unitsPerDay >= 50 ? "50+" : formData.unitsPerDay}{" "}
-                {formData.consumptionType === "snus" ? "prillor" : "cigg"}
+                {formData.consumptionType === "snus"
+                  ? i18n.t("onboarding.snus")
+                  : i18n.t("onboarding.cig")}
               </Typography>
 
               <Button
@@ -185,13 +196,27 @@ export default function TreatmentPlanForm({
               </Button>
             </View>
           </View>
+
           <View className="flex-row justify-between mt-4">
-            <Button onPress={prevStep} variant="white">
-              <Typography>{i18n.t("onboarding.prevBtn")}</Typography>
-            </Button>
-            <Button onPress={nextStep}>
-              <Typography>{i18n.t("onboarding.nextBtn")}</Typography>
-            </Button>
+            <TouchableOpacity
+              onPress={prevStep}
+              className="flex-row items-center ml-2 bg-vgrBlue rounded-full"
+            >
+              <Ionicons
+                name="arrow-back-circle-sharp"
+                size={50}
+                color="white"
+              />
+            </TouchableOpacity>
+            <Typography className="text-white text-xl font-bold flex-1 text-center font-roboto shadow-slate-800 shadow-lg">
+              {step}/4 {i18n.t("onboarding.pages")}
+            </Typography>
+            <TouchableOpacity
+              onPress={nextStep}
+              className="flex-row items-center mr-4  bg-vgrBlue rounded-full"
+            >
+              <Ionicons name="arrow-forward-circle" size={50} color="white" />
+            </TouchableOpacity>
           </View>
         </View>
       )}
