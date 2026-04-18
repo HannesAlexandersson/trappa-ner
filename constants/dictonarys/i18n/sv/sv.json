@@ -47,5 +47,46 @@
     "account": "Profil",
     "settings": "Inställningar",
     "home": "Hem"
+  },
+  "onboarding": {
+    "step1Title": "Välkommen till onboarding-processen!",
+    "step1Subtitle": "Här är lite information om appen och hur den fungerar.",
+    "nextBtn": "Nästa",
+    "prevBtn": "Tillbaka",
+    "step2Title": "Berätta om din konsumtion",
+    "step2Subtitle": "Röker du eller snusar du?",
+    "cig": "Cigaretter",
+    "snus": "Snus",
+    "smoker": "Rökare",
+    "snusUser": "Snusare",
+    "day": "dag",
+    "or less": "eller mindre",
+    "step2mgNicotinePerDay": "Hur många mg nikotin konsumerar du totalt per dag?",
+    "step2unitsPerDay": "Hur många enheter (cigaretter/snuspåsar) konsumerar du per dag?",
+    "step3Title": "Behandlingsplan",
+    "step3Aggressiveness": "Aggressivitet (1-5)",
+    "step3AggSubtitle": "Hur snabbt vill du trappa ner? 1 = långsamt, 5 = snabbt",
+    "step3SupportTools": "Vill du använda några hjälpmedel under nedtrappningen? Exempelvis nikotinplåster eller tuggummi?",
+    "step3SupportToolsSubtitle": "Vi rekommenderar starkt att använda hjälpmedel, eftersom de kan öka dina chanser för framgång",
+    "step3SupportToolWhat": "Vilket hjälpmedel vill du använda?",
+    "step3Patch": "Nikotinplåster",
+    "step3Gum": "Nikotintuggummi",
+    "tos": {
+      "title": "Användarvillkor",
+      "subtitle": "Genom att använda denna app godkänner du följande villkor:",
+      "1": "Datainsamling: Vi samlar in data om din konsumtion och dina framsteg för att kunna erbjuda en personlig upplevelse och förbättra appen. Denna data lagras säkert och kommer inte att delas med tredje part utan ditt uttryckliga samtycke.",
+      "2": "intigretet: Vi tar din integritet på allvar och kommer att vidta alla nödvändiga åtgärder för att skydda dina personuppgifter. Din data är krypterad och används enbart för att kunna erbjuda dig en personlig upplevelse.",
+      "3": "Egetansvar: Du är ansvarig för att följa din behandlingsplan och använda appen på ett ansvarsfullt sätt. Appen är ett verktyg för att hjälpa dig att trappa ner din konsumtion, men det är inget substitut för professionell medicinsk rådgivning. Om du har några frågor eller oro angående din hälsa, vänligen kontakta en läkare.",
+      "4": "Ansvarsfriskrivning: Appen tillhandahålls i befintligt skick och vi garanterar inte att den är fri från fel eller att den kommer att uppfylla dina förväntningar. Vi ansvarar inte för några skador eller förluster som kan uppstå genom användning av appen.",
+      "5": "Ändringar i villkoren: Vi förbehåller oss rätten att uppdatera våra användarvillkor när som helst. Vi kommer att meddela dig om eventuella ändringar genom att publicera de nya villkoren på denna sida. Du uppmanas att regelbundet granska denna sida för eventuella ändringar."
+    },
+    "confirm": "Bekräfta och skapa plan"
+  },
+  "help": {
+    "nicotineHelp": {
+      "title": "Hur räknar jag ut mängden?",
+      "body": "Kolla på baksidan av din dosa. Står det t.ex. 12mg/g? En prilla väger oftast ca 0.8g. \n\n12mg × 0.8 = 9.6mg per prilla. \n\nOm du snusar 10 sådana om dagen, dra reglaget till 96mg.",
+      "btnText": "Uppfattat!"
+    }
   }
 }

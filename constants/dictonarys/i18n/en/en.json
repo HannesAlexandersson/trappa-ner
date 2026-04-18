@@ -87,5 +87,12 @@
       "5": "Changes to Terms: We reserve the right to update our Terms of Service at any time. We will notify you of any changes by posting the new Terms of Service on this page. You are advised to review this page periodically for any changes."
     },
     "confirm": "Confirm & Create Plan"
+  },
+  "help": {
+    "nicotineHelp": {
+      "title": "How to calculate your daily nicotine intake?",
+      "body": "Check the back of your pouch. Does it say something like 12mg/g? A pouch usually weighs around 0.8g. \n\n12mg × 0.8 = 9.6mg per pouch. \n\nIf you use 10 such pouches per day, adjust the slider to 96mg.",
+      "btnText": "Got it!"
+    }
   }
 }
