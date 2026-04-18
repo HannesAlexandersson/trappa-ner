@@ -79,6 +79,16 @@ export type OnboardingText = {
   position: number;
 };
 
+export interface OnboardingData {
+  consumptionType: "smoker" | "snus" | null;
+  mgNicotinePerDay: number;
+  unitsPerDay: number;
+  aggressiveness: number; // 1-5
+  useExternalTools: boolean;
+  toolType: "patch" | "gum" | "none";
+  toolStrength: string;
+}
+
 export type VersionDescriptions = {
   version: string;
   paragraph: string;

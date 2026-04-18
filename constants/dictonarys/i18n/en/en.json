@@ -52,5 +52,35 @@
     "account": "Profile",
     "settings": "Settings",
     "home": "Home"
+  },
+  "onboarding": {
+    "step1Title": "Welcome to the onboarding process!",
+    "step1Subtitle": "Here are some information about the app and how it works.",
+    "nextBtn": "Next",
+    "prevBtn": "Back",
+    "step2Title": "Tell us about your consumption",
+    "step2Subtitle": "Do you smoke or use snus?",
+    "cig": "Cigarettes",
+    "snus": "Snus",
+    "step2mgNicotinePerDay": "How many mg of nicotine do you consume per day in total?",
+    "step2unitsPerDay": "How many units (cigs/pouches) do you consume per day?",
+    "step3Title": "Treatment plan",
+    "step3Aggressiveness": "Aggressiveness (1-5)",
+    "step3AggSubtitle": "Higher level = Faster tapering",
+    "step3SupportTools": "Do you want to use nicotine replacement therapy, like patches or gum?",
+    "step3SupportToolsSubtitle": "We STRONGLY recommend using it, as it can significantly increase your chances of success",
+    "step3SupportToolWhat": "What kind of support tools do you want to use?",
+    "step3Patch": "Nicotine patch",
+    "step3Gum": "Nicotine gum",
+    "tos": {
+      "title": "Terms of Service",
+      "subtitle": "Our Terms of Service: By using this app, you agree to the following terms and conditions:",
+      "1": "Data Collection: We collect data on your nicotine consumption and treatment plan to provide you with personalized support and to improve our services. This data is stored securely and is not shared with third parties without your consent.",
+      "2": "Privacy: We are committed to protecting your privacy. Your data is anonymized and used only for the purposes of providing you with support and improving our services.",
+      "3": "User Responsibility: You are responsible for following the treatment plan provided by the app. The app is a tool to assist you in quitting nicotine, but it is not a substitute for professional medical advice. Always consult with a healthcare provider before making any changes to your treatment plan.",
+      "4": "Limitation of Liability: We are not liable for any damages or losses that may occur as a result of using this app. The app is provided \"as is\" and we make no warranties or guarantees regarding its effectiveness.",
+      "5": "Changes to Terms: We reserve the right to update our Terms of Service at any time. We will notify you of any changes by posting the new Terms of Service on this page. You are advised to review this page periodically for any changes."
+    },
+    "confirm": "Confirm & Create Plan"
   }
 }
