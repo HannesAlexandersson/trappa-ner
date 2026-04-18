@@ -4,7 +4,14 @@ import Ionicons from "@expo/vector-icons/Ionicons";
 import Slider from "@react-native-community/slider";
 import { useRouter } from "expo-router";
 import React, { useState } from "react";
-import { ScrollView, Switch, TouchableOpacity, View } from "react-native";
+import {
+  Modal,
+  Pressable,
+  ScrollView,
+  Switch,
+  TouchableOpacity,
+  View,
+} from "react-native";
 
 export default function TreatmentPlanForm({
   isNewUser,
@@ -12,7 +19,14 @@ export default function TreatmentPlanForm({
   isNewUser: boolean;
 }) {
   const router = useRouter();
+  // Local state for step management and form data
   const [step, setStep] = useState(1);
+  const [helpContent, setHelpContent] = useState<{
+    title: string;
+    body: string;
+  } | null>(null);
+  const [showHelp, setShowHelp] = useState(false);
+  const [helpKey, setHelpKey] = useState("");
 
   // Form State
   const [formData, setFormData] = useState({
@@ -31,6 +45,11 @@ export default function TreatmentPlanForm({
 
   const nextStep = () => setStep(step + 1);
   const prevStep = () => setStep(step - 1);
+
+  const openHelp = (key: string) => {
+    setHelpKey(key);
+    setShowHelp(true);
+  };
 
   const handleFinalSave = async () => {
     // 1. Perform calculations (Logic to be added later)
@@ -73,10 +92,12 @@ export default function TreatmentPlanForm({
           <Typography
             variant="black"
             weight="300"
-            className="text-xl text-center mb-6"
+            size="lg"
+            className="mr-2 mb-6"
           >
             {i18n.t("onboarding.step2Subtitle")}
           </Typography>
+
           <View className="flex-row justify-around mb-6">
             <Button
               variant={formData.consumptionType === "smoker" ? "blue" : "white"}
@@ -107,22 +128,32 @@ export default function TreatmentPlanForm({
           </View>
 
           {/* MG NICOTINE SLIDER - DATA CENTERED */}
-          <View className="mb-12 bg-gray-50 p-6 rounded-3xl border border-gray-100">
-            <Typography
-              size="sm"
-              className="text-gray-500 text-center mb-2 uppercase tracking-widest"
-            >
-              {i18n.t("onboarding.step2mgNicotinePerDay")}
-            </Typography>
+          <View className="mb-12 bg-vgrBlue p-6 rounded-3xl border border-gray-100">
+            <View className="flex-row items-center justify-center mb-6">
+              <Typography
+                size="sm"
+                className="text-gray-200 text-center mb-2 uppercase tracking-widest"
+              >
+                {i18n.t("onboarding.step2mgNicotinePerDay")}
+              </Typography>
+              {/* TOOLTIP ICON */}
+              <TouchableOpacity onPress={() => openHelp("nicotineHelp")}>
+                <Ionicons
+                  name="information-circle-outline"
+                  size={24}
+                  color="#fff"
+                />
+              </TouchableOpacity>
+            </View>
 
             {/* THIS IS THE REAL-TIME DATA FEEDBACK */}
             <View className="items-center justify-center mb-4">
-              <Typography variant="blue" weight="700" className="text-5xl">
+              <Typography variant="white" weight="700" className="text-5xl">
                 {formData.mgNicotinePerDay >= 100
                   ? "100+"
                   : formData.mgNicotinePerDay}
               </Typography>
-              <Typography variant="blue" weight="400" size="lg">
+              <Typography variant="white" weight="400" size="lg">
                 mg / {i18n.t("onboarding.day")}
               </Typography>
             </View>
@@ -133,9 +164,9 @@ export default function TreatmentPlanForm({
               maximumValue={100}
               step={1}
               value={formData.mgNicotinePerDay}
-              minimumTrackTintColor="#005b89"
-              maximumTrackTintColor="#d3d3d3"
-              thumbTintColor="#005b89"
+              minimumTrackTintColor="#FFF"
+              maximumTrackTintColor="#FFF"
+              thumbTintColor="#FFF"
               onValueChange={(val) =>
                 setFormData({ ...formData, mgNicotinePerDay: val })
               }
@@ -351,6 +382,35 @@ export default function TreatmentPlanForm({
           </Button>
         </View>
       )}
+
+      {/* HELP MODAL */}
+      <Modal
+        animationType="fade"
+        transparent={true}
+        visible={showHelp}
+        onRequestClose={() => setShowHelp(false)}
+      >
+        <Pressable
+          className="flex-1 bg-black/50 justify-center items-center p-6"
+          onPress={() => setShowHelp(false)}
+        >
+          <View className="bg-white w-full rounded-3xl p-6 shadow-xl">
+            <Typography weight="700" size="lg" variant="blue" className="mb-4">
+              {i18n.t(`help.${helpKey}.title`)}
+            </Typography>
+
+            <Typography size="md" className="text-gray-600 mb-6">
+              {i18n.t(`help.${helpKey}.body`)}
+            </Typography>
+
+            <Button onPress={() => setShowHelp(false)} variant="blue">
+              <Typography variant="white" className="text-center">
+                {i18n.t(`help.${helpKey}.btnText`)}
+              </Typography>
+            </Button>
+          </View>
+        </Pressable>
+      </Modal>
     </ScrollView>
   );
 }
