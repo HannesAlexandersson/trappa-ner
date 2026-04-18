@@ -1,8 +1,9 @@
 import { Button, Typography } from "@/components";
 import i18n from "@/constants/dictonarys/i18n";
+import Slider from "@react-native-community/slider";
 import { useRouter } from "expo-router";
 import React, { useState } from "react";
-import { ScrollView, Switch, TextInput, View } from "react-native";
+import { ScrollView, Switch, View } from "react-native";
 
 export default function TreatmentPlanForm({
   isNewUser,
@@ -15,8 +16,8 @@ export default function TreatmentPlanForm({
   // Form State
   const [formData, setFormData] = useState({
     consumptionType: "snus", // default
-    mgNicotinePerDay: "",
-    unitsPerDay: "",
+    mgNicotinePerDay: 20,
+    unitsPerDay: 10,
     aggressiveness: 3,
     useExternalTools: false,
     usePatch: false,
@@ -39,7 +40,7 @@ export default function TreatmentPlanForm({
   };
 
   return (
-    <ScrollView className="flex-1 p-4">
+    <ScrollView>
       {/* STEP 1: Placeholder Description */}
       {step === 1 && (
         <View>
@@ -57,12 +58,18 @@ export default function TreatmentPlanForm({
 
       {/* STEP 2: The Core Data */}
       {step === 2 && (
-        <View>
-          <Typography variant="black" className="text-xl mb-4">
+        <View className="flex-1 p-4 ">
+          <Typography
+            variant="black"
+            className="font-roboto mb-4"
+            weight="700"
+            size="xl"
+          >
             {i18n.t("onboarding.step2Title")}
           </Typography>
 
-          <Typography className="mb-2">
+          {/* Question 1 */}
+          <Typography variant="black" weight="300" className="text-lg">
             {i18n.t("onboarding.step2Subtitle")}
           </Typography>
           <View className="flex-row justify-around mb-6">
@@ -72,7 +79,13 @@ export default function TreatmentPlanForm({
                 setFormData({ ...formData, consumptionType: "smoker" })
               }
             >
-              <Typography>{i18n.t("onboarding.cig")}</Typography>
+              <Typography
+                variant={
+                  formData.consumptionType === "smoker" ? "white" : "blue"
+                }
+              >
+                {i18n.t("onboarding.cig")}
+              </Typography>
             </Button>
             <Button
               variant={formData.consumptionType === "snus" ? "blue" : "white"}
@@ -80,30 +93,98 @@ export default function TreatmentPlanForm({
                 setFormData({ ...formData, consumptionType: "snus" })
               }
             >
-              <Typography>{i18n.t("onboarding.snus")}</Typography>
+              <Typography
+                variant={formData.consumptionType === "snus" ? "white" : "blue"}
+              >
+                {i18n.t("onboarding.snus")}
+              </Typography>
             </Button>
           </View>
+          <View className="my-4 h-px w-[90%] bg-vgrBlue " />
 
-          <Typography>{i18n.t("onboarding.step2mgNicotinePerDay")}</Typography>
-          <TextInput
-            className="bg-gray-100 p-4 rounded-lg mb-4"
-            keyboardType="numeric"
-            value={formData.mgNicotinePerDay}
-            onChangeText={(val) =>
-              setFormData({ ...formData, mgNicotinePerDay: val })
-            }
-          />
+          {/* MG NICOTINE SLIDER - DATA CENTERED */}
+          <View className="mb-12 bg-gray-50 p-6 rounded-3xl border border-gray-100">
+            <Typography
+              size="sm"
+              className="text-gray-500 text-center mb-2 uppercase tracking-widest"
+            >
+              {i18n.t("onboarding.step2mgNicotinePerDay")}
+            </Typography>
 
-          <Typography>{i18n.t("onboarding.step2unitsPerDay")}</Typography>
-          <TextInput
-            className="bg-gray-100 p-4 rounded-lg mb-4"
-            keyboardType="numeric"
-            value={formData.unitsPerDay}
-            onChangeText={(val) =>
-              setFormData({ ...formData, unitsPerDay: val })
-            }
-          />
+            {/* THIS IS THE REAL-TIME DATA FEEDBACK */}
+            <View className="items-center justify-center mb-4">
+              <Typography variant="blue" weight="700" className="text-5xl">
+                {formData.mgNicotinePerDay >= 100
+                  ? "100+"
+                  : formData.mgNicotinePerDay}
+              </Typography>
+              <Typography variant="blue" weight="400" size="lg">
+                mg / dag
+              </Typography>
+            </View>
 
+            <Slider
+              style={{ width: "100%", height: 50 }}
+              minimumValue={5}
+              maximumValue={100}
+              step={1}
+              value={formData.mgNicotinePerDay}
+              minimumTrackTintColor="#005b89"
+              maximumTrackTintColor="#d3d3d3"
+              thumbTintColor="#005b89"
+              onValueChange={(val) =>
+                setFormData({ ...formData, mgNicotinePerDay: val })
+              }
+            />
+
+            <View className="flex-row justify-between mt-2">
+              <Typography size="sm" className="text-gray-400">
+                5 mg
+              </Typography>
+              <Typography size="sm" className="text-gray-400">
+                100+ mg
+              </Typography>
+            </View>
+          </View>
+
+          {/* UNITS PER DAY STEPPER */}
+          <View className="mb-10">
+            <Typography className="mb-2">
+              {i18n.t("onboarding.step2unitsPerDay")}
+            </Typography>
+            <View className="flex-row items-center justify-between bg-gray-100 p-2 rounded-xl">
+              <Button
+                variant="white"
+                className="w-12 h-12 rounded-lg"
+                onPress={() =>
+                  setFormData({
+                    ...formData,
+                    unitsPerDay: Math.max(1, formData.unitsPerDay - 1),
+                  })
+                }
+              >
+                <Typography className="text-2xl">-</Typography>
+              </Button>
+
+              <Typography weight="700" className="text-xl">
+                {formData.unitsPerDay >= 50 ? "50+" : formData.unitsPerDay}{" "}
+                {formData.consumptionType === "snus" ? "prillor" : "cigg"}
+              </Typography>
+
+              <Button
+                variant="white"
+                className="w-12 h-12 rounded-lg"
+                onPress={() =>
+                  setFormData({
+                    ...formData,
+                    unitsPerDay: Math.min(50, formData.unitsPerDay + 1),
+                  })
+                }
+              >
+                <Typography className="text-2xl">+</Typography>
+              </Button>
+            </View>
+          </View>
           <View className="flex-row justify-between mt-4">
             <Button onPress={prevStep} variant="white">
               <Typography>{i18n.t("onboarding.prevBtn")}</Typography>
