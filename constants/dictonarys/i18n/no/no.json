@@ -47,5 +47,46 @@
     "account": "Profil",
     "settings": "Innstillinger",
     "home": "Hjem"
+  },
+  "onboarding": {
+    "step1Title": "Nå begynner reisen din mot et nikotinfritt liv!",
+    "step1Subtitle": "Her er litt informasjon om appen og hvordan den fungerer.",
+    "nextBtn": "Neste",
+    "prevBtn": "Tilbake",
+    "step2Title": "Fortell oss om forbruket ditt",
+    "step2Subtitle": "Røyker du eller snuser du?",
+    "cig": "Sigaretter",
+    "snus": "Snus",
+    "smoker": "Røyker",
+    "snusUser": "Snusbruker",
+    "day": "dag",
+    "or less": "eller mindre",
+    "step2mgNicotinePerDay": "Hvor mange mg nikotin konsumerer du per dag?",
+    "step2unitsPerDay": "Hvor mange enheter (sigaretter/snusporsjoner) konsumerer du per dag?",
+    "step3Title": "Behandlingsplan",
+    "step3Aggressiveness": "Hvor aggressiv skal planen være (1-5)?",
+    "step3AggSubtitle": "Hvor raskt vil du trappe ned? 1 = sakte, 5 = raskt",
+    "step3SupportTools": "Vil du bruke noen støtteredskaper for å hjelpe deg i nedtrappingen? Exemlpelvis nikotinplaster eller nikotintyggegummi.",
+    "step3SupportToolsSubtitle": "Støtteredskaper kan være nyttige for å håndtere abstinenssymptomer og øke sjansene for suksess.",
+    "step3SupportToolWhat": "Hvilke støtteredskaper vil du bruke?",
+    "step3Patch": "Nikotinplaster",
+    "step3Gum": "nikotintyggegummi",
+    "tos": {
+      "title": "Vilkår for bruk",
+      "subtitle": "Ved å bruke denne appen godtar du følgende vilkår og betingelser:",
+      "1": "Datainnsamling: Vi samler inn data om forbruket og fremgangen din for å kunne tilby en personlig opplevelse og forbedre appen. Disse dataene lagres sikkert og vil ikke bli delt med tredjeparter uten ditt uttrykkelige samtykke.",
+      "2": "Personvern: Vi tar personvernet ditt på alvor og vil ta alle nødvendige forholdsregler for å beskytte dine personopplysninger. Dataene dine krypteres og brukes utelukkende til å gi deg en personlig opplevelse.",
+      "3": "Personlig ansvar: Du er ansvarlig for å følge behandlingsplanen din og bruke appen ansvarlig. Appen er et verktøy som hjelper deg med å redusere forbruket ditt, men den erstatter ikke profesjonell medisinsk rådgivning. Hvis du har spørsmål eller bekymringer om helsen din, bør du kontakte lege.",
+      "4": "Ansvarsfraskrivelse: Appen leveres «som den er», og vi garanterer ikke at den er feilfri eller at den vil oppfylle dine forventninger. Vi er ikke ansvarlige for eventuelle skader eller tap som måtte oppstå ved bruk av appen.",
+      "5": "Endringer i vilkår: Vi forbeholder oss retten til å oppdatere våre bruksvilkår når som helst. Vi vil varsle deg om eventuelle endringer ved å legge ut de nye vilkårene på denne siden. Du oppfordres til å gjennomgå denne siden regelmessig for eventuelle endringer."
+    },
+    "confirm": "Bekreft og opprett plan"
+  },
+  "help": {
+    "nicotineHelp": {
+      "title": "Hvordan regner jeg ut mengden?",
+      "body": "Sjekk baksiden av esken. Står det for eksempel 12 mg/g? En pille veier vanligvis omtrent 0,8 g. \n\n12 mg × 0,8 = 9,6 mg per pille. \n\nHvis du snuser 10 av disse om dagen, skyver du glidebryteren til 96 mg.",
+      "btnText": "Skjønner!"
+    }
   }
 }

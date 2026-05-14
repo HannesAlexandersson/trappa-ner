@@ -61,18 +61,56 @@ export default function TreatmentPlanForm({
 
   return (
     <ScrollView>
-      {/* STEP 1: Placeholder Description */}
+      {/* STEP 1: INTRO */}
       {step === 1 && (
-        <View>
-          <Typography variant="black" className="text-xl mb-4">
+        <View className="p-4">
+          <Typography variant="black" className="text-2xl mb-3" weight="700">
             {i18n.t("onboarding.step1Title")}
           </Typography>
-          <Typography className="mb-8">
+
+          <Typography className="text-gray-500 mb-8" size="lg">
             {i18n.t("onboarding.step1Subtitle")}
           </Typography>
-          <Button onPress={nextStep}>
-            <Typography>{i18n.t("onboarding.nextBtn")}</Typography>
-          </Button>
+
+          <View className="bg-gray-50 rounded-3xl p-5 mb-6 border border-gray-100">
+            <Typography className="mb-4 leading-6 text-gray-700">
+              {i18n.t("onboarding.step1Info1")}
+            </Typography>
+
+            <Typography className="mb-4 leading-6 text-gray-700">
+              {i18n.t("onboarding.step1Info2")}
+            </Typography>
+
+            <Typography className="mb-4 leading-6 text-gray-700">
+              {i18n.t("onboarding.step1Info3")}
+            </Typography>
+
+            <Typography className="mb-4 leading-6 text-gray-700">
+              {i18n.t("onboarding.step1Info4")}
+            </Typography>
+
+            <Typography className="leading-6 text-gray-700">
+              {i18n.t("onboarding.step1Info5")}
+            </Typography>
+          </View>
+
+          <View className="items-center mb-4">
+            <Typography className="text-gray-400">
+              1 / 4 {i18n.t("onboarding.pages")}
+            </Typography>
+          </View>
+
+          <View className="flex-row justify-center pb-8">
+            <Button
+              onPress={nextStep}
+              variant="blue"
+              className="w-full py-4 rounded-2xl"
+            >
+              <Typography variant="white" className="text-center" weight="700">
+                {i18n.t("onboarding.nextBtn")}
+              </Typography>
+            </Button>
+          </View>
         </View>
       )}
 
@@ -239,7 +277,7 @@ export default function TreatmentPlanForm({
                 color="white"
               />
             </TouchableOpacity>
-            <Typography className="text-white text-xl font-bold flex-1 text-center font-roboto shadow-slate-800 shadow-lg">
+            <Typography className="text-gray-400 text-xl font-bold flex-1 text-center font-roboto shadow-slate-800 shadow-lg">
               {step}/4 {i18n.t("onboarding.pages")}
             </Typography>
             <TouchableOpacity

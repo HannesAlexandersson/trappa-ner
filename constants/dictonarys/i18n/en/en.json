@@ -55,7 +55,12 @@
   },
   "onboarding": {
     "step1Title": "Welcome to the onboarding process!",
-    "step1Subtitle": "Here are some information about the app and how it works.",
+    "step1Subtitle": "Before we begin, here’s a quick overview of how the setup works.",
+    "step1Info1": "During this onboarding process, we’ll ask a few questions about your nicotine usage habits. This information helps us create a personalized treatment plan tailored to your needs.",
+    "step1Info2": "Whether you use cigarettes, snus, or other nicotine products, the app uses your answers to calculate a gradual and realistic reduction plan.",
+    "step1Info3": "The onboarding consists of 3 simple steps, each containing a few short questions. The process only takes a couple of minutes to complete.",
+    "step1Info4": "If you want to change an answer from a previous step, you can always navigate back using the buttons at the bottom of the screen.",
+    "step1Info5": "Once completed, your personalized treatment plan will be generated automatically.",
     "nextBtn": "Next",
     "prevBtn": "Back",
     "pages": "pages",

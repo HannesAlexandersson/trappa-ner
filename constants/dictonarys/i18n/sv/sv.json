@@ -49,10 +49,16 @@
     "home": "Hem"
   },
   "onboarding": {
-    "step1Title": "Välkommen till onboarding-processen!",
+    "step1Title": "Nu börjar din resa mot ett nikotinfritt liv!",
     "step1Subtitle": "Här är lite information om appen och hur den fungerar.",
+    "step1Info1": "Under den här onboarding-processen kommer vi att ställa några frågor om dina nikotinvanor. Denna information hjälper oss att skapa en personlig behandlingsplan som är anpassad efter dina behov.",
+    "step1Info2": "Oavsett om du röker, snusar eller använder andra nikotinprodukter, så använder appen dina svar för att räkna ut en gradvis och realistisk nedtrappningsplan.",
+    "step1Info3": "Onboardingen består av 3 enkla steg, varje innehållande några korta frågor. Processen tar bara några minuter att slutföra.",
+    "step1Info4": "Om du vill ändra ett svar från ett tidigare steg kan du alltid navigera tillbaka med hjälp av knapparna längst ner på skärmen.",
+    "step1Info5": "När du är klar kommer din personliga behandlingsplan att genereras automatiskt.",
     "nextBtn": "Nästa",
     "prevBtn": "Tillbaka",
+    "pages": "Sidor",
     "step2Title": "Berätta om din konsumtion",
     "step2Subtitle": "Röker du eller snusar du?",
     "cig": "Cigaretter",
