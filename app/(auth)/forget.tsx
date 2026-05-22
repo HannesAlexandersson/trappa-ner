@@ -33,11 +33,7 @@ export default function ForgetPassword() {
   return (
     <KeyboardAvoidingView behavior="height" enabled className="flex-1">
       <View className="flex-1 items-center justify-between bg-vgrBlue">
-        {/*  <Image
-          source={require("@/assets/images/vgrLong.png")}
-          className=""
-          style={{ width: 300, height: 150, resizeMode: "contain" }}
-        /> */}
+        {/* TODO: ADD LOGO IMAGE*/}
         <ScrollView>
           <View className="px-4">
             <Typography

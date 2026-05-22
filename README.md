@@ -1,4 +1,4 @@
-# Welcome to your Expo app 👋
+# Welcome to Trapp ner 👋
 
 This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
 
@@ -48,3 +48,7 @@ Join our community of developers creating universal apps.
 
 - [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
 - [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+
+# Trappa ner
+
+Trappa ner is a tool to help with quitting tobaco and nicotin products. You enter how much you use and the app calculates the ultimate schedule for you to use less and less nicotine products in order for you to feel as little abstinence as humanly possible.

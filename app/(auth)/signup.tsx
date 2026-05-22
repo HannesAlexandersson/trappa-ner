@@ -16,11 +16,7 @@ export default function SignUp() {
 
   return (
     <View className="flex-1 items-center justify-center  bg-vgrBlue">
-      {/*  <Image
-        source={require("@/assets/images/vgrLong.png")}
-        className="mb-2"
-        style={{ width: 300, height: 150, resizeMode: "contain" }}
-      /> */}
+      {/* TODO: ADD LOGO IMAGE*/}
 
       <View className="flex-1 items-center justify-center w-full p-4">
         <Typography variant="white" weight="700" className="text-2xl mb-4">
