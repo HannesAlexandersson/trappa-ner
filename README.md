@@ -52,3 +52,11 @@ Join our community of developers creating universal apps.
 # Trappa ner
 
 Trappa ner is a tool to help with quitting tobaco and nicotin products. You enter how much you use and the app calculates the ultimate schedule for you to use less and less nicotine products in order for you to feel as little abstinence as humanly possible.
+
+## Authentication & Validation Guidelines
+
+We are migrating our input forms to use structured validation.
+
+- All authentication endpoints and forms must validate inputs before sending requests to the backend providers.
+- Password rules: For security compliance, passwords must meet minimum length criteria defined in our central schema registry.
+- Error Handling: Ensure users receive clear visual feedback if validation fails. Do not let unhandled validation rejections crash the session.

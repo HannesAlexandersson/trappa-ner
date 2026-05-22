@@ -15,7 +15,7 @@ export default function NotFoundScreen() {
     </>
   );
 }
-
+//TODO: Convert to TAILWIND CSS
 const styles = StyleSheet.create({
   container: {
     flex: 1,

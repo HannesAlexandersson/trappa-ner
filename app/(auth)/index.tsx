@@ -1,6 +1,7 @@
 import { Button, Typography } from "@/components";
 import i18n from "@/constants/dictonarys/i18n";
 import { useAuth } from "@/providers/authProviders";
+import { loginSchema } from "@/utils/zodSchemas";
 import { Link } from "expo-router";
 import React, { useState } from "react";
 import { TextInput, View } from "react-native";
@@ -10,10 +11,23 @@ export default function Auth() {
   //local states for the form inputs
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [errorMsg, setErrorMsg] = useState("");
   // global states and functions from the auth context
   const { signIn } = useAuth();
 
   const handleLogin = async () => {
+    setErrorMsg(""); // Clear errors
+    //parse the input with the zod schema
+    const result = loginSchema.safeParse({
+      emailAddress: email,
+      password: password,
+    });
+
+    if (!result.success) {
+      // TODO: Handle validation errors and display them to the user
+      return;
+    }
+
     await signIn(email, password);
   };
 
