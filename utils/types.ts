@@ -1,4 +1,6 @@
+import { TouchableOpacityProps } from "react-native";
 import { Image } from "react-native-reanimated/lib/typescript/Animated";
+
 
 export type User = {
   id: string | null;
@@ -128,13 +130,15 @@ export type TypographyProps = {
   className?: string;
 };
 
-export type ButtonProps = {
-  children: React.ReactNode;
+
+export interface ButtonProps extends TouchableOpacityProps {
   variant?: "black" | "blue" | "outlined" | "white";
   size?: "sm" | "md" | "lg";
+  loading?: boolean;
+  disabled?: boolean;
+  children: React.ReactNode;
   className?: string;
-  onPress?: () => void;
-};
+}
 
 export type AuthStackParamList = {
   Login: undefined;

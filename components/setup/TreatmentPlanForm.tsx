@@ -27,7 +27,7 @@ export default function TreatmentPlanForm({
   } | null>(null);
   const [showHelp, setShowHelp] = useState(false);
   const [helpKey, setHelpKey] = useState("");
-
+  const [loading, setLoading] = useState(false);
   // Form State
   const [formData, setFormData] = useState({
     consumptionType: "snus", // default
@@ -52,11 +52,19 @@ export default function TreatmentPlanForm({
   };
 
   const handleFinalSave = async () => {
-    // 1. Perform calculations (Logic to be added later)
-    // 2. Save to Supabase
-    // 3. Mark setup as done
-    // await supabase.from('profiles').update({ needs_setup: false, ...formData }).eq('id', user.id);
-    router.replace("/(tabs)");
+    setLoading(true);
+    try {
+      // 1. Perform calculations (Logic to be added later)
+      // 2. Save to Supabase
+      // 3. Mark setup as done
+      // await supabase.from('profiles').update({ needs_setup: false, ...formData }).eq('id', user.id);
+      // if success set loading to false
+    } catch (error) {
+      console.error(error);
+    } finally {
+      setLoading(false);
+      router.replace("/(tabs)");
+    }
   };
 
   return (
@@ -496,6 +504,84 @@ export default function TreatmentPlanForm({
               <Typography variant="white">
                 {i18n.t("onboarding.confirm")}
               </Typography>
+            </Button>
+          </View>
+        </View>
+      )}
+
+      {/* STEP 5: HOW TO USE THE APP */}
+      {step === 5 && (
+        <View className="p-4">
+          <Typography variant="black" className="text-2xl text-center mb-2" weight="700">
+            Så fungerar appen
+          </Typography>
+
+          <Typography size="sm" className="text-gray-500 text-center mb-6 px-4">
+            Här är en snabb genomgång för att du ska få ut det mesta av din nedtrappningsplan.
+          </Typography>
+
+          {/* VIDEO / INSTRUCTIONAL MEDIA PLACEHOLDER */}
+          <View className="bg-slate-900 rounded-3xl h-48 mb-6 justify-center items-center overflow-hidden border border-slate-800">
+            {/* If using Video, replace this view with <Video source={{ uri: '...' }} useNativeControls resizeMode="cover" /> */}
+            <Ionicons name="play-circle-outline" size={64} color="#FFF" />
+            <Typography variant="white" weight="600" className="mt-2">
+              Se instuktionsfilm (1 min)
+            </Typography>
+          </View>
+
+          {/* FEATURE CARDS / QUICK GUIDE */}
+          <View className="space-y-3 mb-8">
+            <View className="bg-gray-50 p-4 rounded-2xl border border-gray-100 flex-row items-center">
+              <View className="bg-blue-100 p-3 rounded-xl mr-4">
+                <Ionicons name="stats-chart" size={24} color="#0056B3" />
+              </View>
+              <View className="flex-1">
+                <Typography weight="700" size="md">1. Logga din förbrukning</Typography>
+                <Typography size="sm" className="text-gray-500">
+                  Registrera varje prilla/cigarett direct i appen under dagen.
+                </Typography>
+              </View>
+            </View>
+
+            <View className="bg-gray-50 p-4 rounded-2xl border border-gray-100 flex-row items-center">
+              <View className="bg-green-100 p-3 rounded-xl mr-4">
+                <Ionicons name="trophy" size={24} color="#2E7D32" />
+              </View>
+              <View className="flex-1">
+                <Typography weight="700" size="md">2. Följ din plan</Typography>
+                <Typography size="sm" className="text-gray-500">
+                  Håll koll på dina dagliga gränser och se dina framsteg i realtid.
+                </Typography>
+              </View>
+            </View>
+
+            <View className="bg-gray-50 p-4 rounded-2xl border border-gray-100 flex-row items-center">
+              <View className="bg-purple-100 p-3 rounded-xl mr-4">
+                <Ionicons name="medkit" size={24} color="#6A1B9A" />
+              </View>
+              <View className="flex-1">
+                <Typography weight="700" size="md">3. Använd hjälpmedel</Typography>
+                <Typography size="sm" className="text-gray-500">
+                  Logga plåster eller tuggumman när abstinensen slår till.
+                </Typography>
+              </View>
+            </View>
+          </View>
+
+          {/* NAVIGATION BUTTONS */}
+          <View className="flex-row justify-between">
+            <Button onPress={prevStep} variant="white" className="flex-1 mr-2">
+              <Typography>{i18n.t("onboarding.prevBtn")}</Typography>
+            </Button>
+
+            <Button
+              onPress={handleFinalSave}
+              variant="blue"
+              size="md"
+              className="flex-1 ml-2"
+              loading={loading}
+            >
+              <Typography variant="white">Starta din plan</Typography>
             </Button>
           </View>
         </View>
