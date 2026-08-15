@@ -49,6 +49,7 @@
     "home": "Hem"
   },
   "onboarding": {
+    "header1": "Din plan",
     "step1Title": "Velkommen til onboarding processen!",
     "step1Subtitle": "Før vi begynder, her er en hurtig oversigt over, hvordan opsætningen fungerer.",
     "step1Info1": "Under denne onboarding proces, vil vi stille nogle spørgsmål om dine nikotinvaner. Denne information hjælper os med at skabe en personlig behandlingsplan, der er skræddersyet til dine behov.",

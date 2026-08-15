@@ -54,6 +54,7 @@
     "home": "Home"
   },
   "onboarding": {
+    "header1": "Your Plan",
     "step1Title": "Welcome to the onboarding process!",
     "step1Subtitle": "Before we begin, here’s a quick overview of how the setup works.",
     "step1Info1": "During this onboarding process, we’ll ask a few questions about your nicotine usage habits. This information helps us create a personalized treatment plan tailored to your needs.",
