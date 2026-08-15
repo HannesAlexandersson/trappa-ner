@@ -64,7 +64,7 @@ export default function TreatmentPlanForm({
       {/* STEP 1: INTRO */}
       {step === 1 && (
         <View className="p-4">
-          <Typography variant="black" className="text-2xl mb-3" weight="700">
+          <Typography variant="black" className="text-[25px] text-center mb-3" weight="700">
             {i18n.t("onboarding.step1Title")}
           </Typography>
 
