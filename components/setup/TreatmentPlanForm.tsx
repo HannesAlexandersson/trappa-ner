@@ -60,7 +60,11 @@ export default function TreatmentPlanForm({
   };
 
   return (
-    <ScrollView>
+    <ScrollView
+      className="flex-1 bg-white"
+      contentContainerStyle={{ paddingBottom: 80 }}
+      showsVerticalScrollIndicator={false}
+    >
       {/* STEP 1: INTRO */}
       {step === 1 && (
         <View className="p-4">
@@ -265,7 +269,7 @@ export default function TreatmentPlanForm({
               </Button>
             </View>
           </View>
-
+          {/* Forward bakward btns */}
           <View className="flex-row justify-between mt-4">
             <TouchableOpacity
               onPress={prevStep}
@@ -290,31 +294,59 @@ export default function TreatmentPlanForm({
         </View>
       )}
 
-      {/* STEP 3: Aggressivity & Tools */}
+      {/* STEP 3: Support Tools */}
       {step === 3 && (
-        <View>
-          <Typography variant="black" className="text-xl mb-4">
+        <View className="p-4 flex-1">
+          <Typography
+            variant="black"
+            className="text-[25px] text-center mb-2"
+            weight="700"
+          >
             {i18n.t("onboarding.step3Title")}
           </Typography>
 
-          <View className="flex-row items-center justify-between mb-4">
-            <Typography>{i18n.t("onboarding.step3SupportTools")}</Typography>
-            <Switch
-              value={formData.useExternalTools}
-              onValueChange={(val) =>
-                setFormData({ ...formData, useExternalTools: val })
-              }
-            />
+          <Typography size="sm" className="text-gray-500 text-center mb-6 px-4">
+            Användning av nikotinläkemedel (som plåster eller tuggummi) dämpar abstinensen avsevärt och ökar chansen att lyckas.
+          </Typography>
+
+          {/* MASTER TOGGLE CARD */}
+          <View className="bg-gray-50 p-5 rounded-2xl border border-gray-200 mb-6">
+            <View className="flex-row items-center justify-between">
+              <View className="flex-1 mr-3">
+                <Typography weight="700" size="md">
+                  Vill du använda hjälpmedel?
+                </Typography>
+                <Typography size="sm" className="text-gray-500 mt-1">
+                  {formData.useExternalTools
+                    ? "Ja, jag vill använda plåster eller tuggummi."
+                    : "Nej, jag vill bara trappa ner min nuvarande produkt."}
+                </Typography>
+              </View>
+              <Switch
+                value={!!formData.useExternalTools}
+                onValueChange={(val) =>
+                  setFormData({ ...formData, useExternalTools: val })
+                }
+              />
+            </View>
           </View>
 
+          {/* REVEALED OPTIONS (ONLY WHEN YES / TRUE) */}
           {formData.useExternalTools && (
-            <View>
+            <View className="space-y-4 mb-6">
               {/* --- PATCH SECTION --- */}
-              <View className="mb-6 p-4 bg-blue-50 rounded-xl">
-                <View className="flex-row justify-between items-center mb-2">
-                  <Typography weight="700">Nikotinplåster</Typography>
+              <View className="p-4 bg-blue-50/60 rounded-2xl border border-blue-100 mb-4">
+                <View className="flex-row justify-between items-center">
+                  <View className="flex-1 mr-2">
+                    <Typography weight="700" variant="blue">
+                      Nikotinplåster
+                    </Typography>
+                    <Typography size="sm" className="text-gray-500">
+                      Ger en jämn basdos under hela dagen.
+                    </Typography>
+                  </View>
                   <Switch
-                    value={formData.usePatch}
+                    value={!!formData.usePatch}
                     onValueChange={(val) =>
                       setFormData({ ...formData, usePatch: val })
                     }
@@ -322,31 +354,47 @@ export default function TreatmentPlanForm({
                 </View>
 
                 {formData.usePatch && (
-                  <View className="flex-row justify-between mt-2">
-                    {[21, 14, 7].map((mg) => (
-                      <Button
-                        key={mg}
-                        variant={
-                          formData.patchStrength === mg ? "blue" : "white"
-                        }
-                        className="flex-1 mx-1"
-                        onPress={() =>
-                          setFormData({ ...formData, patchStrength: mg })
-                        }
-                      >
-                        <Typography size="sm">{mg} mg</Typography>
-                      </Button>
-                    ))}
+                  <View className="mt-3 pt-3 border-t border-blue-100">
+                    <Typography size="sm" className="text-gray-500 mb-2">
+                      Välj styrka på ditt plåster:
+                    </Typography>
+                    <View className="flex-row justify-between">
+                      {[21, 14, 7].map((mg) => (
+                        <Button
+                          key={mg}
+                          variant={formData.patchStrength === mg ? "blue" : "white"}
+                          className="flex-1 mx-1 py-2"
+                          onPress={() =>
+                            setFormData({ ...formData, patchStrength: mg })
+                          }
+                        >
+                          <Typography
+                            size="sm"
+                            weight="700"
+                            variant={formData.patchStrength === mg ? "white" : "black"}
+                          >
+                            {mg} mg
+                          </Typography>
+                        </Button>
+                      ))}
+                    </View>
                   </View>
                 )}
               </View>
 
               {/* --- GUM SECTION --- */}
-              <View className="mb-6 p-4 bg-purple-50 rounded-xl">
-                <View className="flex-row justify-between items-center mb-2">
-                  <Typography weight="700">Nikotintuggummi</Typography>
+              <View className="p-4 bg-purple-50/60 rounded-2xl border border-purple-100 mb-4">
+                <View className="flex-row justify-between items-center">
+                  <View className="flex-1 mr-2">
+                    <Typography weight="700" variant="blue">
+                      Nikotintuggummi / Sugtablett
+                    </Typography>
+                    <Typography size="sm" className="text-gray-500">
+                      För tillfälliga, skarpa begär.
+                    </Typography>
+                  </View>
                   <Switch
-                    value={formData.useGum}
+                    value={!!formData.useGum}
                     onValueChange={(val) =>
                       setFormData({ ...formData, useGum: val })
                     }
@@ -354,32 +402,45 @@ export default function TreatmentPlanForm({
                 </View>
 
                 {formData.useGum && (
-                  <View className="flex-row justify-center mt-2">
-                    {[4, 2].map((mg) => (
-                      <Button
-                        key={mg}
-                        variant={formData.gumStrength === mg ? "blue" : "white"}
-                        className="mx-2 px-6"
-                        onPress={() =>
-                          setFormData({ ...formData, gumStrength: mg })
-                        }
-                      >
-                        <Typography>{mg} mg</Typography>
-                      </Button>
-                    ))}
+                  <View className="mt-3 pt-3 border-t border-purple-100">
+                    <Typography size="sm" className="text-gray-500 mb-2">
+                      Välj styrka på tuggummi/tablett:
+                    </Typography>
+                    <View className="flex-row justify-center">
+                      {[4, 2].map((mg) => (
+                        <Button
+                          key={mg}
+                          variant={formData.gumStrength === mg ? "blue" : "white"}
+                          className="flex-1 mx-1 py-2"
+                          onPress={() =>
+                            setFormData({ ...formData, gumStrength: mg })
+                          }
+                        >
+                          <Typography
+                            size="sm"
+                            weight="700"
+                            variant={formData.gumStrength === mg ? "white" : "black"}
+                          >
+                            {mg} mg
+                          </Typography>
+                        </Button>
+                      ))}
+                    </View>
                   </View>
                 )}
               </View>
             </View>
           )}
 
-          {/* Navigation Buttons - Always outside the logic so they don't disappear */}
-          <View className="flex-row justify-between mt-4 mb-10">
-            <Button onPress={prevStep} variant="white">
+          {/* NAVIGATION BUTTONS */}
+          <View className="flex-row justify-between pt-4">
+            <Button onPress={prevStep} variant="white" className="flex-1 mr-2">
               <Typography>{i18n.t("onboarding.prevBtn")}</Typography>
             </Button>
-            <Button onPress={nextStep}>
-              <Typography>{i18n.t("onboarding.nextBtn")}</Typography>
+            <Button onPress={nextStep} variant="blue" className="flex-1 ml-2">
+              <Typography variant="white">
+                {i18n.t("onboarding.nextBtn")}
+              </Typography>
             </Button>
           </View>
         </View>
