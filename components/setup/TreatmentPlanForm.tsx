@@ -433,7 +433,7 @@ export default function TreatmentPlanForm({
           )}
 
           {/* NAVIGATION BUTTONS */}
-          <View className="mt-auto flex-row justify-between pt-4">
+          <View className="flex-row justify-between pt-4">
             <Button onPress={prevStep} variant="white" className="flex-1 mr-2">
               <Typography>{i18n.t("onboarding.prevBtn")}</Typography>
             </Button>
