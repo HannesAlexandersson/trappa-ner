@@ -64,6 +64,9 @@ export default function TreatmentPlanForm({
       className="flex-1 bg-white"
       contentContainerStyle={{ paddingBottom: 80 }}
       showsVerticalScrollIndicator={false}
+      maximumZoomScale={3}
+      minimumZoomScale={1}
+      showsHorizontalScrollIndicator={false}
     >
       {/* STEP 1: INTRO */}
       {step === 1 && (
@@ -434,7 +437,7 @@ export default function TreatmentPlanForm({
 
           {/* NAVIGATION BUTTONS */}
           <View className="flex-row justify-between pt-4">
-            <Button onPress={prevStep} variant="white" className="flex-1 mr-2">
+            <Button onPress={prevStep} variant="outlined" className="flex-1 mr-2">
               <Typography>{i18n.t("onboarding.prevBtn")}</Typography>
             </Button>
             <Button onPress={nextStep} variant="blue" className="flex-1 ml-2">
@@ -448,12 +451,14 @@ export default function TreatmentPlanForm({
 
       {/* STEP 4: TOS */}
       {step === 4 && (
-        <View>
-          <Typography variant="black" className="text-xl mb-4">
+        <View className="p-4">
+          <Typography variant="black" className="text-xl mb-4" weight="700">
             {i18n.t("onboarding.tos.title")}
           </Typography>
-          <View className="h-40 bg-gray-50 p-4 mb-4 rounded border border-gray-200">
-            <Typography size="md" className="text-gray-700">
+
+          {/* Removed fixed h-40 so the card grows dynamically with text */}
+          <View className="bg-gray-50 p-4 mb-6 rounded-2xl border border-gray-200">
+            <Typography size="md" className="text-gray-700 mb-2">
               {i18n.t("onboarding.tos.subtitle")}
             </Typography>
             <Typography size="sm" className="text-gray-500 mt-2">
@@ -473,12 +478,26 @@ export default function TreatmentPlanForm({
             </Typography>
           </View>
 
-          <Button onPress={prevStep} variant="blue" className="mt-4">
-            <Typography>{i18n.t("onboarding.prevBtn")}</Typography>
-          </Button>
-          <Button onPress={handleFinalSave}>
-            <Typography>{i18n.t("onboarding.confirm")}</Typography>
-          </Button>
+          {/* Side-by-side button row placed cleanly below the text card */}
+          <View className="flex-row justify-between">
+            <Button
+              onPress={prevStep}
+              variant="outlined"
+              className="items-center"
+            >
+              <Typography>{i18n.t("onboarding.prevBtn")}</Typography>
+            </Button>
+
+            <Button
+              onPress={handleFinalSave}
+              variant="blue"
+              className="flex-1 ml-2 items-center"
+            >
+              <Typography variant="white">
+                {i18n.t("onboarding.confirm")}
+              </Typography>
+            </Button>
+          </View>
         </View>
       )}
 

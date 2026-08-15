@@ -6,7 +6,7 @@ import { TouchableOpacity } from "react-native";
 const buttonVariants = {
   black: "bg-black border border-black",
   blue: "bg-vgrBlue border border-vgrBlue",
-  outlined: "bg-white border border-black",
+  outlined: "bg-white border border-black active:bg-blue active:text-white",
   white: "bg-white border border-white",
 };
 
