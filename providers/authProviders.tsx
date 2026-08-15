@@ -31,17 +31,21 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     clearUser,
   } = useUserStore();
 
-  //keep user logged in with supabase on/off state feature
+  // keep user logged in with supabase on/off state feature
   React.useEffect(() => {
     const { data: authData } = supabase.auth.onAuthStateChange(
       (event, session) => {
-        //if there is no active user session return to sign in page
-        if (!session) return router.push("/(auth)");
-        //else call the getUser function with the session id
-        getUser(session?.user.id);
-      },
+        if (session?.user) {
+          // Om det finns en session, hämta användardatan
+          getUser(session.user.id);
+        } else {
+          // Om ingen session finns, nollställ endast state
+          setUser(null);
+          clearUser();
+        }
+      }
     );
-    //clean up function  that terminates the subscription I.E the session
+
     return () => {
       authData?.subscription.unsubscribe();
     };
