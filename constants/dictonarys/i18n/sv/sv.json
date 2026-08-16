@@ -54,7 +54,7 @@
     "step1Subtitle": "Här är lite information om appen och hur den fungerar.",
     "step1Info1": "Under den här onboarding-processen kommer vi att ställa några frågor om dina nikotinvanor. Denna information hjälper oss att skapa en personlig behandlingsplan som är anpassad efter dina behov.",
     "step1Info2": "Oavsett om du röker, snusar eller använder andra nikotinprodukter, så använder appen dina svar för att räkna ut en gradvis och realistisk nedtrappningsplan.",
-    "step1Info3": "Onboardingen består av 3 enkla steg, varje innehållande några korta frågor. Processen tar bara några minuter att slutföra.",
+    "step1Info3": "Onboardingen består av 4 enkla steg, varje innehållande några korta frågor. Processen tar bara några minuter att slutföra.",
     "step1Info4": "Om du vill ändra ett svar från ett tidigare steg kan du alltid navigera tillbaka med hjälp av knapparna längst ner på skärmen.",
     "step1Info5": "När du är klar kommer din personliga behandlingsplan att genereras automatiskt.",
     "nextBtn": "Nästa",
@@ -87,7 +87,22 @@
       "4": "Ansvarsfriskrivning: Appen tillhandahålls i befintligt skick och vi garanterar inte att den är fri från fel eller att den kommer att uppfylla dina förväntningar. Vi ansvarar inte för några skador eller förluster som kan uppstå genom användning av appen.",
       "5": "Ändringar i villkoren: Vi förbehåller oss rätten att uppdatera våra användarvillkor när som helst. Vi kommer att meddela dig om eventuella ändringar genom att publicera de nya villkoren på denna sida. Du uppmanas att regelbundet granska denna sida för eventuella ändringar."
     },
-    "confirm": "Bekräfta och skapa plan"
+    "confirm": "Bekräfta användarvillkor",
+    "step5header": "Så här fungerar appen",
+    "step5subHeader": "Här är en snabb genomgång för att du ska få ut det mesta av din nedtrappningsplan.",
+    "featureCard1Header": "1. Följ dina notiser",
+    "featureCard1Para": "Appen räknar ut tidsintervallet och skickar en notis när det är dags för nästa dos.",
+    "featureCard2Header": "2. Akut abstinens? Använd röda knappen",
+    "featureCard2Para": "I menyraden hittar du en röd knapp med övningar och stöd när suget är som starkast.",
+    "featureCard3Header": "3. Justera planen vid behov",
+    "featureCard3Para": "Du kan när som helst se och korrigera din trappningsplan inne i din profil.",
+    "featureCard4Header": "4. Logga din förbrukning",
+    "featureCard4Para": "Registrera varje prilla/cigarett direct i appen under dagen.",
+    "featureCard5Header": "5. Följ din plan",
+    "featureCard5Para": "Håll koll på dina dagliga gränser och se dina framsteg i realtid.",
+    "featureCard6Header": "5. Använd dina hjälpmedel",
+    "featureCard6Para": " Var inte rädd för att använda plåster eller tuggumman när abstinensen slår till.",
+    "StartJourney": "Starta din resa mot nikotinfrihet"
   },
   "help": {
     "nicotineHelp": {
