@@ -19,10 +19,7 @@ export default function TreatmentPlanForm() {
   const { createTreatmentPlan } = useAuth();
   // Local state for step management and form data
   const [step, setStep] = useState(1);
-  const [helpContent, setHelpContent] = useState<{
-    title: string;
-    body: string;
-  } | null>(null);
+
   const [showHelp, setShowHelp] = useState(false);
   const [helpKey, setHelpKey] = useState("");
   const [loading, setLoading] = useState(false);
@@ -543,7 +540,7 @@ export default function TreatmentPlanForm() {
             </View>
             <View className="bg-gray-50 p-4 rounded-2xl border border-gray-100 flex-row items-center">
               <View className="bg-red-100 p-3 rounded-xl mr-4">
-                <Ionicons name="medkit" size={24} color="#FF0600" />
+                <Ionicons name="flash" size={24} color="#FF0600" />
               </View>
               <View className="flex-1">
                 <Typography weight="700" size="md">{i18n.t("onboarding.featureCard2Header")}</Typography>
