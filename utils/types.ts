@@ -65,7 +65,6 @@ export type AuthContextType = {
     password: string,
   ) => Promise<void>;
   signOut: () => Promise<void>;
-
   editUser: (
     id: string,
     firstname: string,
@@ -73,6 +72,8 @@ export type AuthContextType = {
     email: string,
   ) => Promise<void>;
   /* fetchUserEntries: (limitEntries: boolean, id: string | null) => Promise<DiaryEntry[] | undefined>; */
+  // Returns the updated user object or throws an error
+  createTreatmentPlan: (formData: any) => Promise<void>;
 };
 
 export type OnboardingText = {

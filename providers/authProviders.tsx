@@ -36,10 +36,8 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     const { data: authData } = supabase.auth.onAuthStateChange(
       (event, session) => {
         if (session?.user) {
-          // Om det finns en session, hämta användardatan
           getUser(session.user.id);
         } else {
-          // Om ingen session finns, nollställ endast state
           setUser(null);
           clearUser();
         }
@@ -183,9 +181,67 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     }
   };
 
+  const createTreatmentPlan = async (formData: any) => {
+    if (!user?.id) throw new Error("No authenticated user found");
+
+    // 1. first check if there already exists a treatmentplan for this user id
+    const { data: existingPlan, error: fetchError } = await supabase
+      .from("treatment_plans")
+      .select("*")
+      .eq("user_id", user.id)
+      .single();
+    // if a plan already exist, update it instead of creating a new one
+    if (existingPlan) {
+      const { data: updatedPlan, error: updateError } = await supabase
+        .from("treatment_plans")
+        .update({
+          consumption_type: formData.consumptionType,
+          start_units_per_day: formData.unitsPerDay,
+          mg_nicotine_per_day: formData.mgNicotinePerDay,
+          use_patch: formData.usePatch,
+          patch_strength: formData.patchStrength,
+          use_gum: formData.useGum,
+          gum_strength: formData.gumStrength,
+        })
+        .eq("user_id", user.id);
+
+      if (updateError) throw updateError;
+    } else {
+      // check for error
+      const { error: planError } = await supabase
+        .from("treatment_plans")
+        .insert({
+          user_id: user.id,
+          consumption_type: formData.consumptionType,
+          start_units_per_day: formData.unitsPerDay,
+          mg_nicotine_per_day: formData.mgNicotinePerDay,
+          use_patch: formData.usePatch,
+          patch_strength: formData.patchStrength,
+          use_gum: formData.useGum,
+          gum_strength: formData.gumStrength,
+          is_active: true,
+        });
+
+      if (planError) throw planError;
+
+      // 2. Update profile setup status
+      const { data: profileData, error: profileError } = await supabase
+        .from("profiles")
+        .update({ needs_setup: false })
+        .eq("id", user.id)
+        .select()
+        .single();
+
+      if (profileError) throw profileError;
+
+      // 3. Keep local AuthContext user state up to date
+      setUser(profileData);
+    }
+  };
+
   return (
     <AuthContext.Provider
-      value={{ user, setUser, signIn, signOut, signUp, editUser }}
+      value={{ user, setUser, signIn, signOut, signUp, editUser, createTreatmentPlan }}
     >
       {children}
     </AuthContext.Provider>

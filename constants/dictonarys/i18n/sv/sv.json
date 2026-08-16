@@ -87,7 +87,22 @@
       "4": "Ansvarsfriskrivning: Appen tillhandahålls i befintligt skick och vi garanterar inte att den är fri från fel eller att den kommer att uppfylla dina förväntningar. Vi ansvarar inte för några skador eller förluster som kan uppstå genom användning av appen.",
       "5": "Ändringar i villkoren: Vi förbehåller oss rätten att uppdatera våra användarvillkor när som helst. Vi kommer att meddela dig om eventuella ändringar genom att publicera de nya villkoren på denna sida. Du uppmanas att regelbundet granska denna sida för eventuella ändringar."
     },
-    "confirm": "Bekräfta och skapa plan"
+    "confirm": "Bekräfta användarvillkor",
+    "step5header": "Så här fungerar appen",
+    "step5subHeader": "Här är en snabb genomgång för att du ska få ut det mesta av din nedtrappningsplan.",
+    "featureCard1Header": "1. Följ dina notiser",
+    "featureCard1Para": "Appen räknar ut tidsintervallet och skickar en notis när det är dags för nästa dos.",
+    "featureCard2Header": "2. Akut abstinens? Använd röda knappen",
+    "featureCard2Para": "I menyraden hittar du en röd knapp med övningar och stöd när suget är som starkast.",
+    "featureCard3Header": "3. Justera planen vid behov",
+    "featureCard3Para": "Du kan när som helst se och korrigera din trappningsplan inne i din profil.",
+    "featureCard4Header": "4. Logga din förbrukning",
+    "featureCard4Para": "Registrera varje prilla/cigarett direct i appen under dagen.",
+    "featureCard5Header": "5. Följ din plan",
+    "featureCard5Para": "Håll koll på dina dagliga gränser och se dina framsteg i realtid.",
+    "featureCard6Header": "5. Använd dina hjälpmedel",
+    "featureCard6Para": " Var inte rädd för att använda plåster eller tuggumman när abstinensen slår till.",
+    "StartJourney": "Starta din resa mot nikotinfrihet"
   },
   "help": {
     "nicotineHelp": {

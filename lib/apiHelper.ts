@@ -9,6 +9,7 @@ export const fetchUserDataFromProfilesTable = async (userId: string) => {
   if (error) throw error;
   return data;
 };
+
 export const updateUserProfile = async (userId: string, updates: Record<string, any>) => {
   const { data, error } = await supabase
     .from("profiles")
@@ -19,6 +20,37 @@ export const updateUserProfile = async (userId: string, updates: Record<string, 
 
   if (error) throw error;
   return data;
+};
+
+export const saveTreatmentPlanToDB = async (userId: string, formData: any) => {
+  // 1. Insert into treatment_plans table
+  const { error: planError } = await supabase
+    .from("treatment_plans")
+    .insert({
+      user_id: userId,
+      consumption_type: formData.consumptionType,
+      start_units_per_day: formData.unitsPerDay,
+      mg_nicotine_per_day: formData.mgNicotinePerDay,
+      use_patch: formData.usePatch,
+      patch_strength: formData.patchStrength,
+      use_gum: formData.useGum,
+      gum_strength: formData.gumStrength,
+      is_active: true,
+    });
+
+  if (planError) throw planError;
+
+  // 2. Update needs_setup in profiles table so onboarding is done
+  const { data: updatedProfile, error: profileError } = await supabase
+    .from("profiles")
+    .update({ needs_setup: false })
+    .eq("id", userId)
+    .select()
+    .single();
+
+  if (profileError) throw profileError;
+
+  return updatedProfile;
 };
 
 export const fetchUserAvatarFromAvatarBucket = async (avatarUrl: string) => {
