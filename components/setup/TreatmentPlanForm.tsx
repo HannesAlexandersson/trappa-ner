@@ -1,5 +1,6 @@
 import { Button, Typography } from "@/components";
 import i18n from "@/constants/dictonarys/i18n";
+import { updateUserProfile } from "@/lib/apiHelper";
 import { useAuth } from "@/providers/authProviders";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import Slider from "@react-native-community/slider";
@@ -16,7 +17,7 @@ import {
 
 export default function TreatmentPlanForm() {
   const router = useRouter();
-  const { createTreatmentPlan } = useAuth();
+  const { createTreatmentPlan, user } = useAuth();
   // Local state for step management and form data
   const [step, setStep] = useState(1);
 
@@ -56,6 +57,27 @@ export default function TreatmentPlanForm() {
     } finally {
       setLoading(false);
       router.replace("/(tabs)");
+    }
+  };
+
+
+  const handleTOSAcceptance = async () => {
+    if (!user?.id) return;
+
+    setLoading(true);
+    try {
+      await updateUserProfile(user.id, {
+        agred_tos: true,
+        agreed_tos_date: new Date().toISOString(),
+      });
+
+
+    } catch (error) {
+      console.error("Failed to update TOS agreement:", error);
+      // Optionally trigger an alert/toast here
+    } finally {
+      setLoading(false);
+      setStep(step + 1);
     }
   };
 
@@ -493,7 +515,7 @@ export default function TreatmentPlanForm() {
             </Button>
 
             <Button
-              onPress={nextStep}
+              onPress={handleTOSAcceptance}
               variant="blue"
               className="flex-1 ml-2 items-center"
             >
