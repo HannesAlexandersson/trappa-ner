@@ -47,5 +47,53 @@
     "account": "Profil",
     "settings": "Einstellungen",
     "home": "Startseite"
+  },
+  "onboarding": {
+    "header1": "Dein Plan",
+    "step1Title": "Jetzt beginnt deine Reise in ein nikotinfreies Leben!",
+    "step1Subtitle": "Hier sind einige Informationen über die App und wie sie funktioniert.",
+    "step1Info1": "Während dieses Onboarding-Prozesses werden wir dir einige Fragen zu deinen Nikotingewohnheiten stellen. Diese Informationen helfen uns, einen persönlichen Behandlungsplan zu erstellen, der auf deine Bedürfnisse zugeschnitten ist.",
+    "step1Info2": "Egal ob du rauchst, Snus verwendest oder andere Nikotinprodukte nutzt – die App nutzt deine Antworten, um einen schrittweisen und realistischen Entwöhnungsplan zu berechnen.",
+    "step1Info3": "Das Onboarding besteht aus 3 einfachen Schritten mit jeweils wenigen kurzen Fragen. Der Vorgang dauert nur wenige Minuten.",
+    "step1Info4": "Wenn du eine Antwort aus einem vorherigen Schritt ändern möchtest, kannst du jederzeit über die Schaltflächen am unteren Bildschirmrand zurücknavigieren.",
+    "step1Info5": "Sobald du fertig bist, wird dein persönlicher Behandlungsplan automatisch erstellt.",
+    "nextBtn": "Weiter",
+    "prevBtn": "Zurück",
+    "pages": "Seiten",
+    "step2Title": "Erzähle uns von deinem Konsum",
+    "step2Subtitle": "Rauchst du oder verwendest du Snus?",
+    "cig": "Zigaretten",
+    "snus": "Snus",
+    "smoker": "Raucher",
+    "snusUser": "Snus-Nutzer",
+    "day": "Tag",
+    "or less": "oder weniger",
+    "step2mgNicotinePerDay": "Wie viel mg Nikotin konsumierst du insgesamt pro Tag?",
+    "step2unitsPerDay": "Wie viele Einheiten (Zigaretten/Snus-Beutel) konsumierst du pro Tag?",
+    "step3Title": "Behandlungsplan",
+    "step3Aggressiveness": "Aggressivität (1-5)",
+    "step3AggSubtitle": "Wie schnell möchtest du reduzieren? 1 = langsam, 5 = schnell",
+    "step3SupportTools": "Möchtest du während der Entwöhnung Hilfsmittel verwenden? Zum Beispiel Nikotinpflaster oder Kaugummi?",
+    "step3SupportToolsSubtitle": "Wir empfehlen dringend die Verwendung von Hilfsmitteln, da sie deine Erfolgschancen erhöhen können.",
+    "step3SupportToolWhat": "Welches Hilfsmittel möchtest du verwenden?",
+    "step3Patch": "Nikotinpflaster",
+    "step3Gum": "Nikotinkaugummi",
+    "tos": {
+      "title": "Nutzungsbedingungen",
+      "subtitle": "Durch Nutzung dieser App stimmst du den folgenden Bedingungen zu:",
+      "1": "Datenerfassung: Wir erfassen Daten über deinen Konsum und deine Fortschritte, um ein personalisiertes Erlebnis zu bieten und die App zu verbessern. Diese Daten werden sicher gespeichert und nicht ohne deine ausdrückliche Zustimmung an Dritte weitergegeben.",
+      "2": "Datenschutz: Wir nehmen deinen Datenschutz sehr ernst und ergreifen alle notwendigen Maßnahmen zum Schutz deiner personenbezogenen Daten. Deine Daten werden verschlüsselt und ausschließlich zur Bereitstellung deines persönlichen Erlebnisses verwendet.",
+      "3": "Eigenverantwortung: Du bist dafür verantwortlich, deinen Behandlungsplan zu befolgen und die App verantwungsvoll zu nutzen. Die App ist ein Werkzeug, das dir hilft, deinen Konsum zu reduzieren, ersetzt jedoch keine professionelle medizinische Beratung. Bei Fragen oder Bedenken zu deiner Gesundheit wende dich bitte an einen Arzt.",
+      "4": "Haftungsausschluss: Die App wird wie besehen zur Verfügung gestellt. Wir garantieren nicht, dass sie fehlerfrei ist oder deinen Erwartungen entspricht. Wir haften nicht für Schäden oder Verluste, die durch die Nutzung der App entstehen können.",
+      "5": "Änderungen der Bedingungen: Wir behalten uns das Recht vor, unsere Nutzungsbedingungen jederzeit zu aktualisieren. Wir werden dich über Änderungen informieren, indem wir die neuen Bedingungen auf dieser Seite veröffentlichen. Es wird empfohlen, diese Seite regelmäßig auf Änderungen zu überprüfen."
+    },
+    "confirm": "Bestätigen und Plan erstellen"
+  },
+  "help": {
+    "nicotineHelp": {
+      "title": "Wie berechne ich die Menge?",
+      "body": "Schau auf die Rückseite deiner Dose. Steht dort z. B. 12mg/g? Ein Beutel wiegt meist ca. 0,8g.\n\n12mg × 0,8 = 9,6mg pro Beutel.\n\nWenn du davon 10 Stück am Tag verwendest, schiebe den Regler auf 96mg.",
+      "btnText": "Verstanden!"
+    }
   }
 }

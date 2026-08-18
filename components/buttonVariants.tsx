@@ -1,12 +1,12 @@
 import { ButtonProps } from "@/utils/types";
 import { cn } from "@/utils/utils";
 import React from "react";
-import { TouchableOpacity } from "react-native";
+import { ActivityIndicator, TouchableOpacity } from "react-native";
 
 const buttonVariants = {
   black: "bg-black border border-black",
   blue: "bg-vgrBlue border border-vgrBlue",
-  outlined: "bg-white border border-black",
+  outlined: "bg-white border border-black active:bg-blue active:text-white",
   white: "bg-white border border-white",
 };
 
@@ -21,21 +21,34 @@ const Button: React.FC<ButtonProps> = ({
   variant = "outlined",
   size = "md",
   className = "",
+  loading = false,
+  disabled = false,
   onPress,
   ...props
 }) => {
+  const isInteractionDisabled = disabled || loading;
+
+  const spinnerColor =
+    variant === "black" || variant === "blue" ? "#FFFFFF" : "#000000";
+
   return (
     <TouchableOpacity
+      disabled={isInteractionDisabled}
       className={cn(
         buttonVariants[variant],
         buttonSizes[size],
-        "rounded-lg",
+        "rounded-lg items-center justify-center flex-row",
+        isInteractionDisabled ? "opacity-50" : "",
         className,
       )}
-      {...props}
       onPress={onPress}
+      {...props}
     >
-      {children}
+      {loading ? (
+        <ActivityIndicator size="small" color={spinnerColor} />
+      ) : (
+        children
+      )}
     </TouchableOpacity>
   );
 };
