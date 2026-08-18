@@ -26,22 +26,23 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     first_name,
     last_name,
     user_email,
-    getUserData,
     updateUser,
     clearUser,
   } = useUserStore();
 
-  //keep user logged in with supabase on/off state feature
+  // keep user logged in with supabase on/off state feature
   React.useEffect(() => {
     const { data: authData } = supabase.auth.onAuthStateChange(
       (event, session) => {
-        //if there is no active user session return to sign in page
-        if (!session) return router.push("/(auth)");
-        //else call the getUser function with the session id
-        getUser(session?.user.id);
-      },
+        if (session?.user) {
+          getUser(session.user.id);
+        } else {
+          setUser(null);
+          clearUser();
+        }
+      }
     );
-    //clean up function  that terminates the subscription I.E the session
+
     return () => {
       authData?.subscription.unsubscribe();
     };
@@ -54,7 +55,11 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
       .select("*")
       .eq("id", id)
       .single();
-    if (error) return console.error(error);
+    if (error) {
+      console.error("Profile fetch failed:", error);
+      setUser(null); // Clear state rather than leaving it in an indeterminate pending state
+      return;
+    }
 
     const updatedUser: User = {
       ...data,
@@ -69,11 +74,12 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
       last_name: updatedUser.last_name,
       user_email: updatedUser.email,
     });
-    // if the its the users first time, send them to onboarding, else to the main app
-    if (data?.first_time) {
-      router.push("/onboarding");
+
+    // THE GATEKEEPER LOGIC:
+    if (data?.needs_setup) {
+      router.replace("/onboarding");
     } else {
-      router.push("/(tabs)");
+      router.replace("/(tabs)");
     }
   };
 
@@ -178,9 +184,60 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     }
   };
 
+  const createTreatmentPlan = async (formData: any) => {
+    if (!user?.id) throw new Error("No authenticated user found");
+
+    // 1. Check for an existing treatment plan
+    const { data: existingPlan } = await supabase
+      .from("treatment_plans")
+      .select("id")
+      .eq("user_id", user.id)
+      .maybeSingle(); // maybeSingle avoids throwing errors if 0 rows return
+
+    const planPayload = {
+      user_id: user.id,
+      consumption_type: formData.consumptionType,
+      start_units_per_day: formData.unitsPerDay,
+      mg_nicotine_per_day: formData.mgNicotinePerDay,
+      use_patch: formData.usePatch,
+      patch_strength: formData.patchStrength,
+      use_gum: formData.useGum,
+      gum_strength: formData.gumStrength,
+      is_active: true,
+    };
+
+    if (existingPlan) {
+      const { error: updateError } = await supabase
+        .from("treatment_plans")
+        .update(planPayload)
+        .eq("user_id", user.id);
+
+      if (updateError) throw updateError;
+    } else {
+      const { error: insertError } = await supabase
+        .from("treatment_plans")
+        .insert(planPayload);
+
+      if (insertError) throw insertError;
+    }
+
+    // 2. Always update profile setup status & local context regardless of insert vs update
+    const { data: profileData, error: profileError } = await supabase
+      .from("profiles")
+      .update({ needs_setup: false })
+      .eq("id", user.id)
+      .select()
+      .single();
+
+    if (profileError) throw profileError;
+
+    // 3. Keep local AuthContext user state up to date
+    setUser(profileData);
+  };
+
   return (
     <AuthContext.Provider
-      value={{ user, setUser, signIn, signOut, signUp, editUser }}
+      value={{ user, setUser, signIn, signOut, signUp, editUser, createTreatmentPlan }}
     >
       {children}
     </AuthContext.Provider>

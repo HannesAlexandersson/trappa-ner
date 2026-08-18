@@ -81,7 +81,7 @@ export default function TabLayout() {
                 elevation: 7,
               }}
             >
-              <Ionicons name="flash" size={40} color="white" />
+              <Ionicons name="medkit-sharp" size={40} color="white" />
             </View>
           ),
         }}
@@ -98,7 +98,7 @@ export default function TabLayout() {
           title: i18n.t("tabs.help"),
           tabBarIcon: ({ focused }) => (
             <Ionicons
-              name={focused ? "help" : "help-outline"}
+              name={focused ? "help-circle" : "help-circle-outline"}
               size={24}
               color="#005b89"
             />

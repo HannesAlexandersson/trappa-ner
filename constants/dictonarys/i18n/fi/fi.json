@@ -1,31 +1,31 @@
 {
   "auth": {
     "welcome": "Tervetuloa",
-    "welcome_to": "Tervetuloa Trappa Neriin",
+    "welcome_to": "Tervetuloa Trappa Ner -sovellukseen",
     "login": "Kirjaudu sisään",
     "email_placeholder": "Sähköposti",
     "password_placeholder": "Salasana",
     "forget": {
-      "successMessage": "Tarkista sähköpostisi salasanan nollaukseen",
-      "errorMessage": "Tapahtui virhe, yritä myöhemmin uudelleen",
-      "pageHeader": "Unohditko salasanasi?",
-      "pageInstruction": "Syötä sähköpostiosoitteesi alla ja lähetämme sinulle ohjeet salasanan nollaukseen.",
-      "email_placeholder": "Syötä sähköpostiosoitteesi tänne",
+      "successMessage": "Tarkista sähköpostisi palauttaaksesi salasanasi",
+      "errorMessage": "Tapahtui virhe, yritä uudelleen myöhemmin",
+      "pageHeader": "Unohditko salasanan?",
+      "pageInstruction": "Syötä sähköpostiosoitteesi alle, niin lähetämme sinulle ohjeet salasanan palauttamiseksi.",
+      "email_placeholder": "Kirjoita sähköpostisi tähän",
       "alreadyGotAnAccount": "Onko sinulla jo tili? ",
-      "loginHere": "Kirjaudu tänne",
+      "loginHere": "Kirjaudu sisään tästä",
       "recoverPassword": "Palauta salasana"
     },
     "signup": {
       "pageHeader": "Luo tili",
-      "pageInstruction": "Täytä lomake alla luodaksesi tilin.",
+      "pageInstruction": "Täytä alla oleva lomake luodaksesi tilin.",
       "email_placeholder": "Sähköposti",
       "password_placeholder": "Salasana",
       "confirmPassword_placeholder": "Vahvista salasana",
       "alreadyHaveAnAccount": "Onko sinulla jo tili? ",
-      "loginHere": "Kirjaudu tänne",
+      "loginHere": "Kirjaudu sisään tästä",
       "registerAccount": "Luo tili"
     },
-    "dontHaveAnAccount": "Eikö sinulla ole tiliä? ",
+    "dontHaveAnAccount": "Eikö sinulla ole vielä tiliä? ",
     "registerAccount": "Luo tili"
   },
   "home": {
@@ -33,7 +33,7 @@
   },
   "utilities": {
     "loading": "Ladataan...",
-    "error": "Tapahtui virhe, yritä myöhemmin uudelleen",
+    "error": "Tapahtui virhe, yritä uudelleen myöhemmin",
     "send": "Lähetä",
     "create": "Luo"
   },
@@ -42,10 +42,58 @@
     "goHome": "Palaa kotisivulle!"
   },
   "tabs": {
-    "panic": "ABSTINENCE",
-    "help": "Tuki",
+    "panic": "Vieroitusoireet",
+    "help": "Vinkit ja neuvot",
     "account": "Profiili",
     "settings": "Asetukset",
     "home": "Koti"
+  },
+  "onboarding": {
+    "header1": "Suunnitelmasi",
+    "step1Title": "Matkasi kohti nikotiinitonta elämää alkaa nyt!",
+    "step1Subtitle": "Tässä on hieman tietoa sovelluksesta ja sen toiminnasta.",
+    "step1Info1": "Tämän aloitusvaiheen aikana kysymme muutaman kysymyksen nikotiinitottumuksistasi. Nämä tiedot auttavat meitä luomaan henkilökohtaisen hoitosuunnitelman, joka on mukautettu tarpeisiisi.",
+    "step1Info2": "Poltitpa sitten savukkeita, käytit nuuskaa tai muita nikotiinituotteita, sovellus käyttää vastauksiasi laskemaan asteittaisen ja realistisen vähennyssuunnitelman.",
+    "step1Info3": "Aloitusvaihe koostuu 3 yksinkertaisesta vaiheesta, joista jokainen sisältää muutaman lyhyen kysymyksen. Prosessi kestää vain muutaman minuutin.",
+    "step1Info4": "Jos haluat muuttaa vastaustasi aiemmasta vaiheesta, voit aina siirtyä takaisin näytön alareunassa olevien painikkeiden avulla.",
+    "step1Info5": "Kun olet valmis, henkilökohtainen hoitosuunnitelmasi luodaan automaattisesti.",
+    "nextBtn": "Seuraava",
+    "prevBtn": "Takaisin",
+    "pages": "Sivut",
+    "step2Title": "Kerro kulutuksestasi",
+    "step2Subtitle": "Poltatko vai käytätkö nuuskaa?",
+    "cig": "Savukkeet",
+    "snus": "Nuuska",
+    "smoker": "Tupakoitsija",
+    "snusUser": "Nuuskankäyttäjä",
+    "day": "päivä",
+    "or less": "tai vähemmän",
+    "step2mgNicotinePerDay": "Kuinka monta mg nikotiinia kulutat yhteensä päivässä?",
+    "step2unitsPerDay": "Kuinka monta yksikköä (savuketta/nuuska-annosta) kulutat päivässä?",
+    "step3Title": "Hoitosuunnitelma",
+    "step3Aggressiveness": "Agressiivisuus (1-5)",
+    "step3AggSubtitle": "Kuinka nopeasti haluat vähentää? 1 = hitaasti, 5 = nopeasti",
+    "step3SupportTools": "Haluatko käyttää apuvälineitä vähentämisen aikana? Esimerkiksi nikotiinilaastaria tai -purukumia?",
+    "step3SupportToolsSubtitle": "Suosittelemme lämpimästi apuvälineiden käyttöä, sillä ne voivat parantaa onnistumisen mahdollisuuksiasi.",
+    "step3SupportToolWhat": "Mitä apuvälinettä haluat käyttää?",
+    "step3Patch": "Nikotiinilaastari",
+    "step3Gum": "Nikotiinipurukumi",
+    "tos": {
+      "title": "Käyttöehdot",
+      "subtitle": "Käyttämällä tätä sovellusta hyväksyt seuraavat ehdot:",
+      "1": "Tietojen kerääminen: Keräämme tietoja kulutuksestasi ja edistymisestäsi tarjotaksemme henkilökohtaisen kokemuksen ja parantaaksemme sovellusta. Nämä tiedot tallennetaan turvallisesti eikä niitä jaeta kolmansille osapuolille ilman nimenomaista suostumustasi.",
+      "2": "Tietosuoja: Suhtaudumme tietosuojaasi vakavasti ja ryhdymme kaikkeen tarvittavaan henkilötietojesi suojaamiseksi. Tietosi on kryptattu ja niitä käytetään vain henkilökohtaisen kokemuksen tarjoamiseen.",
+      "3": "Oma vastuualue: Olet vastuussa hoitosuunnitelmasi noudattamisesta ja sovelluksen vastuullisesta käytöstä. Sovellus on työkalu, joka auttaa sinua vähentämään kulutustasi, mutta se ei korvaa ammattimaista lääketieteellistä neuvontaa. Jos sinulla on kysyttävää tai huolenaiheita terveydestäsi, ota yhteyttä lääkäriin.",
+      "4": "Vastuuvapauslauseke: Sovellus tarjotaan sellaisena kuin se on, enmekä takaa, että se on virheetön tai että se vastaa odotuksiasi. Emme ole vastuussa mistään vahingoista tai menetyksistä, joita sovelluksen käytöstä saattaa aiheutua.",
+      "5": "Ehtojen muutokset: Pidätämme oikeuden päivittää käyttöehtojamme milloin tahansa. Ilmoitamme mahdollisista muutoksista julkaisemalla uudet ehdot tällä sivulla. Sinua kehotetaan tarkistamaan tämä sivu säännöllisesti muutosten varalta."
+    },
+    "confirm": "Vahvista ja luo suunnitelma"
+  },
+  "help": {
+    "nicotineHelp": {
+      "title": "Miten lasken määrän?",
+      "body": "Katso rasiasi takapuolelle. Lukeeko siellä esim. 12mg/g? Yksi nuuska-annos painaa yleensä noin 0,8g.\n\n12mg × 0,8 = 9,6mg annosta kohden.\n\nJos käytät 10 sellaista päivässä, vedä liukusäädin kohtaan 96mg.",
+      "btnText": "Selvä!"
+    }
   }
 }

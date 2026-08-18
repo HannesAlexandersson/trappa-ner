@@ -1,0 +1,672 @@
+import { Button, Typography } from "@/components";
+import i18n from "@/constants/dictonarys/i18n";
+import { updateUserProfile } from "@/lib/apiHelper";
+import { useAuth } from "@/providers/authProviders";
+import Ionicons from "@expo/vector-icons/Ionicons";
+import Slider from "@react-native-community/slider";
+import { useRouter } from "expo-router";
+import React, { useState } from "react";
+import {
+  Modal,
+  Pressable,
+  ScrollView,
+  Switch,
+  TouchableOpacity,
+  View,
+} from "react-native";
+
+export default function TreatmentPlanForm() {
+  const router = useRouter();
+  const { createTreatmentPlan, user } = useAuth();
+  // Local state for step management and form data
+  const [step, setStep] = useState(1);
+
+  const [showHelp, setShowHelp] = useState(false);
+  const [helpKey, setHelpKey] = useState("");
+  const [loading, setLoading] = useState(false);
+
+  // Form State
+  const [formData, setFormData] = useState({
+    consumptionType: "snus", // default
+    mgNicotinePerDay: 20,
+    unitsPerDay: 10,
+    aggressiveness: 3,
+    useExternalTools: false,
+    usePatch: false,
+    patchStrength: 0, // Should be 21, 14, or 7 (mg/24h)
+    useGum: false,
+    gumStrength: 0, // Should be 4 or 2 (mg)
+    toolType: "none",
+    toolStrength: "",
+  });
+
+  const nextStep = () => setStep(step + 1);
+  const prevStep = () => setStep(step - 1);
+
+  const openHelp = (key: string) => {
+    setHelpKey(key);
+    setShowHelp(true);
+  };
+
+  const handleFinalSave = async () => {
+    setLoading(true);
+    try {
+      await createTreatmentPlan(formData);
+    } catch (error) {
+      console.error("Error saving treatment plan:", error);
+    } finally {
+      setLoading(false);
+      router.replace("/(tabs)");
+    }
+  };
+
+
+  const handleTOSAcceptance = async () => {
+    if (!user?.id) return;
+
+    setLoading(true);
+    try {
+      await updateUserProfile(user.id, {
+        agred_tos: true,
+        agreed_tos_date: new Date().toISOString(),
+      });
+
+
+    } catch (error) {
+      console.error("Failed to update TOS agreement:", error);
+      // Optionally trigger an alert/toast here
+    } finally {
+      setLoading(false);
+      setStep(step + 1);
+    }
+  };
+
+  return (
+    <ScrollView
+      className="flex-1 bg-white"
+      contentContainerStyle={{ paddingBottom: 80 }}
+      showsVerticalScrollIndicator={false}
+      maximumZoomScale={3}
+      minimumZoomScale={1}
+      showsHorizontalScrollIndicator={false}
+    >
+      {/* STEP 1: INTRO */}
+      {step === 1 && (
+        <View className="p-4">
+          <Typography variant="black" className="text-[25px] text-center mb-3" weight="700">
+            {i18n.t("onboarding.step1Title")}
+          </Typography>
+
+          <Typography className="text-gray-500 mb-8" size="lg">
+            {i18n.t("onboarding.step1Subtitle")}
+          </Typography>
+
+          <View className="bg-gray-50 rounded-3xl p-5 mb-6 border border-gray-100">
+            <Typography className="mb-4 leading-6 text-gray-700">
+              {i18n.t("onboarding.step1Info1")}
+            </Typography>
+
+            <Typography className="mb-4 leading-6 text-gray-700">
+              {i18n.t("onboarding.step1Info2")}
+            </Typography>
+
+            <Typography className="mb-4 leading-6 text-gray-700">
+              {i18n.t("onboarding.step1Info3")}
+            </Typography>
+
+            <Typography className="mb-4 leading-6 text-gray-700">
+              {i18n.t("onboarding.step1Info4")}
+            </Typography>
+
+            <Typography className="leading-6 text-gray-700">
+              {i18n.t("onboarding.step1Info5")}
+            </Typography>
+          </View>
+
+          <View className="items-center mb-4">
+            <Typography className="text-gray-400">
+              1 / 5 {i18n.t("onboarding.pages")}
+            </Typography>
+          </View>
+
+          <View className="flex-row justify-center pb-8">
+            <Button
+              onPress={nextStep}
+              variant="blue"
+              className="w-full py-4 rounded-2xl"
+            >
+              <Typography variant="white" className="text-center" weight="700">
+                {i18n.t("onboarding.nextBtn")}
+              </Typography>
+            </Button>
+          </View>
+        </View>
+      )}
+
+      {/* STEP 2: The Core Data */}
+      {step === 2 && (
+        <View className="flex-1 p-4 ">
+          <Typography
+            variant="black"
+            className="font-roboto mb-4"
+            weight="700"
+            size="xl"
+          >
+            {i18n.t("onboarding.step2Title")}
+          </Typography>
+
+          {/* Question 1 */}
+          <Typography
+            variant="black"
+            weight="300"
+            size="lg"
+            className="mr-2 mb-6"
+          >
+            {i18n.t("onboarding.step2Subtitle")}
+          </Typography>
+
+          <View className="flex-row justify-around mb-6">
+            <Button
+              variant={formData.consumptionType === "smoker" ? "blue" : "white"}
+              onPress={() =>
+                setFormData({ ...formData, consumptionType: "smoker" })
+              }
+            >
+              <Typography
+                variant={
+                  formData.consumptionType === "smoker" ? "white" : "blue"
+                }
+              >
+                {i18n.t("onboarding.cig")}
+              </Typography>
+            </Button>
+            <Button
+              variant={formData.consumptionType === "snus" ? "blue" : "white"}
+              onPress={() =>
+                setFormData({ ...formData, consumptionType: "snus" })
+              }
+            >
+              <Typography
+                variant={formData.consumptionType === "snus" ? "white" : "blue"}
+              >
+                {i18n.t("onboarding.snus")}
+              </Typography>
+            </Button>
+          </View>
+
+          {/* MG NICOTINE SLIDER - DATA CENTERED */}
+          <View className="mb-12 bg-vgrBlue p-6 rounded-3xl border border-gray-100">
+            <View className="flex-row items-center justify-center mb-6">
+              <Typography
+                size="sm"
+                className="text-gray-200 text-center mb-2 uppercase tracking-widest"
+              >
+                {i18n.t("onboarding.step2mgNicotinePerDay")}
+              </Typography>
+              {/* TOOLTIP ICON */}
+              <TouchableOpacity onPress={() => openHelp("nicotineHelp")}>
+                <Ionicons
+                  name="information-circle-outline"
+                  size={24}
+                  color="#fff"
+                />
+              </TouchableOpacity>
+            </View>
+
+            {/* THIS IS THE REAL-TIME DATA FEEDBACK */}
+            <View className="items-center justify-center mb-4">
+              <Typography variant="white" weight="700" className="text-5xl">
+                {formData.mgNicotinePerDay >= 100
+                  ? "100+"
+                  : formData.mgNicotinePerDay}
+              </Typography>
+              <Typography variant="white" weight="400" size="lg">
+                mg / {i18n.t("onboarding.day")}
+              </Typography>
+            </View>
+
+            <Slider
+              style={{ width: "100%", height: 50 }}
+              minimumValue={5}
+              maximumValue={100}
+              step={1}
+              value={formData.mgNicotinePerDay}
+              minimumTrackTintColor="#FFF"
+              maximumTrackTintColor="#FFF"
+              thumbTintColor="#FFF"
+              onValueChange={(val) =>
+                setFormData({ ...formData, mgNicotinePerDay: val })
+              }
+            />
+
+            <View className="flex-row justify-between mt-2">
+              <Typography size="sm" className="text-gray-400">
+                5 mg ({i18n.t("onboarding.or less")})
+              </Typography>
+              <Typography size="sm" className="text-gray-400">
+                100+ mg
+              </Typography>
+            </View>
+          </View>
+
+          {/* UNITS PER DAY STEPPER */}
+          <View className="mb-10">
+            <Typography
+              className="mb-2 text-center"
+              size="lg"
+              variant="black"
+              weight="400"
+            >
+              {i18n.t("onboarding.step2unitsPerDay")}
+            </Typography>
+            <View className="flex-row items-center justify-between bg-gray-100 p-2 rounded-xl">
+              <Button
+                variant="white"
+                className="w-12 h-12 rounded-lg"
+                onPress={() =>
+                  setFormData({
+                    ...formData,
+                    unitsPerDay: Math.max(1, formData.unitsPerDay - 1),
+                  })
+                }
+              >
+                <Typography className="text-2xl">-</Typography>
+              </Button>
+
+              <Typography weight="700" className="text-xl">
+                {formData.unitsPerDay >= 50 ? "50+" : formData.unitsPerDay}{" "}
+                {formData.consumptionType === "snus"
+                  ? i18n.t("onboarding.snus")
+                  : i18n.t("onboarding.cig")}
+              </Typography>
+
+              <Button
+                variant="white"
+                className="w-12 h-12 rounded-lg"
+                onPress={() =>
+                  setFormData({
+                    ...formData,
+                    unitsPerDay: Math.min(50, formData.unitsPerDay + 1),
+                  })
+                }
+              >
+                <Typography className="text-2xl">+</Typography>
+              </Button>
+            </View>
+          </View>
+          {/* Forward bakward btns */}
+          <View className="flex-row justify-between mt-4">
+            <TouchableOpacity
+              onPress={prevStep}
+              className="flex-row items-center ml-2 bg-vgrBlue rounded-full"
+            >
+              <Ionicons
+                name="arrow-back-circle-sharp"
+                size={50}
+                color="white"
+              />
+            </TouchableOpacity>
+            <Typography className="text-gray-400 text-xl font-bold flex-1 text-center font-roboto shadow-slate-800 shadow-lg">
+              {step}/5 {i18n.t("onboarding.pages")}
+            </Typography>
+            <TouchableOpacity
+              onPress={nextStep}
+              className="flex-row items-center mr-4  bg-vgrBlue rounded-full"
+            >
+              <Ionicons name="arrow-forward-circle" size={50} color="white" />
+            </TouchableOpacity>
+          </View>
+        </View>
+      )}
+
+      {/* STEP 3: Support Tools */}
+      {step === 3 && (
+        <View className="p-4 flex-1">
+          <Typography
+            variant="black"
+            className="text-[25px] text-center mb-2"
+            weight="700"
+          >
+            {i18n.t("onboarding.step3Title")}
+          </Typography>
+
+          <Typography size="sm" className="text-gray-500 text-center mb-6 px-4">
+            Användning av nikotinläkemedel (som plåster eller tuggummi) dämpar abstinensen avsevärt och ökar chansen att lyckas.
+          </Typography>
+
+          {/* MASTER TOGGLE CARD */}
+          <View className="bg-gray-50 p-5 rounded-2xl border border-gray-200 mb-6">
+            <View className="flex-row items-center justify-between">
+              <View className="flex-1 mr-3">
+                <Typography weight="700" size="md">
+                  Vill du använda hjälpmedel?
+                </Typography>
+                <Typography size="sm" className="text-gray-500 mt-1">
+                  {formData.useExternalTools
+                    ? "Ja, jag vill använda plåster eller tuggummi."
+                    : "Nej, jag vill bara trappa ner min nuvarande produkt."}
+                </Typography>
+              </View>
+              <Switch
+                value={!!formData.useExternalTools}
+                onValueChange={(val) =>
+                  setFormData({ ...formData, useExternalTools: val })
+                }
+              />
+            </View>
+          </View>
+
+          {/* REVEALED OPTIONS (ONLY WHEN YES / TRUE) */}
+          {formData.useExternalTools && (
+            <View className="space-y-4 mb-6">
+              {/* --- PATCH SECTION --- */}
+              <View className="p-4 bg-blue-50/60 rounded-2xl border border-blue-100 mb-4">
+                <View className="flex-row justify-between items-center">
+                  <View className="flex-1 mr-2">
+                    <Typography weight="700" variant="blue">
+                      Nikotinplåster
+                    </Typography>
+                    <Typography size="sm" className="text-gray-500">
+                      Ger en jämn basdos under hela dagen.
+                    </Typography>
+                  </View>
+                  <Switch
+                    value={!!formData.usePatch}
+                    onValueChange={(val) =>
+                      setFormData({ ...formData, usePatch: val })
+                    }
+                  />
+                </View>
+
+                {formData.usePatch && (
+                  <View className="mt-3 pt-3 border-t border-blue-100">
+                    <Typography size="sm" className="text-gray-500 mb-2">
+                      Välj styrka på ditt plåster:
+                    </Typography>
+                    <View className="flex-row justify-between">
+                      {[21, 14, 7].map((mg) => (
+                        <Button
+                          key={mg}
+                          variant={formData.patchStrength === mg ? "blue" : "white"}
+                          className="flex-1 mx-1 py-2"
+                          onPress={() =>
+                            setFormData({ ...formData, patchStrength: mg })
+                          }
+                        >
+                          <Typography
+                            size="sm"
+                            weight="700"
+                            variant={formData.patchStrength === mg ? "white" : "black"}
+                          >
+                            {mg} mg
+                          </Typography>
+                        </Button>
+                      ))}
+                    </View>
+                  </View>
+                )}
+              </View>
+
+              {/* --- GUM SECTION --- */}
+              <View className="p-4 bg-purple-50/60 rounded-2xl border border-purple-100 mb-4">
+                <View className="flex-row justify-between items-center">
+                  <View className="flex-1 mr-2">
+                    <Typography weight="700" variant="blue">
+                      Nikotintuggummi / Sugtablett
+                    </Typography>
+                    <Typography size="sm" className="text-gray-500">
+                      För tillfälliga, skarpa begär.
+                    </Typography>
+                  </View>
+                  <Switch
+                    value={!!formData.useGum}
+                    onValueChange={(val) =>
+                      setFormData({ ...formData, useGum: val })
+                    }
+                  />
+                </View>
+
+                {formData.useGum && (
+                  <View className="mt-3 pt-3 border-t border-purple-100">
+                    <Typography size="sm" className="text-gray-500 mb-2">
+                      Välj styrka på tuggummi/tablett:
+                    </Typography>
+                    <View className="flex-row justify-center">
+                      {[4, 2].map((mg) => (
+                        <Button
+                          key={mg}
+                          variant={formData.gumStrength === mg ? "blue" : "white"}
+                          className="flex-1 mx-1 py-2"
+                          onPress={() =>
+                            setFormData({ ...formData, gumStrength: mg })
+                          }
+                        >
+                          <Typography
+                            size="sm"
+                            weight="700"
+                            variant={formData.gumStrength === mg ? "white" : "black"}
+                          >
+                            {mg} mg
+                          </Typography>
+                        </Button>
+                      ))}
+                    </View>
+                  </View>
+                )}
+              </View>
+            </View>
+          )}
+
+          {/* NAVIGATION BUTTONS */}
+          <Typography className="text-gray-400 text-xl font-bold flex-1 text-center font-roboto shadow-slate-800 shadow-lg">
+            {step}/5 {i18n.t("onboarding.pages")}
+          </Typography>
+          <View className="flex-row justify-between pt-4">
+
+            <Button onPress={prevStep} variant="outlined" className="flex-1 mr-2">
+              <Typography>{i18n.t("onboarding.prevBtn")}</Typography>
+            </Button>
+            <Button onPress={nextStep} variant="blue" className="flex-1 ml-2">
+              <Typography variant="white">
+                {i18n.t("onboarding.nextBtn")}
+              </Typography>
+            </Button>
+          </View>
+        </View>
+      )}
+
+      {/* STEP 4: TOS */}
+      {step === 4 && (
+        <View className="p-4">
+          <Typography variant="black" className="text-xl mb-4" weight="700">
+            {i18n.t("onboarding.tos.title")}
+          </Typography>
+
+          {/* Removed fixed h-40 so the card grows dynamically with text */}
+          <View className="bg-gray-50 p-4 mb-6 rounded-2xl border border-gray-200">
+            <Typography size="md" className="text-gray-700 mb-2">
+              {i18n.t("onboarding.tos.subtitle")}
+            </Typography>
+            <Typography size="sm" className="text-gray-500 mt-2">
+              1. {i18n.t("onboarding.tos.1")}
+            </Typography>
+            <Typography size="sm" className="text-gray-500 mt-2">
+              2. {i18n.t("onboarding.tos.2")}
+            </Typography>
+            <Typography size="sm" className="text-gray-500 mt-2">
+              3. {i18n.t("onboarding.tos.3")}
+            </Typography>
+            <Typography size="sm" className="text-gray-500 mt-2">
+              4. {i18n.t("onboarding.tos.4")}
+            </Typography>
+            <Typography size="sm" className="text-gray-500 mt-2">
+              5. {i18n.t("onboarding.tos.5")}
+            </Typography>
+          </View>
+
+          {/* Side-by-side button row placed cleanly below the text card */}
+          <View className="flex-row justify-between">
+            <Button
+              onPress={prevStep}
+              variant="outlined"
+              className="items-center"
+            >
+              <Typography>{i18n.t("onboarding.prevBtn")}</Typography>
+            </Button>
+
+            <Button
+              onPress={handleTOSAcceptance}
+              variant="blue"
+              className="flex-1 ml-2 items-center"
+            >
+              <Typography variant="white">
+                {i18n.t("onboarding.confirm")}
+              </Typography>
+            </Button>
+          </View>
+        </View>
+      )}
+
+      {/* STEP 5: HOW TO USE THE APP */}
+      {step === 5 && (
+        <View className="p-4">
+          <Typography variant="black" className="text-2xl text-center mb-2" weight="700">
+            {i18n.t("onboarding.step5header")}
+          </Typography>
+
+          <Typography size="sm" className="text-gray-500 text-center mb-6 px-4">
+            {i18n.t("onboarding.step5subHeader")}
+          </Typography>
+
+          {/* VIDEO / INSTRUCTIONAL MEDIA PLACEHOLDER */}
+          {/*  <View className="bg-slate-900 rounded-3xl h-48 mb-6 justify-center items-center overflow-hidden border border-slate-800"> */}
+          {/* If using Video, replace this view with <Video source={{ uri: '...' }} useNativeControls resizeMode="cover" /> */}
+          {/*  <Ionicons name="play-circle-outline" size={64} color="#FFF" />
+            <Typography variant="white" weight="600" className="mt-2">
+              Se instuktionsfilm (1 min)
+            </Typography>
+          </View> */}
+
+          {/* FEATURE CARDS / QUICK GUIDE */}
+          <View className="space-y-3 mb-8 gap-3">
+            <View className="bg-gray-50 p-4 rounded-2xl border border-gray-100 flex-row items-center">
+              <View className="bg-orange-100 p-3 rounded-xl mr-4">
+                <Ionicons name="notifications" size={24} color="#ea580c" />
+              </View>
+              <View className="flex-1">
+                <Typography weight="700" size="md">{i18n.t("onboarding.featureCard1Header")}</Typography>
+                <Typography size="sm" className="text-gray-500">
+                  {i18n.t("onboarding.featureCard1Para")}
+                </Typography>
+              </View>
+            </View>
+            <View className="bg-gray-50 p-4 rounded-2xl border border-gray-100 flex-row items-center">
+              <View className="bg-red-100 p-3 rounded-xl mr-4">
+                <Ionicons name="flash" size={24} color="#FF0600" />
+              </View>
+              <View className="flex-1">
+                <Typography weight="700" size="md">{i18n.t("onboarding.featureCard2Header")}</Typography>
+                <Typography size="sm" className="text-gray-500">
+                  {i18n.t("onboarding.featureCard2Para")}
+                </Typography>
+              </View>
+            </View>
+            <View className="bg-gray-50 p-4 rounded-2xl border border-gray-100 flex-row items-center">
+              <View className="bg-pink-100 p-3 rounded-xl mr-4">
+                <Ionicons name="analytics" size={24} color="#be185d" />
+              </View>
+              <View className="flex-1">
+                <Typography weight="700" size="md">{i18n.t("onboarding.featureCard3Header")}</Typography>
+                <Typography size="sm" className="text-gray-500">
+                  {i18n.t("onboarding.featureCard3Para")}
+                </Typography>
+              </View>
+            </View>
+            {/*NEW OLD CARDS */}
+            <View className="bg-gray-50 p-4 rounded-2xl border border-gray-100 flex-row items-center">
+              <View className="bg-blue-100 p-3 rounded-xl mr-4">
+                <Ionicons name="stats-chart" size={24} color="#0056B3" />
+              </View>
+              <View className="flex-1">
+                <Typography weight="700" size="md">{i18n.t("onboarding.featureCard4Header")}</Typography>
+                <Typography size="sm" className="text-gray-500">
+                  {i18n.t("onboarding.featureCard4Para")}
+                </Typography>
+              </View>
+            </View>
+
+            <View className="bg-gray-50 p-4 rounded-2xl border border-gray-100 flex-row items-center">
+              <View className="bg-green-100 p-3 rounded-xl mr-4">
+                <Ionicons name="trophy" size={24} color="#2E7D32" />
+              </View>
+              <View className="flex-1">
+                <Typography weight="700" size="md">{i18n.t("onboarding.featureCard5Header")}</Typography>
+                <Typography size="sm" className="text-gray-500">
+                  {i18n.t("onboarding.featureCard5Para")}
+                </Typography>
+              </View>
+            </View>
+
+            <View className="bg-gray-50 p-4 rounded-2xl border border-gray-100 flex-row items-center">
+              <View className="bg-purple-100 p-3 rounded-xl mr-4">
+                <Ionicons name="medkit" size={24} color="#6A1B9A" />
+              </View>
+              <View className="flex-1">
+                <Typography weight="700" size="md">{i18n.t("onboarding.featureCard6Header")}</Typography>
+                <Typography size="sm" className="text-gray-500">
+                  {i18n.t("onboarding.featureCard6Para")}
+                </Typography>
+              </View>
+            </View>
+          </View>
+
+          {/* NAVIGATION BUTTONS */}
+          <View className="flex-row justify-between">
+            <Button onPress={prevStep} variant="outlined" className="flex-1 mr-2">
+              <Typography>{i18n.t("onboarding.prevBtn")}</Typography>
+            </Button>
+
+            <Button
+              onPress={handleFinalSave}
+              variant="blue"
+              size="md"
+              className="flex-1 ml-2"
+              loading={loading}
+            >
+              <Typography variant="white">Starta din plan</Typography>
+            </Button>
+          </View>
+        </View>
+      )}
+
+      {/* HELP MODAL */}
+      <Modal
+        animationType="fade"
+        transparent={true}
+        visible={showHelp}
+        onRequestClose={() => setShowHelp(false)}
+      >
+        <Pressable
+          className="flex-1 bg-black/50 justify-center items-center p-6"
+          onPress={() => setShowHelp(false)}
+        >
+          <View className="bg-white w-full rounded-3xl p-6 shadow-xl">
+            <Typography weight="700" size="lg" variant="blue" className="mb-4">
+              {i18n.t(`help.${helpKey}.title`)}
+            </Typography>
+
+            <Typography size="md" className="text-gray-600 mb-6">
+              {i18n.t(`help.${helpKey}.body`)}
+            </Typography>
+
+            <Button onPress={() => setShowHelp(false)} variant="blue">
+              <Typography variant="white" className="text-center">
+                {i18n.t(`help.${helpKey}.btnText`)}
+              </Typography>
+            </Button>
+          </View>
+        </Pressable>
+      </Modal>
+    </ScrollView>
+  );
+}

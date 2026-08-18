@@ -1,4 +1,6 @@
+import { TouchableOpacityProps } from "react-native";
 import { Image } from "react-native-reanimated/lib/typescript/Animated";
+
 
 export type User = {
   id: string | null;
@@ -63,7 +65,6 @@ export type AuthContextType = {
     password: string,
   ) => Promise<void>;
   signOut: () => Promise<void>;
-
   editUser: (
     id: string,
     firstname: string,
@@ -71,6 +72,8 @@ export type AuthContextType = {
     email: string,
   ) => Promise<void>;
   /* fetchUserEntries: (limitEntries: boolean, id: string | null) => Promise<DiaryEntry[] | undefined>; */
+  // Returns the updated user object or throws an error
+  createTreatmentPlan: (formData: any) => Promise<void>;
 };
 
 export type OnboardingText = {
@@ -78,6 +81,16 @@ export type OnboardingText = {
   paragraph: string;
   position: number;
 };
+
+export interface OnboardingData {
+  consumptionType: "smoker" | "snus" | null;
+  mgNicotinePerDay: number;
+  unitsPerDay: number;
+  aggressiveness: number; // 1-5
+  useExternalTools: boolean;
+  toolType: "patch" | "gum" | "none";
+  toolStrength: string;
+}
 
 export type VersionDescriptions = {
   version: string;
@@ -118,13 +131,15 @@ export type TypographyProps = {
   className?: string;
 };
 
-export type ButtonProps = {
-  children: React.ReactNode;
+
+export interface ButtonProps extends TouchableOpacityProps {
   variant?: "black" | "blue" | "outlined" | "white";
   size?: "sm" | "md" | "lg";
+  loading?: boolean;
+  disabled?: boolean;
+  children: React.ReactNode;
   className?: string;
-  onPress?: () => void;
-};
+}
 
 export type AuthStackParamList = {
   Login: undefined;
