@@ -1,5 +1,48 @@
 import { Image } from "react-native-reanimated/lib/typescript/Animated";
 
+export interface DailyDoseStatus {
+  unitsTakenToday: number;
+  unitsRemainingToday: number;
+  nextDoseTime: Date | null;
+  canTakeDoseNow: boolean;
+}
+
+export interface PlanConfig {
+  N0: number;          // Initial daily doses (e.g., 20)
+  r: number;           // Daily reduction rate (e.g., 0.05 to 0.08)
+  T_awake: number;     // Awake hours per day (default: 16)
+  day: number;         // Current day offset (0 = Day 1)
+  previousNd?: number; // Dose count from previous day (for plateau checks)
+  plateauDays?: number;// How many consecutive days we've been at this count
+}
+
+export interface DaySchedule {
+  day: number;
+  Nd: number;             // Target doses for today
+  IdMinutes: number;      // Target interval in minutes
+  plateauDays: number;    // Updated plateau counter
+  timeSlots: string[];    // Array of ISO time strings or "HH:mm" targets
+}
+
+export interface HomeCountdownState {
+  unitsTakenToday: number;
+  unitsAllowedToday: number;
+  unitsRemainingToday: number;
+  secondsRemaining: number;
+  canTakeDoseNow: boolean;
+  nextDoseFormattedTime: string | null;
+}
+export interface HomeCountdownData {
+  targetPouches: number;
+  intervalMinutes: number;
+  scheduleTimes: string[];
+  unitsTakenToday: number;
+  unitsRemainingToday: number;
+  secondsRemaining: number;
+  canTakeDoseNow: boolean;
+  nextDoseFormattedTime: string | null;
+}
+
 export type User = {
   id: string | null;
   first_name: string;
