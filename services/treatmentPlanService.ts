@@ -120,23 +120,23 @@ export const calculateCountdownState = (
  * returning the exact stats needed for the home countdown clock.
  */
 export const fetchHomeCountdownData = async (userId: string): Promise<HomeCountdownData> => {
-    // 1. Fetch user's active plan
+    // 1. Fetch user's active treatment plan
     const { data: plan, error: planError } = await supabase
-        .from("plans")
+        .from("treatment_plans")
         .select("id, start_date")
         .eq("user_id", userId)
-        .eq("status", "active")
+        .eq("is_active", true)
         .single();
 
     if (planError || !plan) throw new Error("No active treatment plan found");
 
-    // 2. Calculate day_index (days since plan start_date)
-    const startDate = new Date(plan.start_date);
+    // 2. Calculate day_index relative to start_date
+    const startDate = plan.start_date ? new Date(plan.start_date) : new Date();
     const now = new Date();
     const diffTime = Math.abs(now.getTime() - startDate.getTime());
     const dayIndex = Math.floor(diffTime / (1000 * 60 * 60 * 24));
 
-    // 3. Fetch today's ScheduleDay row
+    // 3. Fetch today's schedule row
     const { data: scheduleDay, error: scheduleError } = await supabase
         .from("schedule_days")
         .select("target_pouches, interval_minutes, schedule_times")
@@ -162,12 +162,12 @@ export const fetchHomeCountdownData = async (userId: string): Promise<HomeCountd
     const unitsRemainingToday = Math.max(0, targetPouches - unitsTakenToday);
     const intervalMinutes = scheduleDay.interval_minutes;
 
-    // 5. Calculate countdown to next dose
+    // 5. Calculate countdown timer values
     if (unitsTakenToday === 0) {
         return {
             targetPouches,
             intervalMinutes,
-            scheduleTimes: scheduleDay.schedule_times,
+            scheduleTimes: scheduleDay.schedule_times || [],
             unitsTakenToday: 0,
             unitsRemainingToday: targetPouches,
             secondsRemaining: 0,
@@ -190,7 +190,7 @@ export const fetchHomeCountdownData = async (userId: string): Promise<HomeCountd
     return {
         targetPouches,
         intervalMinutes,
-        scheduleTimes: scheduleDay.schedule_times,
+        scheduleTimes: scheduleDay.schedule_times || [],
         unitsTakenToday,
         unitsRemainingToday,
         secondsRemaining,
