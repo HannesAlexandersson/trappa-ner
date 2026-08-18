@@ -11,6 +11,7 @@ export default function HomeScreen() {
       <Text style={{ fontSize: 24 }}>
         {i18n.t("home.greeting", { name: first_name })}
       </Text>
+      {/*  <HomeCountdownTimer /> */}
     </View>
   );
 }
