@@ -43,6 +43,10 @@ export interface HomeCountdownData {
   nextDoseFormattedTime: string | null;
 }
 
+export interface HomeCountdownTimerProps {
+  initialData: HomeCountdownData;
+}
+
 export type User = {
   id: string | null;
   first_name: string;
