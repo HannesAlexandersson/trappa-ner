@@ -42,11 +42,7 @@ export default function HomeScreen() {
         <Text style={{ fontSize: 24 }}>
           {i18n.t("home.greeting", { name: first_name })}
         </Text>
-        {/*  WICH ONE??!!
-        <Typography variant="black" size="xl" className="mb-4">
-        {i18n.t("home.greeting", { name: first_name })}
-      </Typography>
-        */}
+
       </View>
       {loading ? (
         <View className="p-8 items-center justify-center">

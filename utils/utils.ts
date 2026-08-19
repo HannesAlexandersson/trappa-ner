@@ -46,3 +46,9 @@ export const showNotification = (newEvent: EventProps) => {
 export const truncateText = (text: string, length: number) => {
   return text.length > length ? `${text.substring(0, length)}...` : text;
 };
+
+export const timeOptions = [
+  "05:00", "05:30", "06:00", "06:30",
+  "07:00", "07:30", "08:00", "08:30",
+  "09:00", "09:30", "10:00",
+];
