@@ -78,6 +78,9 @@
     "step3SupportToolWhat": "Vilket hjälpmedel vill du använda?",
     "step3Patch": "Nikotinplåster",
     "step3Gum": "Nikotintuggummi",
+    "scheduleTitle": "Din dagsrutin",
+    "wakeUpTime": "När vaknar du vanligtvis?",
+    "awakeHours": "Vaken tid?",
     "tos": {
       "title": "Användarvillkor",
       "subtitle": "Genom att använda denna app godkänner du följande villkor:",
@@ -109,6 +112,11 @@
       "title": "Hur räknar jag ut mängden?",
       "body": "Kolla på baksidan av din dosa. Står det t.ex. 12mg/g? En prilla väger oftast ca 0.8g. \n\n12mg × 0.8 = 9.6mg per prilla. \n\nOm du snusar 10 sådana om dagen, dra reglaget till 96mg.",
       "btnText": "Uppfattat!"
+    },
+    "awakeTimeHelp": {
+      "title": "Vaken tid per dygn",
+      "body": "Hur många timmar är du vaken per dag? På ett ungefär, eller genomsnittligt",
+      "btnText": "OK!"
     }
   }
 }

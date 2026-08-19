@@ -128,7 +128,7 @@ export type OnboardingText = {
   position: number;
 };
 
-export interface OnboardingData {
+/* export interface OnboardingData {
   consumptionType: "smoker" | "snus" | null;
   mgNicotinePerDay: number;
   unitsPerDay: number;
@@ -136,6 +136,30 @@ export interface OnboardingData {
   useExternalTools: boolean;
   toolType: "patch" | "gum" | "none";
   toolStrength: string;
+} */
+export interface OnboardingData {
+  // Core Consumption
+  consumptionType: "smoker" | "snus" | null;
+  mgNicotinePerDay: number;
+  unitsPerDay: number;
+  aggressiveness: number; // 1-5
+
+  // General External Tools (Original)
+  useExternalTools: boolean;
+  toolType: "patch" | "gum" | "none";
+  toolStrength: string;
+
+  // Specific UI Tool State (Fixes your JSX errors)
+  usePatch: boolean;
+  patchStrength: number; // 21, 14, 7, or 0
+  useGum: boolean;
+  gumStrength: number;   // 4, 2, or 0
+
+  // Algorithm & Schedule Fields
+  awakeHours?: number;    // e.g., 16
+  wakeUpTime?: string;    // e.g., "07:00"
+  reductionRate?: number; // e.g., 0.06
+  startDate?: string;     // ISO string
 }
 
 export type VersionDescriptions = {
