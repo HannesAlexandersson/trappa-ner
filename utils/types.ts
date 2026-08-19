@@ -160,6 +160,7 @@ export interface OnboardingData {
   wakeUpTime?: string;    // e.g., "07:00"
   reductionRate?: number; // e.g., 0.06
   startDate?: string;     // ISO string
+  endDate?: string;       // ISO string e.g., "2026-09-16"
 }
 
 export type VersionDescriptions = {
