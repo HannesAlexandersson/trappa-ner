@@ -1,3 +1,5 @@
+import { prepareTreatmentPlanPayload } from "@/components/setup/TreatmentPlanForm.utils";
+import { saveTreatmentPlanToDB } from "@/lib/apiHelper";
 import { useUserStore } from "@/stores";
 import { supabase } from "@/utils/supabase";
 import { AuthContextType, User } from "@/utils/types";
@@ -26,22 +28,23 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     first_name,
     last_name,
     user_email,
-    getUserData,
     updateUser,
     clearUser,
   } = useUserStore();
 
-  //keep user logged in with supabase on/off state feature
+  // keep user logged in with supabase on/off state feature
   React.useEffect(() => {
     const { data: authData } = supabase.auth.onAuthStateChange(
       (event, session) => {
-        //if there is no active user session return to sign in page
-        if (!session) return router.push("/(auth)");
-        //else call the getUser function with the session id
-        getUser(session?.user.id);
-      },
+        if (session?.user) {
+          getUser(session.user.id);
+        } else {
+          setUser(null);
+          clearUser();
+        }
+      }
     );
-    //clean up function  that terminates the subscription I.E the session
+
     return () => {
       authData?.subscription.unsubscribe();
     };
@@ -54,7 +57,11 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
       .select("*")
       .eq("id", id)
       .single();
-    if (error) return console.error(error);
+    if (error) {
+      console.error("Profile fetch failed:", error);
+      setUser(null); // Clear state rather than leaving it in an indeterminate pending state
+      return;
+    }
 
     const updatedUser: User = {
       ...data,
@@ -69,11 +76,12 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
       last_name: updatedUser.last_name,
       user_email: updatedUser.email,
     });
-    // if the its the users first time, send them to onboarding, else to the main app
-    if (data?.first_time) {
-      router.push("/onboarding");
+
+    // THE GATEKEEPER LOGIC:
+    if (data?.needs_setup) {
+      router.replace("/onboarding");
     } else {
-      router.push("/(tabs)");
+      router.replace("/(tabs)");
     }
   };
 
@@ -178,9 +186,18 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     }
   };
 
+  const createTreatmentPlan = async (formData: ReturnType<typeof prepareTreatmentPlanPayload>) => {
+    if (!user?.id) throw new Error("No authenticated user found");
+
+    // Call the orchestrator method (handles upserts for plan, usage_profiles, and schedule_days)
+    const updatedProfile = await saveTreatmentPlanToDB(user.id, formData);
+
+    // Update local AuthContext user state with the returned profile data
+    setUser(updatedProfile);
+  };
   return (
     <AuthContext.Provider
-      value={{ user, setUser, signIn, signOut, signUp, editUser }}
+      value={{ user, setUser, signIn, signOut, signUp, editUser, createTreatmentPlan }}
     >
       {children}
     </AuthContext.Provider>

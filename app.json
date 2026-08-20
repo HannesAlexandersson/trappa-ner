@@ -22,7 +22,8 @@
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/image.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "package": "com.anonymous.trappaner"
     },
     "web": {
       "bundler": "metro",
