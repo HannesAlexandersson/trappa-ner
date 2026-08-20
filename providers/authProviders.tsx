@@ -1,3 +1,5 @@
+import { prepareTreatmentPlanPayload } from "@/components/setup/TreatmentPlanForm.utils";
+import { saveTreatmentPlanToDB } from "@/lib/apiHelper";
 import { useUserStore } from "@/stores";
 import { supabase } from "@/utils/supabase";
 import { AuthContextType, User } from "@/utils/types";
@@ -184,57 +186,15 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     }
   };
 
-  const createTreatmentPlan = async (formData: any) => {
+  const createTreatmentPlan = async (formData: ReturnType<typeof prepareTreatmentPlanPayload>) => {
     if (!user?.id) throw new Error("No authenticated user found");
 
-    // 1. Check for an existing treatment plan
-    const { data: existingPlan } = await supabase
-      .from("treatment_plans")
-      .select("id")
-      .eq("user_id", user.id)
-      .maybeSingle(); // maybeSingle avoids throwing errors if 0 rows return
+    // Call the orchestrator method (handles upserts for plan, usage_profiles, and schedule_days)
+    const updatedProfile = await saveTreatmentPlanToDB(user.id, formData);
 
-    const planPayload = {
-      user_id: user.id,
-      consumption_type: formData.consumptionType,
-      start_units_per_day: formData.unitsPerDay,
-      mg_nicotine_per_day: formData.mgNicotinePerDay,
-      use_patch: formData.usePatch,
-      patch_strength: formData.patchStrength,
-      use_gum: formData.useGum,
-      gum_strength: formData.gumStrength,
-      is_active: true,
-    };
-
-    if (existingPlan) {
-      const { error: updateError } = await supabase
-        .from("treatment_plans")
-        .update(planPayload)
-        .eq("user_id", user.id);
-
-      if (updateError) throw updateError;
-    } else {
-      const { error: insertError } = await supabase
-        .from("treatment_plans")
-        .insert(planPayload);
-
-      if (insertError) throw insertError;
-    }
-
-    // 2. Always update profile setup status & local context regardless of insert vs update
-    const { data: profileData, error: profileError } = await supabase
-      .from("profiles")
-      .update({ needs_setup: false })
-      .eq("id", user.id)
-      .select()
-      .single();
-
-    if (profileError) throw profileError;
-
-    // 3. Keep local AuthContext user state up to date
-    setUser(profileData);
+    // Update local AuthContext user state with the returned profile data
+    setUser(updatedProfile);
   };
-
   return (
     <AuthContext.Provider
       value={{ user, setUser, signIn, signOut, signUp, editUser, createTreatmentPlan }}

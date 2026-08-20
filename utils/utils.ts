@@ -9,6 +9,18 @@ export const formatDate = (date: Date): string => {
   return `${year}-${month}-${day}`;
 };
 
+// Format seconds into HH:MM:SS
+export const formatTime = (totalSeconds: number) => {
+  const hrs = Math.floor(totalSeconds / 3600);
+  const mins = Math.floor((totalSeconds % 3600) / 60);
+  const secs = totalSeconds % 60;
+
+  if (hrs > 0) {
+    return `${hrs}h ${mins}m ${secs}s`;
+  }
+  return `${mins}m ${secs}s`;
+};
+
 //utility function to combine class names
 export const cn = (...classes: (string | undefined)[]) =>
   classes.filter(Boolean).join(" ");
@@ -46,3 +58,9 @@ export const showNotification = (newEvent: EventProps) => {
 export const truncateText = (text: string, length: number) => {
   return text.length > length ? `${text.substring(0, length)}...` : text;
 };
+
+export const timeOptions = [
+  "05:00", "05:30", "06:00", "06:30",
+  "07:00", "07:30", "08:00", "08:30",
+  "09:00", "09:30", "10:00",
+];

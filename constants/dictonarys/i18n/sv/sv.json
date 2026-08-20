@@ -29,7 +29,23 @@
     "registerAccount": "Skapa ett konto"
   },
   "home": {
-    "greeting": "Välkommen tillbaka, %{name}!"
+    "greeting": "Välkommen tillbaka, %{name}!",
+    "countdownTimer": {
+      "nextDoseInterval": "Nästa dosintervall",
+      "canTakeNextDose": "Du kan ta nästa dos!",
+      "hoursLeftToNextDose": "Du har mindre än 1 timme kvar tills nästa dos!",
+      "hoursLeftToNextDoseOverOneHour": "Du har %{hours} timmar kvar till nästa dos!",
+      "todayTaken": "Använt idag: ",
+      "remainingToday": "Kvar idag: ",
+      "takeDoseButton": "Ta dosen nu",
+      "doseModal": {
+        "title": "Abstinens information",
+        "subTitle": "Hur mycket abstinens känner du?",
+        "cravingLabel": "Välj nivå av abstinens",
+        "saveButton": "Logga dos MED abstinensinformation",
+        "skipButton": "Logga dos UTAN abstinensinformation"
+      }
+    }
   },
   "utilities": {
     "loading": "Laddar...",
@@ -48,13 +64,16 @@
     "settings": "Inställningar",
     "home": "Hem"
   },
+  "general": {
+    "days": "dagar"
+  },
   "onboarding": {
     "header1": "Din Plan",
     "step1Title": "Nu börjar din resa mot ett nikotinfritt liv!",
     "step1Subtitle": "Här är lite information om appen och hur den fungerar.",
     "step1Info1": "Under den här onboarding-processen kommer vi att ställa några frågor om dina nikotinvanor. Denna information hjälper oss att skapa en personlig behandlingsplan som är anpassad efter dina behov.",
     "step1Info2": "Oavsett om du röker, snusar eller använder andra nikotinprodukter, så använder appen dina svar för att räkna ut en gradvis och realistisk nedtrappningsplan.",
-    "step1Info3": "Onboardingen består av 4 enkla steg, varje innehållande några korta frågor. Processen tar bara några minuter att slutföra.",
+    "step1Info3": "Onboardingen består av några enkla steg, varje innehållande några korta frågor. Processen tar bara några minuter att slutföra.",
     "step1Info4": "Om du vill ändra ett svar från ett tidigare steg kan du alltid navigera tillbaka med hjälp av knapparna längst ner på skärmen.",
     "step1Info5": "När du är klar kommer din personliga behandlingsplan att genereras automatiskt.",
     "nextBtn": "Nästa",
@@ -78,6 +97,19 @@
     "step3SupportToolWhat": "Vilket hjälpmedel vill du använda?",
     "step3Patch": "Nikotinplåster",
     "step3Gum": "Nikotintuggummi",
+    "scheduleTitle": "Din dagsrutin",
+    "wakeUpTime": "När vaknar du vanligtvis?",
+    "awakeHours": "Vaken tid?",
+    "summaryTitle": "Din personliga plan",
+    "summarySubtitle": "Allt är klart! Här är översikten för din nedtrappning.",
+    "summaryEndgoal": "Slutmål",
+    "summarySupremGoal": "Nikotinfri (0 st)",
+    "summaryCalculatedTime": "Beräknad tid",
+    "summaryEndDate": "Beräknat slutdatum",
+    "summaryFirstDoseToday": "Första dos idag",
+    "summaryNotificationsImportant": "Påminnelser är avgörande",
+    "summaryNotificationsSchedule": "Appen skickar notiser när det är dags för nästa dos för att hålla dig på banan.",
+    "Aid": "Hjälpmedel",
     "tos": {
       "title": "Användarvillkor",
       "subtitle": "Genom att använda denna app godkänner du följande villkor:",
@@ -109,6 +141,16 @@
       "title": "Hur räknar jag ut mängden?",
       "body": "Kolla på baksidan av din dosa. Står det t.ex. 12mg/g? En prilla väger oftast ca 0.8g. \n\n12mg × 0.8 = 9.6mg per prilla. \n\nOm du snusar 10 sådana om dagen, dra reglaget till 96mg.",
       "btnText": "Uppfattat!"
+    },
+    "awakeTimeHelp": {
+      "title": "Vaken tid per dygn",
+      "body": "Hur många timmar är du vaken per dag? På ett ungefär, eller genomsnittligt",
+      "btnText": "OK!"
+    },
+    "logDoseHelp": {
+      "title": "Abstinens nivå vid dostillfälle",
+      "body": "Du kan antingen fylla i hur mycket abstinens du känner när du tar din dos ELLER så loggar du din dos UTAN att fylla i abstinensnivå. Då loggas enbart tidpunkten för när du tar dosen.",
+      "btnText": "OK!"
     }
   }
 }

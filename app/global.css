@@ -5,3 +5,7 @@
 @theme {
   --color-vgr-blue: #005b89;
 }
+
+.greyBg {
+  background-color: #f9fafb;
+}
