@@ -1,11 +1,10 @@
-import { HomeCountdownTimer, Typography } from "@/components";
-import i18n from "@/constants/dictonarys/i18n";
+import { HomeCountdownTimer, HomeHeader, Typography } from "@/components";
 import { useAuth } from "@/providers/authProviders";
 import { fetchHomeCountdownData } from "@/services/treatmentPlanService";
 import { useUserStore } from "@/stores";
 import { HomeCountdownData } from "@/utils/types";
 import React, { useEffect, useState } from "react";
-import { ActivityIndicator, ScrollView, Text, View } from "react-native";
+import { ActivityIndicator, ScrollView, View } from "react-native";
 
 export default function HomeScreen() {
   // Global states & contexts
@@ -38,12 +37,8 @@ export default function HomeScreen() {
 
   return (
     <ScrollView className="flex-1 bg-gray-50 p-4">
-      <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
-        <Text style={{ fontSize: 24 }}>
-          {i18n.t("home.greeting", { name: first_name })}
-        </Text>
+      <HomeHeader first_name={first_name} />
 
-      </View>
       {loading ? (
         <View className="p-8 items-center justify-center">
           <ActivityIndicator size="large" color="#2563eb" />

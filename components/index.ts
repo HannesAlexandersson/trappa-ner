@@ -7,6 +7,7 @@ import { ThemedText } from "@/components/Themed-text";
 import { ThemedView } from "@/components/Themed-view";
 import Typography from "@/components/Typography";
 import { HomeCountdownTimer } from "./HomeCountdownTimer";
+import { HomeHeader } from "./HomeHeader";
 import { Collapsible } from "./ui/Collapsible";
 import { IconSymbol } from "./ui/Icon-symbol.ios";
 
@@ -14,11 +15,10 @@ export {
   Button,
   Collapsible,
   ExternalLink,
-  HelloWave, HomeCountdownTimer, IconSymbol,
+  HelloWave, HomeCountdownTimer, HomeHeader, IconSymbol,
   ParallaxScrollView,
   RoundCheckmark,
   ThemedText,
-  ThemedView,
-  Typography
+  ThemedView, Typography
 };
 

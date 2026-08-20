@@ -1,4 +1,5 @@
 import Typography from "@/components/Typography";
+import i18n from "@/constants/dictonarys/i18n";
 import { HomeCountdownTimerProps } from "@/utils/types";
 import React, { useEffect, useState } from "react";
 import { View } from "react-native";
@@ -35,9 +36,9 @@ export const HomeCountdownTimer: React.FC<HomeCountdownTimerProps> = ({ initialD
     };
 
     return (
-        <View className="p-6 bg-white rounded-3xl border border-gray-100 items-center justify-center shadow-sm">
+        <View className="p-6 bg-white rounded-3xl border border-gray-100 items-center justify-center shadow-sm my-4">
             <Typography variant="black" size="sm" className="text-gray-400 uppercase tracking-widest mb-2">
-                Next Dose Interval
+                {i18n.t("home.countdownTimer.nextDoseInterval")}
             </Typography>
 
             {/* Main Countdown Header */}
@@ -47,14 +48,16 @@ export const HomeCountdownTimer: React.FC<HomeCountdownTimerProps> = ({ initialD
                 </Typography>
             ) : (
                 <Typography variant="black" className="text-3xl font-extrabold text-green-600 my-2">
-                    You can take your next dose!
+                    {i18n.t("home.countdownTimer.canTakeNextDose")}
                 </Typography>
             )}
 
             {/* Primary Subtext */}
             {secondsLeft > 0 && (
                 <Typography size="sm" className="text-gray-600 mt-1 mb-4 text-center">
-                    You have {Math.ceil(secondsLeft / 3600)} hours until you can take your next dose
+                    {i18n.t("home.countDownTimer.hoursLeftToNextDose", {
+                        hours: Math.ceil(secondsLeft / 3600)
+                    })}
                     {initialData.nextDoseFormattedTime ? ` (${initialData.nextDoseFormattedTime})` : ""}.
                 </Typography>
             )}
@@ -62,10 +65,10 @@ export const HomeCountdownTimer: React.FC<HomeCountdownTimerProps> = ({ initialD
             {/* Secondary Stats Row */}
             <View className="mt-4 pt-4 border-t border-gray-100 w-full flex-row justify-around">
                 <Typography size="sm" className="text-gray-500">
-                    Today taken: <Typography size="sm" weight="700" className="text-gray-800">{initialData.unitsTakenToday}</Typography>
+                    {i18n.t("home.countdownTimer.todayTaken")}<Typography size="sm" weight="700" className="text-gray-800">{initialData.unitsTakenToday}</Typography>
                 </Typography>
                 <Typography size="sm" className="text-gray-500">
-                    Remaining today: <Typography size="sm" weight="700" className="text-gray-800">{initialData.unitsRemainingToday}</Typography>
+                    {i18n.t("home.countdownTimer.remainingToday")}<Typography size="sm" weight="700" className="text-gray-800">{initialData.unitsRemainingToday}</Typography>
                 </Typography>
             </View>
         </View>

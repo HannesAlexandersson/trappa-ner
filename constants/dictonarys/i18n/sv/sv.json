@@ -29,7 +29,14 @@
     "registerAccount": "Skapa ett konto"
   },
   "home": {
-    "greeting": "Välkommen tillbaka, %{name}!"
+    "greeting": "Välkommen tillbaka, %{name}!",
+    "countdownTimer": {
+      "nextDoseInterval": "Nästa dosintervall",
+      "canTakeNextDose": "Du kan ta nästa dos!",
+      "hoursLeftToNextDose": "Du har %{hours} kvar tills nästa dos!",
+      "todayTaken": "Använt idag: ",
+      "remainingToday": "Kvar idag: "
+    }
   },
   "utilities": {
     "loading": "Laddar...",
