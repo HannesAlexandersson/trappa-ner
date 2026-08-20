@@ -13,6 +13,7 @@ module.exports = {
         greyBg: "#f9fafb",
         grey100: "#f3f4f6",
         grey200: "#e5e7eb",
+        grey400: "#9ca3af",
         grey500: "#6b7280",
         grey600: "#4b5563",
         blue50: "#eff6ff",

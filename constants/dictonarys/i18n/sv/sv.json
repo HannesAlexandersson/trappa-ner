@@ -47,6 +47,12 @@
       }
     }
   },
+  "settings": {
+    "topHeader": "Profil Inställningar",
+    "firstName": "Förnamn",
+    "lastName": "Efternamn",
+    "email": "Email"
+  },
   "utilities": {
     "loading": "Laddar...",
     "error": "Ett fel uppstod, försök igen senare",
