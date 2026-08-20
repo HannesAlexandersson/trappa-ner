@@ -1,4 +1,4 @@
-import { Button, Typography } from "@/components";
+import { Button, HelpModal, Typography } from "@/components";
 import i18n from "@/constants/dictonarys/i18n";
 import { updateUserProfile } from "@/lib/apiHelper";
 import { useAuth } from "@/providers/authProviders";
@@ -11,11 +11,10 @@ import { useRouter } from "expo-router";
 import React, { useState } from "react";
 import {
   Modal,
-  Pressable,
   ScrollView,
   Switch,
   TouchableOpacity,
-  View,
+  View
 } from "react-native";
 import { calculatePlanSummary, prepareTreatmentPlanPayload } from "./TreatmentPlanForm.utils";
 
@@ -829,26 +828,7 @@ export default function TreatmentPlanForm() {
         visible={showHelp}
         onRequestClose={() => setShowHelp(false)}
       >
-        <Pressable
-          className="flex-1 bg-black/50 justify-center items-center p-6"
-          onPress={() => setShowHelp(false)}
-        >
-          <View className="bg-white w-full rounded-3xl p-6 shadow-xl">
-            <Typography weight="700" size="lg" variant="blue" className="mb-4">
-              {i18n.t(`help.${helpKey}.title`)}
-            </Typography>
-
-            <Typography size="md" className="text-grey600 mb-6">
-              {i18n.t(`help.${helpKey}.body`)}
-            </Typography>
-
-            <Button onPress={() => setShowHelp(false)} variant="blue">
-              <Typography variant="white" className="text-center">
-                {i18n.t(`help.${helpKey}.btnText`)}
-              </Typography>
-            </Button>
-          </View>
-        </Pressable>
+        <HelpModal setShowHelp={setShowHelp} helpKey={helpKey} />
       </Modal>
 
       {/* WAKE UP TIME MODAL */}
