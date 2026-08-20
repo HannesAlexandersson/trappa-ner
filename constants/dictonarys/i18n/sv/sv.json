@@ -47,11 +47,23 @@
       }
     }
   },
+  "settings": {
+    "topHeader": "Profil Inställningar",
+    "firstName": "Förnamn",
+    "lastName": "Efternamn",
+    "email": "Email",
+    "language": "Språkinställning",
+    "newPassword": "Nytt lösenord",
+    "confirmPassword": "Bekräfta det nya lösenordet"
+  },
   "utilities": {
     "loading": "Laddar...",
     "error": "Ett fel uppstod, försök igen senare",
     "send": "Skicka",
-    "create": "Skapa"
+    "create": "Skapa",
+    "saveChanges": "Spara ändringar",
+    "saving": "Sparar...",
+    "logOut": "Logga ut"
   },
   "not-found": {
     "message": "Den här sidan finns inte.",
@@ -151,6 +163,11 @@
       "title": "Abstinens nivå vid dostillfälle",
       "body": "Du kan antingen fylla i hur mycket abstinens du känner när du tar din dos ELLER så loggar du din dos UTAN att fylla i abstinensnivå. Då loggas enbart tidpunkten för när du tar dosen.",
       "btnText": "OK!"
+    },
+    "settingsHelp": {
+      "title": "Profil inställningar",
+      "body": "Här kan du ändra inställningar & ändra dina personliga uppgifter som exempelvis namn, email osv. Du kan även göra ändringar i din behandlingsplan här!",
+      "btnText": "Uppfattat!"
     }
   }
 }

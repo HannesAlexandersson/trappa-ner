@@ -3,8 +3,10 @@ import { useAuth } from "@/providers/authProviders";
 import { fetchHomeCountdownData } from "@/services/treatmentPlanService";
 import { useUserStore } from "@/stores";
 import { HomeCountdownData } from "@/utils/types";
-import React, { useEffect, useState } from "react";
-import { ActivityIndicator, ScrollView, View } from "react-native";
+import { useFocusEffect } from "@react-navigation/native";
+import React, { useCallback, useEffect, useState } from "react";
+import { ActivityIndicator, BackHandler, ScrollView, View } from "react-native";
+
 
 export default function HomeScreen() {
   // Global states & contexts
@@ -16,6 +18,21 @@ export default function HomeScreen() {
   const [error, setError] = useState<string | null>(null);
 
   // Hooks
+  useFocusEffect(
+    useCallback(() => {
+      const onBackPress = () => {
+        return true;
+      };
+
+      const subscription = BackHandler.addEventListener(
+        "hardwareBackPress",
+        onBackPress
+      );
+
+      return () => subscription.remove();
+    }, [])
+  );
+
   useEffect(() => {
     async function loadDashboardData() {
       if (!user?.id) return;

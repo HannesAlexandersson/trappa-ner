@@ -1,5 +1,24 @@
+import i18n, { translations } from "@/constants/dictonarys/i18n";
+import { getLocales } from "expo-localization";
 import Toast from "react-native-toast-message";
 import { EventProps } from "./types";
+
+
+export const setUserLocale = (language: string | null) => {
+  if (language && language in translations) {
+    i18n.locale = language;
+    return;
+  }
+
+  const systemLocale = getLocales()[0]?.languageCode;
+
+  if (systemLocale && systemLocale in translations) {
+    i18n.locale = systemLocale;
+    return;
+  }
+
+  i18n.locale = "en";
+};
 
 //format date strings
 export const formatDate = (date: Date): string => {

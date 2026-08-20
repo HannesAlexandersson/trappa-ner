@@ -1,6 +1,6 @@
 import { calculateIntervalMinutes, calculateTotalDays, generateScheduleTimes } from "@/components/setup/TreatmentPlanForm.utils";
 import { supabase } from "@/utils/supabase";
-import { OnboardingData } from "@/utils/types";
+import { OnboardingData, UpdateUserProfile } from "@/utils/types";
 
 export const fetchUserDataFromProfilesTable = async (userId: string) => {
   const { data, error } = await supabase
@@ -12,7 +12,10 @@ export const fetchUserDataFromProfilesTable = async (userId: string) => {
   return data;
 };
 
-export const updateUserProfile = async (userId: string, updates: Record<string, any>) => {
+export const updateUserProfile = async (
+  userId: string,
+  updates: UpdateUserProfile
+) => {
   const { data, error } = await supabase
     .from("profiles")
     .update(updates)
@@ -21,6 +24,7 @@ export const updateUserProfile = async (userId: string, updates: Record<string, 
     .single();
 
   if (error) throw error;
+
   return data;
 };
 

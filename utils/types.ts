@@ -1,6 +1,20 @@
 import { TouchableOpacityProps } from "react-native";
 import { Image } from "react-native-reanimated/lib/typescript/Animated";
 
+export type UpdateUserProfile = {
+  first_name?: string;
+  last_name?: string;
+  language?: string;
+};
+
+export type Profile = {
+  id: string;
+  first_name: string | null;
+  last_name: string | null;
+  email: string | null;
+  language: string | null;
+};
+
 export interface DailyDoseStatus {
   unitsTakenToday: number;
   unitsRemainingToday: number;
@@ -54,6 +68,7 @@ export type User = {
   last_name: string;
   email: string;
   first_time: boolean;
+  language: string;
 };
 
 export type EventSource = {

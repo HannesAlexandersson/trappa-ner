@@ -7,7 +7,33 @@ import fi from "./fi/fi.json";
 import no from "./no/no.json";
 import sv from "./sv/sv.json";
 
-const translations = { en, sv, da, no, fi, de };
+export const translations = { en, sv, da, no, fi, de };
+export const languageOptions = {
+    en: {
+        name: "English",
+        flag: "🇬🇧",
+    },
+    sv: {
+        name: "Svenska",
+        flag: "🇸🇪",
+    },
+    da: {
+        name: "Dansk",
+        flag: "🇩🇰",
+    },
+    no: {
+        name: "Norsk",
+        flag: "🇳🇴",
+    },
+    fi: {
+        name: "Suomi",
+        flag: "🇫🇮",
+    },
+    de: {
+        name: "Deutsch",
+        flag: "🇩🇪",
+    },
+} as const;
 const i18n = new I18n(translations);
 
 // Set the locale once at the beginning of your app.

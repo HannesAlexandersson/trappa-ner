@@ -8,6 +8,7 @@ import { ThemedView } from "@/components/Themed-view";
 import Typography from "@/components/Typography";
 import { HomeCountdownTimer } from "./_home/HomeCountdownTimer";
 import { HomeHeader } from "./_home/HomeHeader";
+import HelpModal from "./HelpModal";
 import { Collapsible } from "./ui/Collapsible";
 import { IconSymbol } from "./ui/Icon-symbol.ios";
 
@@ -15,7 +16,7 @@ export {
   Button,
   Collapsible,
   ExternalLink,
-  HelloWave, HomeCountdownTimer, HomeHeader, IconSymbol,
+  HelloWave, HelpModal, HomeCountdownTimer, HomeHeader, IconSymbol,
   ParallaxScrollView,
   RoundCheckmark,
   ThemedText,
