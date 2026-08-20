@@ -36,7 +36,7 @@ export default function HomeScreen() {
   }, [user?.id]);
 
   return (
-    <ScrollView className="flex-1 bg-gray-50 p-4">
+    <ScrollView className="flex-1 bg-grey50 p-4">
       <HomeHeader first_name={first_name} />
 
       {loading ? (

@@ -62,14 +62,14 @@ export const HomeCountdownTimer: React.FC<HomeCountdownTimerProps> = ({ initialD
         }
     };
     return (
-        <View className="p-6 bg-white rounded-3xl border border-gray-100 items-center justify-center shadow-sm my-4">
-            <Typography variant="black" size="sm" className="text-gray-400 uppercase tracking-widest mb-2">
+        <View className="p-6 bg-white rounded-3xl border border-grey100 items-center justify-center shadow-sm my-4">
+            <Typography variant="black" size="sm" className="text-grey400 uppercase tracking-widest mb-2">
                 {i18n.t("home.countdownTimer.nextDoseInterval")}
             </Typography>
 
             {/* Main Countdown Header */}
             {secondsLeft > 0 ? (
-                <Typography variant="black" className="text-4xl font-extrabold text-blue-600 my-2">
+                <Typography variant="black" size="h1" weight="700" className=" font-extrabold text-blue-600 my-2">
                     {formatTime(secondsLeft)}
                 </Typography>
             ) : (
@@ -92,7 +92,7 @@ export const HomeCountdownTimer: React.FC<HomeCountdownTimerProps> = ({ initialD
 
             {/* Primary Subtext */}
             {secondsLeft > 0 && (
-                <Typography size="sm" className="text-gray-600 mt-1 mb-4 text-center">
+                <Typography size="sm" className="text-grey600 mt-1 mb-4 text-center">
                     {secondsLeft < 3600
                         ? i18n.t("home.countdownTimer.hoursLeftToNextDose")
                         : i18n.t("home.countdownTimer.hoursLeftToNextDoseOverOneHour", {
@@ -103,12 +103,12 @@ export const HomeCountdownTimer: React.FC<HomeCountdownTimerProps> = ({ initialD
             )}
 
             {/* Secondary Stats Row */}
-            <View className="mt-4 pt-4 border-t border-gray-100 w-full flex-row justify-around">
-                <Typography size="sm" className="text-gray-500">
+            <View className="mt-4 pt-4 border-t border-grey100 w-full flex-row justify-around">
+                <Typography size="sm" className="text-grey500">
                     {i18n.t("home.countdownTimer.todayTaken")}
                     <Typography size="sm" weight="700" className="text-gray-800">{data.unitsTakenToday}</Typography>
                 </Typography>
-                <Typography size="sm" className="text-gray-500">
+                <Typography size="sm" className="text-grey500">
                     {i18n.t("home.countdownTimer.remainingToday")}
                     <Typography size="sm" weight="700" className="text-gray-800">{data.unitsRemainingToday}</Typography>
                 </Typography>
