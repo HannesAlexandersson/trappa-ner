@@ -40,7 +40,7 @@ export default function RootLayout() {
         <Toast />
         <Stack>
           <Stack.Screen name="(auth)" options={{ headerShown: false }} />
-          <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+          <Stack.Screen name="(tabs)" options={{ headerShown: false, gestureEnabled: false }} />
           <Stack.Screen name="onboarding" options={{ headerShown: false }} />
           <Stack.Screen name="+not-found" />
         </Stack>
