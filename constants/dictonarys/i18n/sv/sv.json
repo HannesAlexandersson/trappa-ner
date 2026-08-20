@@ -51,13 +51,18 @@
     "topHeader": "Profil Inställningar",
     "firstName": "Förnamn",
     "lastName": "Efternamn",
-    "email": "Email"
+    "email": "Email",
+    "language": "Språkinställning",
+    "newPassword": "Nytt lösenord",
+    "confirmPassword": "Bekräfta det nya lösenordet"
   },
   "utilities": {
     "loading": "Laddar...",
     "error": "Ett fel uppstod, försök igen senare",
     "send": "Skicka",
-    "create": "Skapa"
+    "create": "Skapa",
+    "saveChanges": "Spara ändringar",
+    "saving": "Sparar..."
   },
   "not-found": {
     "message": "Den här sidan finns inte.",

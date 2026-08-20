@@ -3,6 +3,7 @@ import { saveTreatmentPlanToDB } from "@/lib/apiHelper";
 import { useUserStore } from "@/stores";
 import { supabase } from "@/utils/supabase";
 import { AuthContextType, User } from "@/utils/types";
+import { setUserLocale } from "@/utils/utils";
 import { useRouter } from "expo-router";
 import React from "react";
 
@@ -66,7 +67,8 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     const updatedUser: User = {
       ...data,
     };
-
+    // Set the locale for the user
+    setUserLocale(updatedUser.language);
     //set the user to the updated user in context
     setUser(updatedUser);
     // and in the zustand store
