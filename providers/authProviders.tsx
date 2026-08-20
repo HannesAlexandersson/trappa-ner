@@ -42,6 +42,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
         } else {
           setUser(null);
           clearUser();
+          router.replace("/(auth)");
         }
       }
     );

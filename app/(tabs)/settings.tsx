@@ -108,6 +108,15 @@ export default function SettingsScreen() {
     setShowHelp(true);
   };
 
+  const handleLogout = async () => {
+    const { error } = await supabase.auth.signOut();
+
+    if (error) {
+      Alert.alert("Error", "Could not log out.");
+      console.error(error);
+    }
+  };
+
   return (
     <View className="flex-1 p-6">
       <View className="flex flex-row justify-around">
@@ -217,6 +226,14 @@ export default function SettingsScreen() {
       >
         <HelpModal setShowHelp={setShowHelp} helpKey={helpKey} />
       </Modal>
+      <Pressable
+        className="bg-red-500 rounded-lg p-4 items-center mt-8"
+        onPress={handleLogout}
+      >
+        <Text className="text-white font-semibold">
+          {i18n.t("utilities.logOut")}
+        </Text>
+      </Pressable>
     </View>
   );
 }

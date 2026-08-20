@@ -62,7 +62,8 @@
     "send": "Skicka",
     "create": "Skapa",
     "saveChanges": "Spara ändringar",
-    "saving": "Sparar..."
+    "saving": "Sparar...",
+    "logOut": "Logga ut"
   },
   "not-found": {
     "message": "Den här sidan finns inte.",
