@@ -5,6 +5,7 @@ import React from "react";
 import { View } from "react-native";
 
 export default function TabLayout() {
+
   return (
     <Tabs
       screenOptions={{
@@ -17,18 +18,6 @@ export default function TabLayout() {
           fontWeight: "bold",
           fontFamily: "Roboto",
         },
-        /*  headerBackground: () => (
-          <ImageBackground
-            source={require("@/assets/images/image.png")}
-            style={{
-              width: "100%",
-              height: "100%",
-              justifyContent: "center",
-              alignItems: "center",
-            }}
-            resizeMode="cover"
-          />
-        ), */
       }}
     >
       <Tabs.Screen
