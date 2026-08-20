@@ -1,8 +1,10 @@
+import HelpModal from "@/components/HelpModal";
 import i18n from "@/constants/dictonarys/i18n";
 import { updateUserProfile } from "@/lib/apiHelper";
 import { useAuth } from "@/providers/authProviders";
+import Ionicons from "@expo/vector-icons/Ionicons";
 import { useState } from "react";
-import { Alert, Pressable, Text, TextInput, View } from "react-native";
+import { Alert, Modal, Pressable, Text, TextInput, TouchableOpacity, View } from "react-native";
 
 export default function SettingsScreen() {
   const { user } = useAuth();
@@ -10,6 +12,8 @@ export default function SettingsScreen() {
   const [firstName, setFirstName] = useState(user?.first_name ?? "");
   const [lastName, setLastName] = useState(user?.last_name ?? "");
   const [isSaving, setIsSaving] = useState(false);
+  const [showHelp, setShowHelp] = useState(false);
+  const [helpKey, setHelpKey] = useState("");
 
 
   if (!user) {
@@ -42,11 +46,27 @@ export default function SettingsScreen() {
   const hasChanges =
     firstName !== (user.first_name ?? "") ||
     lastName !== (user.last_name ?? "");
+
+  const openHelp = (key: string) => {
+    setHelpKey(key);
+    setShowHelp(true);
+  };
   return (
     <View className="flex-1 p-6">
-      <Text className="text-3xl font-bold mb-8 font-roboto text-vgrBlue shadow-slate-300 shadow-lg">
-        {i18n.t("settings.topHeader")}
-      </Text>
+      <View className="flex flex-row justify-around">
+        <Text className="text-3xl font-bold mb-8 font-roboto text-vgrBlue shadow-slate-300 shadow-lg">
+          {i18n.t("settings.topHeader")}
+        </Text>
+        <TouchableOpacity onPress={() => openHelp("settingsHelp")}>
+          <Ionicons
+            name="information-circle-outline"
+            size={24}
+            color="#005b89"
+          />
+        </TouchableOpacity>
+      </View>
+
+
 
       <Text className="text-base font-semibold mb-2">
         {i18n.t("settings.firstName")}
@@ -90,6 +110,15 @@ export default function SettingsScreen() {
           </Text>
         </Pressable>
       )}
+
+      <Modal
+        animationType="fade"
+        transparent={true}
+        visible={showHelp}
+        onRequestClose={() => setShowHelp(false)}
+      >
+        <HelpModal setShowHelp={setShowHelp} helpKey={helpKey} />
+      </Modal>
     </View>
   );
 }
