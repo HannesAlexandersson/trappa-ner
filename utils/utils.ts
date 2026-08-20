@@ -9,6 +9,18 @@ export const formatDate = (date: Date): string => {
   return `${year}-${month}-${day}`;
 };
 
+// Format seconds into HH:MM:SS
+export const formatTime = (totalSeconds: number) => {
+  const hrs = Math.floor(totalSeconds / 3600);
+  const mins = Math.floor((totalSeconds % 3600) / 60);
+  const secs = totalSeconds % 60;
+
+  if (hrs > 0) {
+    return `${hrs}h ${mins}m ${secs}s`;
+  }
+  return `${mins}m ${secs}s`;
+};
+
 //utility function to combine class names
 export const cn = (...classes: (string | undefined)[]) =>
   classes.filter(Boolean).join(" ");

@@ -33,9 +33,18 @@
     "countdownTimer": {
       "nextDoseInterval": "Nästa dosintervall",
       "canTakeNextDose": "Du kan ta nästa dos!",
-      "hoursLeftToNextDose": "Du har %{hours} kvar tills nästa dos!",
+      "hoursLeftToNextDose": "Du har mindre än 1 timme kvar tills nästa dos!",
+      "hoursLeftToNextDoseOverOneHour": "Du har %{hours} timmar kvar till nästa dos!",
       "todayTaken": "Använt idag: ",
-      "remainingToday": "Kvar idag: "
+      "remainingToday": "Kvar idag: ",
+      "takeDoseButton": "Ta dosen nu",
+      "doseModal": {
+        "title": "Abstinens information",
+        "subTitle": "Hur mycket abstinens känner du?",
+        "cravingLabel": "Välj nivå av abstinens",
+        "saveButton": "Logga dos MED abstinensinformation",
+        "skipButton": "Logga dos UTAN abstinensinformation"
+      }
     }
   },
   "utilities": {
@@ -136,6 +145,11 @@
     "awakeTimeHelp": {
       "title": "Vaken tid per dygn",
       "body": "Hur många timmar är du vaken per dag? På ett ungefär, eller genomsnittligt",
+      "btnText": "OK!"
+    },
+    "logDoseHelp": {
+      "title": "Abstinens nivå vid dostillfälle",
+      "body": "Du kan antingen fylla i hur mycket abstinens du känner när du tar din dos ELLER så loggar du din dos UTAN att fylla i abstinensnivå. Då loggas enbart tidpunkten för när du tar dosen.",
       "btnText": "OK!"
     }
   }

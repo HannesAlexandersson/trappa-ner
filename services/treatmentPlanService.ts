@@ -120,7 +120,7 @@ export const calculateCountdownState = (
  * returning the exact stats needed for the home countdown clock.
  */
 export const fetchHomeCountdownData = async (userId: string): Promise<HomeCountdownData> => {
-    // 1. Fetch user's active treatment plan
+    // 1. Fetch active plan
     const { data: plan, error: planError } = await supabase
         .from("treatment_plans")
         .select("id, start_date")
@@ -130,29 +130,25 @@ export const fetchHomeCountdownData = async (userId: string): Promise<HomeCountd
 
     if (planError || !plan) throw new Error("No active treatment plan found");
 
-    // 2. Calculate day_index relative to start_date
-    const startDate = plan.start_date ? new Date(plan.start_date) : new Date();
-    const now = new Date();
-    const diffTime = Math.abs(now.getTime() - startDate.getTime());
-    const dayIndex = Math.floor(diffTime / (1000 * 60 * 60 * 24));
-
-    // 3. Fetch today's schedule row
+    // 2. Fetch today's schedule
     const { data: scheduleDay, error: scheduleError } = await supabase
         .from("schedule_days")
         .select("target_pouches, interval_minutes, schedule_times")
         .eq("plan_id", plan.id)
-        .eq("day_index", dayIndex)
+        .eq("day_index", 0)
         .single();
 
     if (scheduleError || !scheduleDay) throw new Error("No schedule found for today");
 
-    // 4. Fetch today's dose logs
-    const startOfDay = new Date(now.setHours(0, 0, 0, 0)).toISOString();
+    // 3. Fetch today's logs
+    const startOfDay = new Date();
+    startOfDay.setHours(0, 0, 0, 0);
+
     const { data: logs, error: logsError } = await supabase
         .from("dose_logs")
         .select("timestamp")
         .eq("user_id", userId)
-        .gte("timestamp", startOfDay)
+        .gte("timestamp", startOfDay.toISOString())
         .order("timestamp", { ascending: true });
 
     if (logsError) throw logsError;
@@ -160,9 +156,9 @@ export const fetchHomeCountdownData = async (userId: string): Promise<HomeCountd
     const unitsTakenToday = logs ? logs.length : 0;
     const targetPouches = scheduleDay.target_pouches;
     const unitsRemainingToday = Math.max(0, targetPouches - unitsTakenToday);
-    const intervalMinutes = scheduleDay.interval_minutes;
+    const intervalMinutes = scheduleDay.interval_minutes || 60;
 
-    // 5. Calculate countdown timer values
+    // CASE A: User has not taken Dose 1 yet -> Unlocked
     if (unitsTakenToday === 0) {
         return {
             targetPouches,
@@ -176,25 +172,151 @@ export const fetchHomeCountdownData = async (userId: string): Promise<HomeCountd
         };
     }
 
-    const lastLogTimestamp = logs[logs.length - 1].timestamp;
-    const lastDoseTime = new Date(lastLogTimestamp);
-    const nextDoseTime = new Date(lastDoseTime.getTime() + intervalMinutes * 60 * 1000);
+    // CASE B: Daily limit reached -> Locked
+    if (unitsRemainingToday <= 0) {
+        return {
+            targetPouches,
+            intervalMinutes,
+            scheduleTimes: scheduleDay.schedule_times || [],
+            unitsTakenToday,
+            unitsRemainingToday: 0,
+            secondsRemaining: 86400, // Lock button until next day
+            canTakeDoseNow: false,
+            nextDoseFormattedTime: "Imorgon",
+        };
+    }
+
+    // CASE C: Dose taken -> Calculate countdown to NEXT dose in schedule_times
+    const scheduleTimes = scheduleDay.schedule_times || [];
+    const nextDoseTimeStr = scheduleTimes[unitsTakenToday]; // Slot index for next dose
+
+    let nextDoseTime: Date;
+
+    if (nextDoseTimeStr) {
+        const [hrs, mins] = nextDoseTimeStr.split(":").map(Number);
+        nextDoseTime = new Date();
+        nextDoseTime.setHours(hrs, mins, 0, 0);
+    } else {
+        // Fallback: Last Log + Interval Minutes
+        const lastLogTime = new Date(logs[logs.length - 1].timestamp).getTime();
+        nextDoseTime = new Date(lastLogTime + intervalMinutes * 60 * 1000);
+    }
 
     const currentTime = new Date();
-    const diffInSeconds = Math.floor((nextDoseTime.getTime() - currentTime.getTime()) / 1000);
+    const diffInSeconds = Math.ceil((nextDoseTime.getTime() - currentTime.getTime()) / 1000);
     const secondsRemaining = Math.max(0, diffInSeconds);
 
-    const hours = String(nextDoseTime.getHours()).padStart(2, "0");
-    const mins = String(nextDoseTime.getMinutes()).padStart(2, "0");
+    const hoursStr = String(nextDoseTime.getHours()).padStart(2, "0");
+    const minsStr = String(nextDoseTime.getMinutes()).padStart(2, "0");
 
     return {
         targetPouches,
         intervalMinutes,
-        scheduleTimes: scheduleDay.schedule_times || [],
+        scheduleTimes,
         unitsTakenToday,
         unitsRemainingToday,
         secondsRemaining,
         canTakeDoseNow: secondsRemaining === 0,
-        nextDoseFormattedTime: `${hours}:${mins}`,
+        nextDoseFormattedTime: `${hoursStr}:${minsStr}`,
     };
+};
+
+export const logDoseTaken = async (
+    userId: string,
+    extraData?: { scheduled?: string | null; craving_level?: number | null }
+): Promise<HomeCountdownData> => {
+    const now = new Date();
+    const nowIso = now.toISOString();
+
+    // 1. Fetch active plan
+    const { data: plan, error: planError } = await supabase
+        .from("treatment_plans")
+        .select("id")
+        .eq("user_id", userId)
+        .eq("is_active", true)
+        .single();
+
+    if (planError || !plan) throw new Error("No active treatment plan found.");
+
+    // 2. Check existing dose logs
+    const { data: existingLogs } = await supabase
+        .from("dose_logs")
+        .select("id")
+        .eq("user_id", userId);
+
+    const doseCount = existingLogs ? existingLogs.length : 0;
+    const isFirstDose = doseCount === 0;
+
+    // 3. IF FIRST DOSE: Anchor plan and chain all subsequent dose times relative to the prior dose
+    if (isFirstDose) {
+        await supabase
+            .from("treatment_plans")
+            .update({ start_date: nowIso })
+            .eq("id", plan.id);
+
+        const { data: day0 } = await supabase
+            .from("schedule_days")
+            .select("id, target_pouches, interval_minutes")
+            .eq("plan_id", plan.id)
+            .eq("day_index", 0)
+            .single();
+
+        if (day0) {
+            const targetCount = day0.target_pouches;
+            const baseIntervalMins = day0.interval_minutes; // Planned interval between doses
+
+            const updatedScheduleTimes: string[] = [];
+            let currentDoseTime = new Date(now);
+
+            // Dose 1 is exact time taken
+            const hrs1 = String(currentDoseTime.getHours()).padStart(2, "0");
+            const mins1 = String(currentDoseTime.getMinutes()).padStart(2, "0");
+            updatedScheduleTimes.push(`${hrs1}:${mins1}`);
+
+            // Chain Doses 2 through N: Previous Dose Time + Planned Interval
+            for (let i = 1; i < targetCount; i++) {
+                currentDoseTime = new Date(currentDoseTime.getTime() + baseIntervalMins * 60 * 1000);
+
+                const hrs = String(currentDoseTime.getHours()).padStart(2, "0");
+                const mins = String(currentDoseTime.getMinutes()).padStart(2, "0");
+                updatedScheduleTimes.push(`${hrs}:${mins}`);
+            }
+
+            // Write chained array to schedule_days
+            await supabase
+                .from("schedule_days")
+                .update({ schedule_times: updatedScheduleTimes })
+                .eq("id", day0.id);
+        }
+    }
+
+    // 4. Fetch the updated schedule array to set target scheduled timestamp
+    const { data: currentSchedule } = await supabase
+        .from("schedule_days")
+        .select("schedule_times")
+        .eq("plan_id", plan.id)
+        .eq("day_index", 0)
+        .single();
+
+    let targetScheduledIso = nowIso;
+
+    if (!isFirstDose && currentSchedule?.schedule_times?.[doseCount]) {
+        const timeStr = currentSchedule.schedule_times[doseCount];
+        const [hrs, mins] = timeStr.split(":").map(Number);
+        const scheduledDate = new Date();
+        scheduledDate.setHours(hrs, mins, 0, 0);
+        targetScheduledIso = scheduledDate.toISOString();
+    }
+
+    // 5. Save the dose log
+    const { error: logError } = await supabase.from("dose_logs").insert({
+        user_id: userId,
+        timestamp: nowIso,
+        scheduled: targetScheduledIso,
+        craving_level: extraData?.craving_level || null,
+    });
+
+    if (logError) throw new Error(`Failed to log dose: ${logError.message}`);
+
+    return await fetchHomeCountdownData(userId);
 };
