@@ -63,7 +63,9 @@
     "create": "Skapa",
     "saveChanges": "Spara ändringar",
     "saving": "Sparar...",
-    "logOut": "Logga ut"
+    "logOut": "Logga ut",
+    "previus": "Föregående",
+    "next": "Nästa"
   },
   "not-found": {
     "message": "Den här sidan finns inte.",
@@ -181,6 +183,10 @@
       "abstinence-support": "Abstinenshjälp",
       "tools": "Hjälpmedel",
       "other": "Övrigt"
+    },
+    "threads": {
+      "replies": "svar",
+      "lastReply": "Sista svaret"
     }
   }
 }

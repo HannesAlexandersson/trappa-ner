@@ -1,4 +1,5 @@
 import { Typography } from "@/components";
+import i18n from "@/constants/dictonarys/i18n";
 import { useForumStore } from "@/stores/forumStore";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import { router, useLocalSearchParams } from "expo-router";
@@ -6,8 +7,10 @@ import { useEffect } from "react";
 import {
     ActivityIndicator,
     Pressable,
+    ScrollView,
     View,
 } from "react-native";
+
 
 export default function ForumThreadScreen() {
     const { threadId } = useLocalSearchParams<{
@@ -36,7 +39,7 @@ export default function ForumThreadScreen() {
     }, [threadId, fetchThread, fetchReplies]);
 
     const handleGoBack = () => {
-        router.back();
+        router.navigate("/(tabs)/forum");
     };
 
     const handlePreviousPage = () => {
@@ -66,21 +69,21 @@ export default function ForumThreadScreen() {
     }
 
     return (
-        <View className="flex-1">
-            <View className="flex-row justify-start mt-4 ml-2">
+        <ScrollView className="flex-1 px-6">
+            <View className="flex-row justify-start mt-4">
                 <Pressable
                     onPress={handleGoBack}
                     className="bg-vgrBlue rounded-full"
                 >
                     <Ionicons
                         name="arrow-back-circle-sharp"
-                        size={50}
+                        size={40}
                         color="white"
                     />
                 </Pressable>
             </View>
 
-            <View className="flex-1 p-6">
+            <View className="flex-1 pt-6 pb-12 mb-12">
                 {/* THREAD START */}
 
                 <Typography
@@ -108,9 +111,9 @@ export default function ForumThreadScreen() {
                     weight="700"
                     className="text-vgrBlue"
                 >
-                    Replies
+                    {i18n.t("forum.threads.replies")}
                 </Typography>
-
+                {/* TIMESTAMPS NEEDS BETTER FORMATTING */}
                 {replies.map((reply) => (
                     <View
                         key={reply.id}
@@ -139,7 +142,7 @@ export default function ForumThreadScreen() {
                                 size="md"
                                 variant={currentPage === 0 ? "black" : "blue"}
                             >
-                                Previous
+                                {i18n.t("utilities.previus")}
                             </Typography>
                         </Pressable>
 
@@ -158,7 +161,7 @@ export default function ForumThreadScreen() {
                                     currentPage >= pageCount - 1 ? "black" : "blue"
                                 }
                             >
-                                Next
+                                {i18n.t("utilities.next")}
                             </Typography>
                         </Pressable>
                     </View>
@@ -170,11 +173,11 @@ export default function ForumThreadScreen() {
                         className="items-center mt-2"
                     >
                         <Typography size="md" variant="blue">
-                            Last reply
+                            {i18n.t("forum.threads.lastReply")}
                         </Typography>
                     </Pressable>
                 )}
             </View>
-        </View>
+        </ScrollView>
     );
 }
