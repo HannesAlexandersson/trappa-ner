@@ -1,4 +1,4 @@
-import { HelpModal } from "@/components";
+import HelpModal from "@/components/HelpModal";
 import Typography from "@/components/Typography";
 import i18n from "@/constants/dictonarys/i18n";
 import Ionicons from "@expo/vector-icons/Ionicons";

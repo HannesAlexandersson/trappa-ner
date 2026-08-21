@@ -34,9 +34,9 @@ export default function TabLayout() {
         }}
       />
       <Tabs.Screen
-        name="account"
+        name="plan"
         options={{
-          title: i18n.t("tabs.account"),
+          title: i18n.t("tabs.plan"),
           tabBarIcon: ({ focused }) => (
             <Ionicons
               name={focused ? "person-sharp" : "person-outline"}
@@ -82,9 +82,9 @@ export default function TabLayout() {
         }}
       />
       <Tabs.Screen
-        name="help"
+        name="forum"
         options={{
-          title: i18n.t("tabs.help"),
+          title: i18n.t("tabs.forum"),
           tabBarIcon: ({ focused }) => (
             <Ionicons
               name={focused ? "help-circle" : "help-circle-outline"}
