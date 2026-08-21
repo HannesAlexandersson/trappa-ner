@@ -1,6 +1,8 @@
 import { Typography } from "@/components";
 import HelpModal from "@/components/HelpModal";
 import i18n, { languageOptions } from "@/constants/dictonarys/i18n";
+import { Colors } from "@/constants/theme";
+import { useColorScheme } from "@/hooks/use-color-scheme";
 import { updateUserProfile } from "@/lib/apiHelper";
 import { useAuth } from "@/providers/authProviders";
 import { useThemeStore } from "@/stores/themeStore";
@@ -12,6 +14,7 @@ import {
   Alert,
   Modal,
   Pressable,
+  ScrollView,
   Text,
   TextInput,
   TouchableOpacity,
@@ -21,6 +24,13 @@ import {
 export default function SettingsScreen() {
   const { user } = useAuth();
   const setTheme = useThemeStore((state) => state.setTheme);
+  const systemTheme = useColorScheme();
+  const theme = useThemeStore((state) => state.theme);
+
+  const activeTheme =
+    theme === "system"
+      ? systemTheme ?? "light"
+      : theme;
 
   const [firstName, setFirstName] = useState(user?.first_name ?? "");
   const [lastName, setLastName] = useState(user?.last_name ?? "");
@@ -121,23 +131,32 @@ export default function SettingsScreen() {
   };
 
   return (
-    <View className="flex-1 p-6">
+    <ScrollView className="flex-1 p-6">
 
       <View className="flex flex-row justify-between">
-        <Text className="text-3xl font-bold mb-8 font-roboto text-vgrBlue shadow-slate-300 shadow-lg">
+        <Text className="text-3xl font-bold mb-8 font-roboto text-vgrBlue dark:text-white shadow-slate-300 shadow-lg">
           {i18n.t("settings.systemSettings")}
         </Text>
 
         <TouchableOpacity onPress={() => openHelp("systemSettingsHelp")}>
-          <Ionicons
-            name="information-circle-outline"
-            size={24}
-            color="#005b89"
-          />
+          {theme == "dark" ? (
+            <Ionicons
+              name="information-circle-outline"
+              size={24}
+              color="#fff"
+            />
+          ) : (
+            <Ionicons
+              name="information-circle-outline"
+              size={24}
+              color="#005b89"
+            />
+          )}
+
         </TouchableOpacity>
       </View>
       {/* System settings */}
-      <Text className="text-base font-semibold mb-2">
+      <Text className="text-base font-semibold mb-2 dark:text-white">
         {i18n.t("settings.theme")}
       </Text>
       <View className="flex flex-row justify-around mb-6">
@@ -153,98 +172,117 @@ export default function SettingsScreen() {
           <Typography size="sm" weight="300" className="dark:text-white text-black" > {i18n.t("settings.light")}</Typography>
         </View>
         <View className="flex flex-col items-center justify-center">
-          <TouchableOpacity onPress={() => setTheme("dark")} className="bg-white rounded-md p-2">
+          <TouchableOpacity onPress={() => setTheme("dark")} className="bg-vgrBlue dark:bg-white rounded-md p-2">
+            {theme == "dark" ? (
+              <Ionicons
+                name="moon-sharp"
+                size={50}
+                color="#005b89"
+              />
+            ) : (
+              <Ionicons
+                name="moon-sharp"
+                size={50}
+                color="#fff"
+              />
+            )}
 
-            <Ionicons
-              name="moon-sharp"
-              size={50}
-              color="#005b89"
-            />
+
           </TouchableOpacity>
           <Typography size="sm" weight="300" className="dark:text-white text-black" > {i18n.t("settings.dark")}</Typography>
         </View>
       </View>
-      <Text className="text-base font-semibold mb-2">
+      <Text className="text-base font-semibold mb-2 dark:text-white">
         {i18n.t("settings.language")}
       </Text>
 
-      <View className="border border-grey300 rounded-lg mb-6 overflow-hidden">
+      <View className="border border-grey300 dark:border-grey50 rounded-lg mb-6 overflow-hidden ">
         <Picker
           selectedValue={language}
           onValueChange={(value) => setLanguage(value)}
+
         >
           {Object.entries(languageOptions).map(([locale, option]) => (
             <Picker.Item
               key={locale}
               label={`${option.flag}  ${option.name}`}
               value={locale}
+              color={Colors[activeTheme].vgrBlue}
             />
           ))}
         </Picker>
       </View>
       {/* Profile Settings */}
       <View className="flex flex-row justify-between">
-        <Text className="text-3xl font-bold mb-8 font-roboto text-vgrBlue shadow-slate-300 shadow-lg">
+        <Text className="text-3xl font-bold mb-8 font-roboto text-vgrBlue dark:text-white shadow-slate-300 shadow-lg">
           {i18n.t("settings.profileSettings")}
         </Text>
 
         <TouchableOpacity onPress={() => openHelp("profileSettingsHelp")}>
-          <Ionicons
-            name="information-circle-outline"
-            size={24}
-            color="#005b89"
-          />
+          {theme == "dark" ? (
+            <Ionicons
+              name="information-circle-outline"
+              size={24}
+              color="#fff"
+            />
+          ) : (
+            <Ionicons
+              name="information-circle-outline"
+              size={24}
+              color="#005b89"
+            />
+          )}
         </TouchableOpacity>
       </View>
-      <Text className="text-base font-semibold mb-2">
+      <Text className="text-base font-semibold mb-2 dark:text-white">
         {i18n.t("settings.firstName")}
       </Text>
 
       <TextInput
-        className="border border-grey300 rounded-lg p-3 mb-4"
+        className="border border-grey300 dark:border-grey50 rounded-lg p-3 mb-4  dark:text-white"
         value={firstName}
         onChangeText={setFirstName}
       />
 
-      <Text className="text-base font-semibold mb-2">
+      <Text className="text-base font-semibold mb-2 dark:text-white">
         {i18n.t("settings.lastName")}
       </Text>
 
       <TextInput
-        className="border border-grey300 rounded-lg p-3 mb-4"
+        className="border border-grey300 dark:border-grey50 rounded-lg p-3 mb-4 dark:text-white"
         value={lastName}
         onChangeText={setLastName}
       />
 
-      <Text className="text-base font-semibold mb-2">
+      <Text className="text-base font-semibold mb-2 dark:text-white">
         {i18n.t("settings.email")}
       </Text>
 
       <TextInput
-        className="border border-grey300 rounded-lg p-3 mb-4"
+        className="border border-grey300 dark:border-grey50 rounded-lg p-3 mb-4 dark:text-white"
         value={email}
         onChangeText={setEmail}
         keyboardType="email-address"
         autoCapitalize="none"
       />
 
-      <Text className="text-base font-semibold mb-2">
+      <Text className="text-base font-semibold mb-2 dark:text-white">
         {i18n.t("settings.newPassword")}
       </Text>
 
       <TextInput
-        className="border border-grey300 rounded-lg p-3 mb-4"
+        className="border border-grey300 dark:border-grey50 rounded-lg p-3 mb-4 dark:text-white"
         value={newPassword}
         onChangeText={setNewPassword}
         secureTextEntry
       />
 
-      <Text className="text-base font-semibold mb-2">
+      <Text className="text-base font-semibold mb-2 dark:text-white">
         {i18n.t("settings.confirmPassword")}
       </Text>
 
       <TextInput
-        className="border border-grey300 rounded-lg p-3 mb-6"
+        className="border border-grey300 dark:border-grey50 rounded-lg p-3 mb-6 dark:text-white"
         value={confirmPassword}
         onChangeText={setConfirmPassword}
         secureTextEntry
@@ -252,11 +290,11 @@ export default function SettingsScreen() {
 
       {hasChanges && (
         <Pressable
-          className="bg-vgrBlue rounded-lg p-4 items-center"
+          className="bg-vgrBlue dark:bg-white dark:border dark:border-vgrBlue rounded-lg p-4 items-center"
           onPress={handleSave}
           disabled={isSaving}
         >
-          <Text className="text-white font-semibold">
+          <Text className="text-white dark:text-vgrBlue font-semibold">
             {isSaving ? i18n.t("utilities.saving") : i18n.t("utilities.saveChanges")}
           </Text>
         </Pressable>
@@ -271,13 +309,13 @@ export default function SettingsScreen() {
         <HelpModal setShowHelp={setShowHelp} helpKey={helpKey} />
       </Modal>
       <Pressable
-        className="bg-red-500 rounded-lg p-4 items-center mt-8"
+        className="bg-red-500 rounded-lg p-4 items-center mt-8 mb-20"
         onPress={handleLogout}
       >
         <Text className="text-white font-semibold">
           {i18n.t("utilities.logOut")}
         </Text>
       </Pressable>
-    </View>
+    </ScrollView>
   );
 }

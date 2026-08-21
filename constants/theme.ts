@@ -37,6 +37,7 @@ export const Colors = {
     textSecondary: "#4B5563",
     vgrBlue: "#005b89",
     icon: "#687076",
+    pickerText: "#000000",
   },
 
   dark: {
@@ -47,6 +48,7 @@ export const Colors = {
     textSecondary: "#D1D5DB",
     vgrBlue: "#005b89",
     icon: "#9BA1A6",
+    pickerText: "#FFFFFF",
   },
 };
 
