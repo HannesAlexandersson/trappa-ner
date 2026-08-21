@@ -1,6 +1,7 @@
 import { Typography } from "@/components";
 import i18n from "@/constants/dictonarys/i18n";
 import { useForumStore } from "@/stores/forumStore";
+import { formatDateTime } from "@/utils/utils";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import { router, useLocalSearchParams } from "expo-router";
 import { useEffect } from "react";
@@ -95,7 +96,7 @@ export default function ForumThreadScreen() {
                 </Typography>
 
                 <Typography size="sm" className="mb-4">
-                    {thread.created_at}
+                    {formatDateTime(thread.created_at)}
                 </Typography>
 
                 <View className="border border-grey300 rounded-lg p-5 mb-6">
@@ -120,7 +121,7 @@ export default function ForumThreadScreen() {
                         className="border border-grey300 rounded-lg p-4 mb-4"
                     >
                         <Typography size="sm" className="mb-2">
-                            {reply.created_at}
+                            {formatDateTime(reply.created_at)}
                         </Typography>
 
                         <Typography size="md">

@@ -3,6 +3,7 @@ import i18n from "@/constants/dictonarys/i18n";
 import { getForumThreads } from "@/services/forumService";
 import { useForumStore } from "@/stores/forumStore";
 import { ForumThread } from "@/utils/types";
+import { formatDateTime } from "@/utils/utils";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import { router, useLocalSearchParams } from "expo-router";
 import { useEffect, useState } from "react";
@@ -94,7 +95,7 @@ export default function ForumCategoryScreen() {
                         </Typography>
 
                         <Typography size="sm" className="mt-2">
-                            {thread.created_at}
+                            {formatDateTime(thread.created_at)}
                         </Typography>
                     </Pressable>
                 ))}

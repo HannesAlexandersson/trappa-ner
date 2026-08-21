@@ -21,6 +21,17 @@ export const setUserLocale = (language: string | null) => {
 };
 
 //format date strings
+export const formatDateTime = (dateString: string): string => {
+  const date = new Date(dateString);
+
+  return date.toLocaleDateString(undefined, {
+    year: "numeric",
+    month: "short",
+    day: "numeric",
+    hour: "2-digit",
+    minute: "2-digit",
+  });
+};
 export const formatDate = (date: Date): string => {
   const year = date.getFullYear();
   const month = String(date.getMonth() + 1).padStart(2, "0");
