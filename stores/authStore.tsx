@@ -1,6 +1,6 @@
 import { fetchUserDataFromProfilesTable } from "@/lib/apiHelper";
-import { UserStore } from "@/utils/types";
 import { create } from "zustand";
+import { UserStore } from "./stores.types";
 
 export const useUserStore = create<UserStore>((set) => ({
   id: null,
