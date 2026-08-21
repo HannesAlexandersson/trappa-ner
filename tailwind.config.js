@@ -17,7 +17,12 @@ module.exports = {
         grey500: "#6b7280",
         grey600: "#4b5563",
         blue50: "#eff6ff",
-        blue100: "#dbeafe"
+        blue100: "#dbeafe",
+        darkBg: "#111827",
+        darkSurface: "#1f2937",
+        darkBorder: "#374151",
+        darkText: "#f9fafb",
+        darkTextSecondary: "#d1d5db",
       },
     },
   },

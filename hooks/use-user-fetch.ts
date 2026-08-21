@@ -28,7 +28,7 @@ export const useUserFetch = () => {
         router.push("/onboarding");
       } else {
         setUser(userData);
-        router.push("/(tabs)/index");
+        router.push("/(tabs)");
       }
     } catch (error) {
       console.error("Error fetching user data:", error);

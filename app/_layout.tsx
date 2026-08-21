@@ -1,9 +1,11 @@
 import { useColorScheme } from "@/hooks/use-color-scheme";
 import { AuthProvider } from "@/providers/authProviders";
+import { useThemeStore } from "@/stores/themeStore";
 import { useFonts } from "expo-font";
 import { Stack } from "expo-router";
 import * as SplashScreen from "expo-splash-screen";
 import { StatusBar } from "expo-status-bar";
+import { colorScheme } from "nativewind";
 import { useEffect } from "react";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import "react-native-reanimated";
@@ -18,11 +20,23 @@ export const unstable_settings = {
 };
 
 export default function RootLayout() {
-  const colorScheme = useColorScheme();
+  const systemTheme = useColorScheme();
+  const theme = useThemeStore((state) => state.theme);
+
 
   const [loaded] = useFonts({
     Roboto: require("../assets/fonts/Roboto/Roboto-Regular.ttf"),
   });
+
+  useEffect(() => {
+    const activeTheme =
+      theme === "system"
+        ? systemTheme ?? "light"
+        : theme;
+
+    colorScheme.set(activeTheme);
+  }, [theme, systemTheme]);
+
 
   useEffect(() => {
     if (loaded) {
@@ -44,7 +58,7 @@ export default function RootLayout() {
           <Stack.Screen name="onboarding" options={{ headerShown: false }} />
           <Stack.Screen name="+not-found" />
         </Stack>
-        <StatusBar style="auto" />
+        <StatusBar style={systemTheme === "dark" ? "light" : "dark"} />
       </AuthProvider>
     </GestureHandlerRootView>
   );

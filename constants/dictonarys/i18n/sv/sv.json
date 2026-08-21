@@ -48,13 +48,17 @@
     }
   },
   "settings": {
-    "topHeader": "Profil Inställningar",
+    "systemSettings": "System Inställningar",
+    "profileSettings": "Profil Inställningar",
     "firstName": "Förnamn",
     "lastName": "Efternamn",
     "email": "Email",
     "language": "Språkinställning",
     "newPassword": "Nytt lösenord",
-    "confirmPassword": "Bekräfta det nya lösenordet"
+    "confirmPassword": "Bekräfta det nya lösenordet",
+    "theme": "Utseende tema",
+    "light": "Ljust",
+    "dark": "Mörkt"
   },
   "utilities": {
     "loading": "Laddar...",
@@ -166,10 +170,15 @@
       "body": "Du kan antingen fylla i hur mycket abstinens du känner när du tar din dos ELLER så loggar du din dos UTAN att fylla i abstinensnivå. Då loggas enbart tidpunkten för när du tar dosen.",
       "btnText": "OK!"
     },
-    "settingsHelp": {
+    "profileSettingsHelp": {
       "title": "Profil inställningar",
       "body": "Här kan du ändra inställningar & ändra dina personliga uppgifter som exempelvis namn, email osv. Du kan även göra ändringar i din behandlingsplan här!",
       "btnText": "Uppfattat!"
+    },
+    "systemSettingsHelp": {
+      "title": "System inställningar",
+      "body": "Här kan du ställa in exempelvis språk och utseende. Välj mellan ljus- och mörkt tema, eller varför inte testa vårt 'Höst' tema? Vad du än gillar så finns det något för alla!",
+      "btnText": "Ok!"
     },
     "forumBasicHelp": {
       "title": "Forumet",

@@ -1,7 +1,9 @@
+import { Typography } from "@/components";
 import HelpModal from "@/components/HelpModal";
 import i18n, { languageOptions } from "@/constants/dictonarys/i18n";
 import { updateUserProfile } from "@/lib/apiHelper";
 import { useAuth } from "@/providers/authProviders";
+import { useThemeStore } from "@/stores/themeStore";
 import { supabase } from "@/utils/supabase";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import { Picker } from "@react-native-picker/picker";
@@ -18,6 +20,7 @@ import {
 
 export default function SettingsScreen() {
   const { user } = useAuth();
+  const setTheme = useThemeStore((state) => state.setTheme);
 
   const [firstName, setFirstName] = useState(user?.first_name ?? "");
   const [lastName, setLastName] = useState(user?.last_name ?? "");
@@ -119,12 +122,13 @@ export default function SettingsScreen() {
 
   return (
     <View className="flex-1 p-6">
-      <View className="flex flex-row justify-around">
+
+      <View className="flex flex-row justify-between">
         <Text className="text-3xl font-bold mb-8 font-roboto text-vgrBlue shadow-slate-300 shadow-lg">
-          {i18n.t("settings.topHeader")}
+          {i18n.t("settings.systemSettings")}
         </Text>
 
-        <TouchableOpacity onPress={() => openHelp("settingsHelp")}>
+        <TouchableOpacity onPress={() => openHelp("systemSettingsHelp")}>
           <Ionicons
             name="information-circle-outline"
             size={24}
@@ -132,7 +136,66 @@ export default function SettingsScreen() {
           />
         </TouchableOpacity>
       </View>
+      {/* System settings */}
+      <Text className="text-base font-semibold mb-2">
+        {i18n.t("settings.theme")}
+      </Text>
+      <View className="flex flex-row justify-around mb-6">
+        <View className="flex flex-col items-center justify-center">
+          <TouchableOpacity onPress={() => setTheme("light")} className="bg-blue-400 dark:bg-white rounded-md p-2">
+            <Ionicons
+              name="sunny-sharp"
+              size={50}
+              color="#dbe920"
+            />
 
+          </TouchableOpacity>
+          <Typography size="sm" weight="300" className="dark:text-white text-black" > {i18n.t("settings.light")}</Typography>
+        </View>
+        <View className="flex flex-col items-center justify-center">
+          <TouchableOpacity onPress={() => setTheme("dark")} className="bg-white rounded-md p-2">
+
+            <Ionicons
+              name="moon-sharp"
+              size={50}
+              color="#005b89"
+            />
+          </TouchableOpacity>
+          <Typography size="sm" weight="300" className="dark:text-white text-black" > {i18n.t("settings.dark")}</Typography>
+        </View>
+      </View>
+      <Text className="text-base font-semibold mb-2">
+        {i18n.t("settings.language")}
+      </Text>
+
+      <View className="border border-grey300 rounded-lg mb-6 overflow-hidden">
+        <Picker
+          selectedValue={language}
+          onValueChange={(value) => setLanguage(value)}
+        >
+          {Object.entries(languageOptions).map(([locale, option]) => (
+            <Picker.Item
+              key={locale}
+              label={`${option.flag}  ${option.name}`}
+              value={locale}
+            />
+          ))}
+        </Picker>
+      </View>
+      {/* Profile Settings */}
+      <View className="flex flex-row justify-between">
+        <Text className="text-3xl font-bold mb-8 font-roboto text-vgrBlue shadow-slate-300 shadow-lg">
+          {i18n.t("settings.profileSettings")}
+        </Text>
+
+        <TouchableOpacity onPress={() => openHelp("profileSettingsHelp")}>
+          <Ionicons
+            name="information-circle-outline"
+            size={24}
+            color="#005b89"
+          />
+        </TouchableOpacity>
+      </View>
       <Text className="text-base font-semibold mb-2">
         {i18n.t("settings.firstName")}
       </Text>
@@ -164,25 +227,6 @@ export default function SettingsScreen() {
         keyboardType="email-address"
         autoCapitalize="none"
       />
-
-      <Text className="text-base font-semibold mb-2">
-        {i18n.t("settings.language")}
-      </Text>
-
-      <View className="border border-grey300 rounded-lg mb-6 overflow-hidden">
-        <Picker
-          selectedValue={language}
-          onValueChange={(value) => setLanguage(value)}
-        >
-          {Object.entries(languageOptions).map(([locale, option]) => (
-            <Picker.Item
-              key={locale}
-              label={`${option.flag}  ${option.name}`}
-              value={locale}
-            />
-          ))}
-        </Picker>
-      </View>
 
       <Text className="text-base font-semibold mb-2">
         {i18n.t("settings.newPassword")}

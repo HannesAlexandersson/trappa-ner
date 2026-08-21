@@ -254,3 +254,5 @@ export type ForumReply = {
   created_at: string;
   updated_at: string;
 };
+
+export type ThemeMode = "system" | "light" | "dark";
