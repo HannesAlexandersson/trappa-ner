@@ -3,9 +3,10 @@ import i18n from "@/constants/dictonarys/i18n";
 import { getForumThreads } from "@/services/forumService";
 import { useForumStore } from "@/stores/forumStore";
 import { ForumThread } from "@/utils/types";
-import { useLocalSearchParams } from "expo-router";
+import Ionicons from "@expo/vector-icons/Ionicons";
+import { router, useLocalSearchParams } from "expo-router";
 import { useEffect, useState } from "react";
-import { ActivityIndicator, View } from "react-native";
+import { ActivityIndicator, Pressable, TouchableOpacity, View } from "react-native";
 
 export default function ForumCategoryScreen() {
     const { categoryId } = useLocalSearchParams<{ categoryId: string }>();
@@ -36,6 +37,10 @@ export default function ForumCategoryScreen() {
         loadThreads();
     }, [categoryId]);
 
+    const handleGoBack = () => {
+        router.navigate("/(tabs)/forum");
+    }
+
     if (isLoading) {
         return (
             <View className="flex-1 justify-center items-center">
@@ -45,31 +50,55 @@ export default function ForumCategoryScreen() {
     }
 
     return (
-        <View className="flex-1 p-6">
-            {category && (
-                <Typography
-                    size="h1"
-                    weight="700"
-                    className="text-vgrBlue"
+        <View className="flex-1 p-2">
+            {/* NAVIGATION */}
+            <View className="flex-row justify-start mt-4">
+                <TouchableOpacity
+                    onPress={handleGoBack}
+                    className="flex-row items-center ml-4 bg-vgrBlue rounded-full"
                 >
-                    {i18n.t(`forum.categories.${category.slug}`)}
-                </Typography>
-            )}
+                    <Ionicons
+                        name="arrow-back-circle-sharp"
+                        size={40}
+                        color="white"
+                    />
+                </TouchableOpacity>
+            </View>
 
-            {threads.map((thread) => (
-                <View
-                    key={thread.id}
-                    className="border border-grey300 rounded-lg p-5 mb-4"
-                >
-                    <Typography size="lg" weight="600">
-                        {thread.title}
+            <View className="flex-1 p-6">
+                {category && (
+                    <Typography
+                        size="h1"
+                        weight="700"
+                        className="text-vgrBlue"
+                    >
+                        {i18n.t(`forum.categories.${category.slug}`)}
                     </Typography>
+                )}
 
-                    <Typography size="sm" className="mt-2">
-                        {thread.body}
-                    </Typography>
-                </View>
-            ))}
+                {threads.map((thread) => (
+                    <Pressable
+                        key={thread.id}
+                        onPress={() =>
+                            router.push({
+                                pathname: "/forum/thread/[threadId]",
+                                params: {
+                                    threadId: thread.id,
+                                },
+                            })
+                        }
+                        className="border border-grey300 rounded-lg p-5 mb-4"
+                    >
+                        <Typography size="lg" weight="600">
+                            {thread.title}
+                        </Typography>
+
+                        <Typography size="sm" className="mt-2">
+                            {thread.created_at}
+                        </Typography>
+                    </Pressable>
+                ))}
+            </View>
         </View>
     );
 }

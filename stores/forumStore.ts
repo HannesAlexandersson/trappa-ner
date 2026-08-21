@@ -5,11 +5,19 @@ import { ForumStore } from "./stores.types";
 
 export const useForumStore = create<ForumStore>((set, get) => ({
     categories: [],
+
     threadsByCategory: {},
+
     threads: {},
+
     repliesByThread: {},
 
+    replyPage: {},
+
+    replyPageCount: {},
+
     categoriesLoaded: false,
+
     isLoadingCategories: false,
 
     fetchCategories: async () => {
@@ -75,14 +83,24 @@ export const useForumStore = create<ForumStore>((set, get) => ({
         }
     },
 
-    fetchReplies: async (threadId) => {
+    fetchReplies: async (threadId, page) => {
         try {
-            const data = await getForumReplies(threadId);
+            const { data, count } = await getForumReplies(threadId, page);
 
             set((state) => ({
                 repliesByThread: {
                     ...state.repliesByThread,
                     [threadId]: data,
+                },
+
+                replyPage: {
+                    ...state.replyPage,
+                    [threadId]: page,
+                },
+
+                replyPageCount: {
+                    ...state.replyPageCount,
+                    [threadId]: Math.ceil(count / 20),
                 },
             }));
         } catch (error) {

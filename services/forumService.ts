@@ -78,19 +78,28 @@ export const getForumThread = async (
 };
 
 export const getForumReplies = async (
-    threadId: string
-): Promise<ForumReply[]> => {
-    const { data, error } = await supabase
+    threadId: string,
+    page: number,
+    pageSize: number = 20
+): Promise<{ data: ForumReply[]; count: number }> => {
+    const from = page * pageSize;
+    const to = from + pageSize - 1;
+
+    const { data, error, count } = await supabase
         .from("forum_replies")
-        .select("*")
+        .select("*", { count: "exact" })
         .eq("thread_id", threadId)
-        .order("created_at", { ascending: true });
+        .order("created_at", { ascending: true })
+        .range(from, to);
 
     if (error) {
         throw error;
     }
 
-    return data;
+    return {
+        data: data ?? [],
+        count: count ?? 0,
+    };
 };
 
 export const createForumReply = async (

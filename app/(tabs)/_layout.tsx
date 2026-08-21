@@ -101,6 +101,12 @@ export default function TabLayout() {
         }}
       />
       <Tabs.Screen
+        name="forum/thread/[threadId]"
+        options={{
+          href: null,
+        }}
+      />
+      <Tabs.Screen
         name="settings"
         options={{
           title: i18n.t("tabs.settings"),

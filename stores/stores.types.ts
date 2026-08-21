@@ -13,15 +13,22 @@ export type ForumStore = {
     categories: ForumCategory[];
     threadsByCategory: Record<string, ForumThreadSummary[]>;
     threads: Record<string, ForumThread>;
-    repliesByThread: Record<string, ForumReply[]>;
-
     categoriesLoaded: boolean;
     isLoadingCategories: boolean;
+    /*   repliesByThread: Record<string, ForumReply[]>;
+   
+  fetchThread: (threadId: string) => Promise<void>;
+   fetchReplies: (threadId: string) => Promise<void>;  */
 
     fetchCategories: () => Promise<void>;
     fetchThreads: (categoryId: string) => Promise<void>;
+
+    repliesByThread: Record<string, ForumReply[]>;
+    replyPage: Record<string, number>;
+    replyPageCount: Record<string, number>;
+
     fetchThread: (threadId: string) => Promise<void>;
-    fetchReplies: (threadId: string) => Promise<void>;
+    fetchReplies: (threadId: string, page: number) => Promise<void>;
 };
 
 export interface MediaStore {

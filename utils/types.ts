@@ -5,6 +5,8 @@ export type UpdateUserProfile = {
   first_name?: string;
   last_name?: string;
   language?: string;
+  agred_tos?: boolean;
+  agreed_tos_date?: string;
 };
 
 export type Profile = {
