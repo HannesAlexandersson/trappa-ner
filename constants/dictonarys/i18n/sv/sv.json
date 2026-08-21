@@ -63,7 +63,9 @@
     "create": "Skapa",
     "saveChanges": "Spara ändringar",
     "saving": "Sparar...",
-    "logOut": "Logga ut"
+    "logOut": "Logga ut",
+    "previus": "Föregående",
+    "next": "Nästa"
   },
   "not-found": {
     "message": "Den här sidan finns inte.",
@@ -71,8 +73,8 @@
   },
   "tabs": {
     "panic": "ABSTINENS",
-    "help": "Tips&Tricks",
-    "account": "Profil",
+    "forum": "Forum",
+    "plan": "Planering",
     "settings": "Inställningar",
     "home": "Hem"
   },
@@ -168,6 +170,23 @@
       "title": "Profil inställningar",
       "body": "Här kan du ändra inställningar & ändra dina personliga uppgifter som exempelvis namn, email osv. Du kan även göra ändringar i din behandlingsplan här!",
       "btnText": "Uppfattat!"
+    },
+    "forumBasicHelp": {
+      "title": "Forumet",
+      "body": "Här kan du skriva tips och tricks som fungerat för dig i kampen mot abstinensen. Ju fler som delar med sig av sina framgångar desto lättare blir det för andra att också lyckas! Välj en passande kategori och börja posta! Följ vanlig vett och etikett!",
+      "btnText": "Uppfattat!"
+    }
+  },
+  "forum": {
+    "header": "Forum",
+    "categories": {
+      "abstinence-support": "Abstinenshjälp",
+      "tools": "Hjälpmedel",
+      "other": "Övrigt"
+    },
+    "threads": {
+      "replies": "svar",
+      "lastReply": "Sista svaret"
     }
   }
 }

@@ -100,5 +100,13 @@
       "body": "Check the back of your pouch. Does it say something like 12mg/g? A pouch usually weighs around 0.8g. \n\n12mg × 0.8 = 9.6mg per pouch. \n\nIf you use 10 such pouches per day, adjust the slider to 96mg.",
       "btnText": "Got it!"
     }
+  },
+  "forum": {
+    "header": "Forum",
+    "categories": {
+      "abstinence-support": "Abstinence support",
+      "tools": "Assistance tools",
+      "other": "Other"
+    }
   }
 }

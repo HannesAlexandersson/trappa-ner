@@ -5,6 +5,8 @@ export type UpdateUserProfile = {
   first_name?: string;
   last_name?: string;
   language?: string;
+  agred_tos?: boolean;
+  agreed_tos_date?: string;
 };
 
 export type Profile = {
@@ -87,28 +89,7 @@ export type EventProps = {
   profile_id: string | null;
 };
 
-export interface MediaStore {
-  getPhotoForAvatar?: boolean;
-  selectedMedia: string | null;
-  selectedMediaFile: string | null;
-  setSelectedMedia: (file: string | null) => void;
-  setSelectedMediaFile: (file: string | null) => void;
-  userMediaFiles: ({ file }: { file: string }) => string | null;
-  mediaData: mediaDataProps;
-  setMediaData: (newData: mediaDataProps) => void;
-  handleSelect: (fileUrl: string) => void;
-  setGetPhotoForAvatar: (value: boolean) => void;
-}
 
-export interface UserStore {
-  id: string | null;
-  first_name: string;
-  last_name: string;
-  user_email: string;
-  getUserData: (id: string) => Promise<void>;
-  updateUser: (updates: Partial<UserStore>) => void;
-  clearUser: () => void;
-}
 
 export interface FullViewModalProps {
   isVisible: boolean;
@@ -243,4 +224,33 @@ export type MediaUpload = {
   type: string;
   url: string;
   uri?: string;
+};
+
+
+/* FORUM TYPES */
+
+export type ForumCategory = {
+  id: string;
+  name: string;
+  slug: string;
+  created_at: string;
+};
+
+export type ForumThread = {
+  id: string;
+  category_id: string;
+  author_id: string;
+  title: string;
+  body: string;
+  created_at: string;
+  updated_at: string;
+};
+
+export type ForumReply = {
+  id: string;
+  thread_id: string;
+  author_id: string;
+  body: string;
+  created_at: string;
+  updated_at: string;
 };

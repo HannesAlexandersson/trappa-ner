@@ -34,9 +34,9 @@ export default function TabLayout() {
         }}
       />
       <Tabs.Screen
-        name="account"
+        name="plan"
         options={{
-          title: i18n.t("tabs.account"),
+          title: i18n.t("tabs.plan"),
           tabBarIcon: ({ focused }) => (
             <Ionicons
               name={focused ? "person-sharp" : "person-outline"}
@@ -82,16 +82,28 @@ export default function TabLayout() {
         }}
       />
       <Tabs.Screen
-        name="help"
+        name="forum/index"
         options={{
-          title: i18n.t("tabs.help"),
+          title: i18n.t("tabs.forum"),
           tabBarIcon: ({ focused }) => (
             <Ionicons
-              name={focused ? "help-circle" : "help-circle-outline"}
+              name={focused ? "chatbubbles" : "chatbubbles-outline"}
               size={24}
               color="#005b89"
             />
           ),
+        }}
+      />
+      <Tabs.Screen
+        name="forum/[categoryId]"
+        options={{
+          href: null,
+        }}
+      />
+      <Tabs.Screen
+        name="forum/thread/[threadId]"
+        options={{
+          href: null,
         }}
       />
       <Tabs.Screen
