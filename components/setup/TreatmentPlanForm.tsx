@@ -680,11 +680,11 @@ export default function TreatmentPlanForm() {
       {/* STEP 5: TOS */}
       {step === 5 && (
         <View className="p-4">
-          <Typography variant="black" className="text-xl mb-4" weight="700">
+          <Typography className="text-xl mb-4 text-black dark:text-white" weight="700">
             {i18n.t("onboarding.tos.title")}
           </Typography>
 
-          {/* Removed fixed h-40 so the card grows dynamically with text */}
+
           <View className="bg-grey50 p-4 mb-6 rounded-2xl border border-grey200">
             <Typography size="md" className="text-gray-700 mb-2">
               {i18n.t("onboarding.tos.subtitle")}
@@ -706,7 +706,7 @@ export default function TreatmentPlanForm() {
             </Typography>
           </View>
 
-          {/* Side-by-side button row placed cleanly below the text card */}
+
           <View className="flex-row justify-between">
             <Button
               onPress={prevStep}
@@ -732,11 +732,11 @@ export default function TreatmentPlanForm() {
       {/* STEP 6: HOW TO USE THE APP */}
       {step === 6 && (
         <View className="p-4">
-          <Typography variant="black" className="text-2xl text-center mb-2" weight="700">
+          <Typography className=" text-black dark:text-white text-2xl text-center mb-2" weight="700">
             {i18n.t("onboarding.step5header")}
           </Typography>
 
-          <Typography size="sm" className="text-grey500 text-center mb-6 px-4">
+          <Typography size="sm" className="text-grey500 dark:text-grey200 text-center mb-6 px-4">
             {i18n.t("onboarding.step5subHeader")}
           </Typography>
 
@@ -751,71 +751,71 @@ export default function TreatmentPlanForm() {
 
           {/* FEATURE CARDS / QUICK GUIDE */}
           <View className="space-y-3 mb-8 gap-3">
-            <View className="bg-grey50 p-4 rounded-2xl border border-grey100 flex-row items-center">
+            <View className="bg-grey50 dark:bg-slate-400 p-4 rounded-2xl border border-grey100 flex-row items-center">
               <View className="bg-orange-100 p-3 rounded-xl mr-4">
                 <Ionicons name="notifications" size={24} color="#ea580c" />
               </View>
               <View className="flex-1">
-                <Typography weight="700" size="md">{i18n.t("onboarding.featureCard1Header")}</Typography>
-                <Typography size="sm" className="text-grey500">
+                <Typography weight="700" size="md" className="text-black dark:text-white">{i18n.t("onboarding.featureCard1Header")}</Typography>
+                <Typography size="sm" className="text-grey500 dark:text-grey200">
                   {i18n.t("onboarding.featureCard1Para")}
                 </Typography>
               </View>
             </View>
-            <View className="bg-grey50 p-4 rounded-2xl border border-grey100 flex-row items-center">
+            <View className="bg-grey50 dark:bg-slate-400 p-4 rounded-2xl border border-grey100 flex-row items-center">
               <View className="bg-red-100 p-3 rounded-xl mr-4">
                 <Ionicons name="flash" size={24} color="#FF0600" />
               </View>
               <View className="flex-1">
-                <Typography weight="700" size="md">{i18n.t("onboarding.featureCard2Header")}</Typography>
-                <Typography size="sm" className="text-grey500">
+                <Typography weight="700" size="md" className="text-black dark:text-white">{i18n.t("onboarding.featureCard2Header")}</Typography>
+                <Typography size="sm" className="text-grey500  dark:text-grey200">
                   {i18n.t("onboarding.featureCard2Para")}
                 </Typography>
               </View>
             </View>
-            <View className="bg-grey50 p-4 rounded-2xl border border-grey100 flex-row items-center">
+            <View className="bg-grey50 dark:bg-slate-400 p-4 rounded-2xl border border-grey100 flex-row items-center">
               <View className="bg-pink-100 p-3 rounded-xl mr-4">
                 <Ionicons name="analytics" size={24} color="#be185d" />
               </View>
               <View className="flex-1">
-                <Typography weight="700" size="md">{i18n.t("onboarding.featureCard3Header")}</Typography>
-                <Typography size="sm" className="text-grey500">
+                <Typography weight="700" size="md" className="text-black dark:text-white">{i18n.t("onboarding.featureCard3Header")}</Typography>
+                <Typography size="sm" className="text-grey500  dark:text-grey200">
                   {i18n.t("onboarding.featureCard3Para")}
                 </Typography>
               </View>
             </View>
             {/*NEW OLD CARDS */}
-            <View className="bg-grey50 p-4 rounded-2xl border border-grey100 flex-row items-center">
+            <View className="bg-grey50 dark:bg-slate-400 p-4 rounded-2xl border border-grey100 flex-row items-center">
               <View className="bg-blue100 p-3 rounded-xl mr-4">
                 <Ionicons name="stats-chart" size={24} color="#0056B3" />
               </View>
               <View className="flex-1">
-                <Typography weight="700" size="md">{i18n.t("onboarding.featureCard4Header")}</Typography>
-                <Typography size="sm" className="text-grey500">
+                <Typography weight="700" size="md" className="text-black dark:text-white">{i18n.t("onboarding.featureCard4Header")}</Typography>
+                <Typography size="sm" className="text-grey500  dark:text-grey200">
                   {i18n.t("onboarding.featureCard4Para")}
                 </Typography>
               </View>
             </View>
 
-            <View className="bg-grey50 p-4 rounded-2xl border border-grey100 flex-row items-center">
+            <View className="bg-grey50 dark:bg-slate-400 p-4 rounded-2xl border border-grey100 flex-row items-center">
               <View className="bg-green-100 p-3 rounded-xl mr-4">
                 <Ionicons name="trophy" size={24} color="#2E7D32" />
               </View>
               <View className="flex-1">
-                <Typography weight="700" size="md">{i18n.t("onboarding.featureCard5Header")}</Typography>
-                <Typography size="sm" className="text-grey500">
+                <Typography weight="700" size="md" className="text-black dark:text-white">{i18n.t("onboarding.featureCard5Header")}</Typography>
+                <Typography size="sm" className="text-grey500 dark:text-grey200">
                   {i18n.t("onboarding.featureCard5Para")}
                 </Typography>
               </View>
             </View>
 
-            <View className="bg-grey50 p-4 rounded-2xl border border-grey100 flex-row items-center">
+            <View className="bg-grey50 dark:bg-slate-400 p-4 rounded-2xl border border-grey100 flex-row items-center">
               <View className="bg-purple-100 p-3 rounded-xl mr-4">
                 <Ionicons name="medkit" size={24} color="#6A1B9A" />
               </View>
               <View className="flex-1">
-                <Typography weight="700" size="md">{i18n.t("onboarding.featureCard6Header")}</Typography>
-                <Typography size="sm" className="text-grey500">
+                <Typography weight="700" size="md" className="text-black dark:text-white">{i18n.t("onboarding.featureCard6Header")}</Typography>
+                <Typography size="sm" className="text-grey500 dark:text-grey200">
                   {i18n.t("onboarding.featureCard6Para")}
                 </Typography>
               </View>
