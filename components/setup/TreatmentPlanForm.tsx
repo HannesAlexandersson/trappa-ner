@@ -592,33 +592,33 @@ export default function TreatmentPlanForm() {
       {/* step 4 Present the treatmentplan */}
       {step === 4 && (
         <View className="w-full p-4 ">
-          <Typography variant="black" weight="700" size="xl" className="mb-2">
+          <Typography weight="700" size="xl" className="mb-2 text-black dark:text-white">
             {i18n.t("onboarding.summaryTitle")}
           </Typography>
-          <Typography size="sm" className="text-grey600 mb-6">
+          <Typography size="sm" className="text-grey600 dark:text-grey200 mb-6">
             {i18n.t("onboarding.summarySubtitle")}
           </Typography>
 
           {/* PLAN HIGHLIGHT CARD */}
-          <View className="bg-grey50 p-5 rounded-3xl border border-grey100 w-full mb-6">
+          <View className="bg-grey50 dark:bg-grey300/50 p-5 rounded-3xl border border-grey100 w-full mb-6">
             {/* Target Goal */}
             <View className="flex-row justify-between items-center pb-4 border-b border-grey200">
-              <Typography size="sm" className="text-grey600">{i18n.t("onboarding.summaryEndgoal")}</Typography>
-              <Typography weight="700" variant="blue">{i18n.t("onboarding.summarySupremGoal")}</Typography>
+              <Typography size="sm" className="text-grey600 dark:text-grey200">{i18n.t("onboarding.summaryEndgoal")}</Typography>
+              <Typography weight="700" variant={activeTheme == "light" ? "blue" : "white"}>{i18n.t("onboarding.summarySupremGoal")}</Typography>
             </View>
 
             {/* Estimated Duration */}
             <View className="flex-row justify-between items-center py-4 border-b border-grey200">
-              <Typography size="sm" className="text-grey600">{i18n.t("onboarding.summaryCalculatedTime")}</Typography>
-              <Typography weight="700" variant="black">
+              <Typography size="sm" className="text-grey600 dark:text-grey200">{i18n.t("onboarding.summaryCalculatedTime")}</Typography>
+              <Typography weight="700" className="text-black dark:text-white">
                 {calculatePlanSummary(formData).totalDays} {i18n.t("general.days")}
               </Typography>
             </View>
 
             {/* END DATE */}
             <View className="flex-row justify-between items-center py-4 border-b border-grey200">
-              <Typography size="sm" className="text-grey600">{i18n.t("onboarding.summaryEndDate")}</Typography>
-              <Typography weight="700" variant="black">
+              <Typography size="sm" className="text-grey600 dark:text-grey200">{i18n.t("onboarding.summaryEndDate")}</Typography>
+              <Typography weight="700" className="text-black dark:text-white">
                 {/*  format the ISO datestring into readable format */}
                 {new Date(calculatePlanSummary(formData).endDate).toLocaleDateString(undefined, {
                   year: "numeric",
@@ -631,8 +631,8 @@ export default function TreatmentPlanForm() {
             {/* Active Aids from Step 3 */}
             {(formData.usePatch || formData.useGum) && (
               <View className="flex-row justify-between items-center py-4 border-b border-grey200">
-                <Typography size="sm" className="text-grey600">{i18n.t("onboarding.Aid")}</Typography>
-                <Typography weight="700" variant="black" className="text-right flex-1 ml-4">
+                <Typography size="sm" className="text-grey600 dark:text-grey200">{i18n.t("onboarding.Aid")}</Typography>
+                <Typography weight="700" className="text-black dark:text-white text-right flex-1 ml-4">
                   {[
                     formData.usePatch ? `Plåster (${formData.patchStrength}mg)` : null,
                     formData.useGum ? `Tuggummi (${formData.gumStrength}mg)` : null,
@@ -643,21 +643,21 @@ export default function TreatmentPlanForm() {
 
             {/* First Dose Time */}
             <View className="flex-row justify-between items-center pt-4">
-              <Typography size="sm" className="text-grey600">{i18n.t("onboarding.summaryFirstDoseToday")}</Typography>
-              <Typography weight="700" variant="black">
+              <Typography size="sm" className="text-grey600 dark:text-grey200">{i18n.t("onboarding.summaryFirstDoseToday")}</Typography>
+              <Typography weight="700" className="text-black dark:text-white">
                 Kl. {formData.wakeUpTime || "07:00"}
               </Typography>
             </View>
           </View>
 
           {/* PUSH NOTIFICATION PERMISSION CARD */}
-          <View className="bg-blue50 p-5 rounded-3xl border border-blue100 w-full mb-6 flex-row items-center">
-            <Ionicons name="notifications-outline" size={28} color="#0056B3" className="mr-4" />
+          <View className="bg-blue50 dark:bg-semiDarkBg p-5 rounded-3xl border border-blue-600 w-full mb-6 flex-row items-center">
+            <Ionicons name="notifications-outline" size={28} color={activeTheme == "light" ? "#0056B3" : "#fff"} className="mr-4" />
             <View className="flex-1 pr-2">
-              <Typography weight="700" size="sm" className="text-blue-900 mb-1">
+              <Typography weight="700" size="sm" className="text-blue-900 dark:text-white mb-1">
                 {i18n.t("onboarding.summaryNotificationsImportant")}
               </Typography>
-              <Typography size="sm" className="text-blue-700">
+              <Typography size="sm" className="text-blue-700 dark:text-blue-200">
                 {i18n.t("onboarding.summaryNotificationsSchedule")}
               </Typography>
             </View>
