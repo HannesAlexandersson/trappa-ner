@@ -455,8 +455,8 @@ export default function TreatmentPlanForm() {
                 </Typography>
                 <Typography size="sm" className="text-grey500 mt-1">
                   {formData.useExternalTools
-                    ? "Ja, jag vill använda plåster eller tuggummi."
-                    : "Nej, jag vill bara trappa ner min nuvarande produkt."}
+                    ? i18n.t("onboarding.step3SupportToolsCardYes")
+                    : i18n.t("onboarding.step3SupportToolsCardNo")}
                 </Typography>
               </View>
               <Switch
@@ -472,14 +472,17 @@ export default function TreatmentPlanForm() {
           {formData.useExternalTools && (
             <View className="space-y-4 mb-6">
               {/* --- PATCH SECTION --- */}
-              <View className="p-4 bg-blue50/60 rounded-2xl border border-blue100 mb-4">
+              <Typography weight="700" className="text-lg font-roboto text-vgrBlue dark:text-white ml-1">
+                {i18n.t("onboarding.step3SupportToolWhat")}
+              </Typography>
+              <View className="p-4 bg-blue50/60 dark:bg-blue-400/50 rounded-2xl border border-blue100 mb-4">
                 <View className="flex-row justify-between items-center">
                   <View className="flex-1 mr-2">
-                    <Typography weight="700" variant="blue">
-                      Nikotinplåster
+                    <Typography weight="700" variant={activeTheme == "light" ? "blue" : "white"}>
+                      {i18n.t("onboarding.step3Patch")}
                     </Typography>
-                    <Typography size="sm" className="text-grey500">
-                      Ger en jämn basdos under hela dagen.
+                    <Typography size="sm" className="text-grey500 dark:text-grey200">
+                      {i18n.t("onboarding.step3PatchDescription")}
                     </Typography>
                   </View>
                   <Switch
@@ -492,8 +495,8 @@ export default function TreatmentPlanForm() {
 
                 {formData.usePatch && (
                   <View className="mt-3 pt-3 border-t border-blue100">
-                    <Typography size="sm" className="text-grey500 mb-2">
-                      Välj styrka på ditt plåster:
+                    <Typography size="sm" className="text-grey500  dark:text-grey200 mb-2">
+                      {i18n.t("onboarding.step3PatchStrenghtSelection")}
                     </Typography>
                     <View className="flex-row justify-between">
                       {[21, 14, 7].map((mg) => (
@@ -520,14 +523,14 @@ export default function TreatmentPlanForm() {
               </View>
 
               {/* --- GUM SECTION --- */}
-              <View className="p-4 bg-purple-50/60 rounded-2xl border border-purple-100 mb-4">
+              <View className="p-4 bg-purple-50/60 dark:bg-purple-500/50 rounded-2xl border border-purple-100 dark:border-purple-400 mb-4">
                 <View className="flex-row justify-between items-center">
                   <View className="flex-1 mr-2">
-                    <Typography weight="700" variant="blue">
-                      Nikotintuggummi / Sugtablett
+                    <Typography weight="700" variant={activeTheme == "light" ? "blue" : "white"}>
+                      {i18n.t("onboarding.step3Gum")}
                     </Typography>
-                    <Typography size="sm" className="text-grey500">
-                      För tillfälliga, skarpa begär.
+                    <Typography size="sm" className="text-grey500 dark:text-grey200">
+                      {i18n.t("onboarding.step3GumDescription")}
                     </Typography>
                   </View>
                   <Switch
@@ -539,9 +542,9 @@ export default function TreatmentPlanForm() {
                 </View>
 
                 {formData.useGum && (
-                  <View className="mt-3 pt-3 border-t border-purple-100">
-                    <Typography size="sm" className="text-grey500 mb-2">
-                      Välj styrka på tuggummi/tablett:
+                  <View className="mt-3 pt-3 border-t border-purple-100 dark:border-purple-400">
+                    <Typography size="sm" className="text-grey500 dark:text-grey200 mb-2">
+                      {i18n.t("onboarding.step3GumDescription")}
                     </Typography>
                     <View className="flex-row justify-center">
                       {[4, 2].map((mg) => (
@@ -570,7 +573,7 @@ export default function TreatmentPlanForm() {
           )}
 
           {/* NAVIGATION BUTTONS */}
-          <Typography className="text-gray-400 text-xl font-bold flex-1 text-center font-roboto shadow-slate-800 shadow-lg">
+          <Typography className="text-gray-400 dark:text-grey50 text-xl font-bold flex-1 text-center font-roboto shadow-slate-800 shadow-lg">
             {step}/5 {i18n.t("onboarding.pages")}
           </Typography>
           <View className="flex-row justify-between pt-4">
