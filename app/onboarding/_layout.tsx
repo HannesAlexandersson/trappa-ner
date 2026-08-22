@@ -1,21 +1,31 @@
-import i18n from "@/constants/dictonarys/i18n";
+import { Colors } from "@/constants/theme";
+import { useColorScheme } from "@/hooks/use-color-scheme";
+import { useThemeStore } from "@/stores/themeStore";
 import { Stack } from "expo-router";
 import React from "react";
 
 
 export default function OnboardingLayout() {
+    const systemTheme = useColorScheme();
+    const theme = useThemeStore((state) => state.theme);
+
+    const activeTheme =
+        theme === "system"
+            ? systemTheme ?? "light"
+            : theme;
+
     return (
         <Stack
             screenOptions={{
-                // Option 1: Hide it completely to build your own custom look inside the page
-                // headerShown: false, 
-
-                /* Option 2: If you WANT a header but want it to look good: */
                 headerShown: true,
-                headerTitle: i18n.t("onboarding.header1"),
+                headerTitle: "",
+                headerStyle: {
+                    backgroundColor: Colors[activeTheme].headerBackground,
+                    // WHENWE HAVE ADS USE THE DYNAMIC HEIGHT SYSTEM
+                    // height: headerHeight,
+                },
                 headerShadowVisible: false,
-                headerStyle: { backgroundColor: '#005b89' },
-                headerTintColor: '#ffffff'
+                headerTintColor: '#ffffff',
             }}
         />
     );

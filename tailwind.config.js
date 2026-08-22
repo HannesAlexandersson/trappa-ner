@@ -19,6 +19,7 @@ module.exports = {
         blue50: "#eff6ff",
         blue100: "#dbeafe",
         darkBg: "#111827",
+        semiDarkBg: "#0c3043",
         darkSurface: "#1f2937",
         darkBorder: "#374151",
         darkText: "#f9fafb",

@@ -202,7 +202,7 @@ export type TypographyProps = {
 
 
 export interface ButtonProps extends TouchableOpacityProps {
-  variant?: "black" | "blue" | "outlined" | "white";
+  variant?: "black" | "blue" | "outlined" | "white" | "darkThemedUnselected" | "darkThemedSelected";
   size?: "sm" | "md" | "lg";
   loading?: boolean;
   disabled?: boolean;

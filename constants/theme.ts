@@ -42,7 +42,8 @@ export const Colors = {
     tabBackground: "#fff",
     headerBackground: "#fff",
     tabText: "#11181C",
-    activityIndicator: "#2563eb"
+    activityIndicator: "#2563eb",
+    onboardingHeader: "#005b89",
   },
 
   dark: {
@@ -58,7 +59,8 @@ export const Colors = {
     tabBackground: "#151718",
     headerBackground: "#151718",
     tabText: "#ECEDEE",
-    activityIndicator: "#1b9e99"
+    activityIndicator: "#1b9e99",
+    onboardingHeader: "#021e2d",
   },
 };
 
