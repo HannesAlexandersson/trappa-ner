@@ -1,6 +1,8 @@
 import { HelpModal, Typography } from "@/components";
 import i18n from "@/constants/dictonarys/i18n";
+import { useColorScheme } from "@/hooks/use-color-scheme";
 import { useForumStore } from "@/stores/forumStore";
+import { useThemeStore } from "@/stores/themeStore";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import { router } from "expo-router";
 import { useEffect, useState } from "react";
@@ -13,8 +15,12 @@ export default function ForumScreen() {
     isLoadingCategories,
     fetchCategories,
   } = useForumStore();
-
-
+  const systemTheme = useColorScheme();
+  const theme = useThemeStore((state) => state.theme);
+  const activeTheme =
+    theme === "system"
+      ? systemTheme ?? "light"
+      : theme;
   // Local states
   const [showHelp, setShowHelp] = useState(false);
   const [helpKey, setHelpKey] = useState("");
@@ -41,14 +47,14 @@ export default function ForumScreen() {
   return (
     <View className="flex-1 p-6">
       <View className="flex-row justify-between ">
-        <Typography size="h1" weight="700" className="mb-8 text-vgrBlue font-roboto">
+        <Typography size="h1" weight="700" className="mb-8 text-vgrBlue dark:text-blue-300 font-roboto">
           {i18n.t("forum.header")}
         </Typography>
         <TouchableOpacity onPress={() => openHelp("forumBasicHelp")}>
           <Ionicons
             name="information-circle-outline"
             size={24}
-            color="#005b89"
+            color={activeTheme == "dark" ? "#93c5fd" : "#005b89"}
           />
         </TouchableOpacity>
       </View>
@@ -63,9 +69,9 @@ export default function ForumScreen() {
               },
             })
           }
-          className="border border-grey300 rounded-lg p-5 mb-4"
+          className="border border-grey300 dark:border-white rounded-lg p-5 mb-4"
         >
-          <Typography size="lg" weight="600">
+          <Typography size="lg" weight="600" className="dark:text-white text-black">
             {i18n.t(`forum.categories.${category.slug}`)}
           </Typography>
         </Pressable>

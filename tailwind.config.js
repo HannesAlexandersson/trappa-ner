@@ -23,6 +23,7 @@ module.exports = {
         darkBorder: "#374151",
         darkText: "#f9fafb",
         darkTextSecondary: "#d1d5db",
+        darkThemeText: "#fff"
       },
     },
   },

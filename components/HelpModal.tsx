@@ -17,12 +17,12 @@ const HelpModal = ({ setShowHelp, helpKey }: HelpModalProps) => {
             className="flex-1 bg-black/50 justify-center items-center p-6"
             onPress={() => setShowHelp(false)}
         >
-            <View className="bg-white w-full rounded-3xl p-6 shadow-xl">
-                <Typography weight="700" size="lg" variant="blue" className="mb-4">
+            <View className="bg-white dark:bg-slate-700 w-full rounded-3xl p-6 shadow-xl">
+                <Typography weight="700" size="lg" variant="blue" className="mb-4 dark:text-white">
                     {i18n.t(`help.${helpKey}.title`)}
                 </Typography>
 
-                <Typography size="md" className="text-grey600 mb-6">
+                <Typography size="md" className="text-grey600 dark:text-white mb-6">
                     {i18n.t(`help.${helpKey}.body`)}
                 </Typography>
 

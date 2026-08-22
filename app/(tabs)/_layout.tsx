@@ -16,6 +16,18 @@ export default function TabLayout() {
     theme === "system"
       ? systemTheme ?? "light"
       : theme;
+
+
+  // WHEN ADS ARE ADDED
+  /* const AD_PADDING = 10;
+  const MAX_AD_HEIGHT = 80;
+
+  const headerHeight = Math.min(
+    adHeight + AD_PADDING,
+    MAX_AD_HEIGHT
+  );
+ */
+  /* Let the header height be dynamic depening on the ad height up to a ceiling max value. */
   return (
     <Tabs
       screenOptions={{
@@ -24,6 +36,8 @@ export default function TabLayout() {
 
         headerStyle: {
           backgroundColor: Colors[activeTheme].headerBackground,
+          // WHENWE HAVE ADS USE THE DYNAMIC HEIGHT SYSTEM
+          // height: headerHeight,
         },
 
         tabBarActiveTintColor: Colors[activeTheme].tabIcon,

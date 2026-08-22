@@ -1,7 +1,9 @@
 import { Typography } from "@/components";
 import i18n from "@/constants/dictonarys/i18n";
+import { useColorScheme } from "@/hooks/use-color-scheme";
 import { getForumThreads } from "@/services/forumService";
 import { useForumStore } from "@/stores/forumStore";
+import { useThemeStore } from "@/stores/themeStore";
 import { ForumThread } from "@/utils/types";
 import { formatDateTime } from "@/utils/utils";
 import Ionicons from "@expo/vector-icons/Ionicons";
@@ -13,6 +15,12 @@ export default function ForumCategoryScreen() {
     const { categoryId } = useLocalSearchParams<{ categoryId: string }>();
 
     const categories = useForumStore((state) => state.categories);
+    const systemTheme = useColorScheme();
+    const theme = useThemeStore((state) => state.theme);
+    const activeTheme =
+        theme === "system"
+            ? systemTheme ?? "light"
+            : theme;
 
     const [threads, setThreads] = useState<ForumThread[]>([]);
     const [isLoading, setIsLoading] = useState(true);
@@ -56,12 +64,12 @@ export default function ForumCategoryScreen() {
             <View className="flex-row justify-start mt-4">
                 <TouchableOpacity
                     onPress={handleGoBack}
-                    className="flex-row items-center ml-4 bg-vgrBlue rounded-full"
+                    className="flex-row items-center ml-4 bg-vgrBlue dark:bg-white rounded-full"
                 >
                     <Ionicons
                         name="arrow-back-circle-sharp"
                         size={40}
-                        color="white"
+                        color={activeTheme == "dark" ? "#111827" : "#fff"}
                     />
                 </TouchableOpacity>
             </View>
@@ -71,7 +79,7 @@ export default function ForumCategoryScreen() {
                     <Typography
                         size="h1"
                         weight="700"
-                        className="text-vgrBlue"
+                        className="text-vgrBlue dark:text-darkThemeText"
                     >
                         {i18n.t(`forum.categories.${category.slug}`)}
                     </Typography>
@@ -88,15 +96,20 @@ export default function ForumCategoryScreen() {
                                 },
                             })
                         }
-                        className="border border-grey300 rounded-lg p-5 mb-4"
+                        className="border border-grey300 dark:border-darkThemeText rounded-lg p-5 mb-4"
                     >
-                        <Typography size="lg" weight="600">
+                        <Typography size="lg" weight="600" className="dark:text-darkThemeText">
                             {thread.title}
                         </Typography>
 
-                        <Typography size="sm" className="mt-2">
+                        <Typography size="sm" className="mt-2 dark:text-darkThemeText" >
                             {formatDateTime(thread.created_at)}
                         </Typography>
+                        {/*  WE NEED TO ADD AUTHOR NAME ALSO!!!
+                       
+                       <Typography size="sm" className="mt-2 dark:text-darkThemeText" >
+                            {formatDateTime(thread.author_name)}
+                        </Typography> */}
                     </Pressable>
                 ))}
             </View>
