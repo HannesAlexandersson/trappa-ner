@@ -22,8 +22,9 @@ import {
 } from "react-native";
 
 export default function SettingsScreen() {
-  const { user } = useAuth();
-  const setTheme = useThemeStore((state) => state.setTheme);
+  // GLOBAL
+  const { user, updateTheme } = useAuth();
+  // STORES
   const systemTheme = useColorScheme();
   const theme = useThemeStore((state) => state.theme);
 
@@ -31,15 +32,13 @@ export default function SettingsScreen() {
     theme === "system"
       ? systemTheme ?? "light"
       : theme;
-
+  // LOCAL
   const [firstName, setFirstName] = useState(user?.first_name ?? "");
   const [lastName, setLastName] = useState(user?.last_name ?? "");
   const [email, setEmail] = useState(user?.email ?? "");
   const [language, setLanguage] = useState(user?.language ?? i18n.locale);
-
   const [newPassword, setNewPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
-
   const [isSaving, setIsSaving] = useState(false);
   const [showHelp, setShowHelp] = useState(false);
   const [helpKey, setHelpKey] = useState("");
@@ -53,6 +52,7 @@ export default function SettingsScreen() {
   }
 
   if (!user.id) return null;
+  // HANDLERS
   const hasProfileChanges =
     firstName !== (user.first_name ?? "") ||
     lastName !== (user.last_name ?? "") ||
@@ -161,7 +161,7 @@ export default function SettingsScreen() {
       </Text>
       <View className="flex flex-row justify-around mb-6">
         <View className="flex flex-col items-center justify-center">
-          <TouchableOpacity onPress={() => setTheme("light")} className="bg-blue-400 dark:bg-white rounded-md p-2">
+          <TouchableOpacity onPress={() => updateTheme("light")} className="bg-blue-400 dark:bg-white rounded-md p-2">
             <Ionicons
               name="sunny-sharp"
               size={50}
@@ -172,7 +172,7 @@ export default function SettingsScreen() {
           <Typography size="sm" weight="300" className="dark:text-white text-black" > {i18n.t("settings.light")}</Typography>
         </View>
         <View className="flex flex-col items-center justify-center">
-          <TouchableOpacity onPress={() => setTheme("dark")} className="bg-vgrBlue dark:bg-white rounded-md p-2">
+          <TouchableOpacity onPress={() => updateTheme("dark")} className="bg-vgrBlue dark:bg-white rounded-md p-2">
             {theme == "dark" ? (
               <Ionicons
                 name="moon-sharp"
@@ -308,6 +308,7 @@ export default function SettingsScreen() {
       >
         <HelpModal setShowHelp={setShowHelp} helpKey={helpKey} />
       </Modal>
+
       <Pressable
         className="bg-red-500 rounded-lg p-4 items-center mt-8 mb-20"
         onPress={handleLogout}
