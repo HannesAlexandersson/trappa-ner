@@ -118,8 +118,8 @@ export default function TreatmentPlanForm() {
 
   return (
     <ScrollView
-      className="flex-1 bg-white dark:bg-slate-800"
-      contentContainerStyle={{ paddingBottom: 80 }}
+      className="flex-1 bg-white dark:bg-slate-800 pb-80 w-full"
+      /* contentContainerStyle={{ paddingBottom: 80, width: "100%", }} */
       showsVerticalScrollIndicator={false}
       maximumZoomScale={3}
       minimumZoomScale={1}
@@ -180,7 +180,7 @@ export default function TreatmentPlanForm() {
 
       {/* STEP 2: The Core Data */}
       {step === 2 && (
-        <View className="flex-1 w-full px-4 py-4">
+        <View className="w-full px-4 py-4">
           <Typography
             className="font-roboto mb-4 w-full text-black dark:text-white"
             weight="700"
@@ -198,12 +198,14 @@ export default function TreatmentPlanForm() {
           </Typography>
 
           {/* TOGGLE BUTTONS */}
-          <View className="flex-row justify-around w-full mb-6 gap-2">
+          {/* <View className="flex-row justify-around w-full mb-6 gap-2"> */}
+          <View className="flex-row w-full mb-6 gap-2">
             <Button
               variant={activeTheme == "dark" ? formData.consumptionType === "smoker" ? "darkThemedSelected" : "darkThemedUnselected" : formData.consumptionType === "smoker" ? "blue" : "white"}
               onPress={() =>
                 setFormData({ ...formData, consumptionType: "smoker" })
               }
+              className="flex-1"
             >
               <Typography
                 className={activeTheme == "dark" ? formData.consumptionType === "smoker" ? "text-darkTextSecondary" : "text-white"
@@ -218,6 +220,7 @@ export default function TreatmentPlanForm() {
               onPress={() =>
                 setFormData({ ...formData, consumptionType: "snus" })
               }
+              className="flex-1"
             >
               <Typography
                 className={activeTheme == "dark" ? formData.consumptionType === "snus" ? "text-darkTextSecondary" : "text-white"
@@ -231,8 +234,8 @@ export default function TreatmentPlanForm() {
 
           {/* MG NICOTINE SLIDER - DATA CENTERED */}
           <View className="mb-8 bg-vgrBlue dark:bg-semiDarkBg p-6 rounded-3xl border border-grey100 w-full">
-            {/* Header Row Fixed */}
-            <View className="flex-row items-center justify-center mb-4 w-full px-2">
+
+            <View className="flex-row justify-around mb-4 w-full px-2">
               <Typography
                 size="sm"
                 className="text-grey200 text-center mb-2 uppercase tracking-widest flex-shrink"
@@ -262,7 +265,7 @@ export default function TreatmentPlanForm() {
             </View>
             <View className="w-full">
               <Slider
-                /* style={{ width: "100%", height: 50 }} */
+                /*   style={{ width: "100%", height: 50 }} */
                 className="w-full h-14"
                 minimumValue={5}
                 maximumValue={100}

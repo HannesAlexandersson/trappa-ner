@@ -4,7 +4,7 @@ import { View } from "react-native";
 
 export default function OnboardingScreen() {
   return (
-    <View className="flex-1 items-center justify-start ">
+    <View className="flex-1 w-full items-center justify-start ">
       <TreatmentPlanForm />
     </View>
   );
