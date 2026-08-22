@@ -18,8 +18,8 @@ export const HomeHeader = ({ first_name }: { first_name: string }) => {
     if (!showWelcome) return null;
 
     return (
-        <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
-            <Text style={{ fontSize: 24 }}>
+        <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }} >
+            <Text style={{ fontSize: 24 }} className="text-black font-roboto dark:text-white">
                 {i18n.t("home.greeting", { name: first_name })}
             </Text>
         </View>

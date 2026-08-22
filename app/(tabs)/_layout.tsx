@@ -1,6 +1,7 @@
 import i18n from "@/constants/dictonarys/i18n";
 import { Colors } from "@/constants/theme";
 import { useColorScheme } from "@/hooks/use-color-scheme";
+import { useThemeStore } from "@/stores/themeStore";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import { router, Tabs } from "expo-router";
 import React from "react";
@@ -8,21 +9,32 @@ import { View } from "react-native";
 
 
 export default function TabLayout() {
-  const theme = useColorScheme();
+  const systemTheme = useColorScheme();
+  const theme = useThemeStore((state) => state.theme);
+
+  const activeTheme =
+    theme === "system"
+      ? systemTheme ?? "light"
+      : theme;
   return (
     <Tabs
       screenOptions={{
-        tabBarActiveTintColor: "#000",
         headerShown: true,
-        headerTitleAlign: "center",
-        headerTitleStyle: {
-          color: "white",
-          fontSize: 30,
-          fontWeight: "bold",
-          fontFamily: "Roboto",
+        headerTitle: "",
+
+        headerStyle: {
+          backgroundColor: Colors[activeTheme].headerBackground,
         },
+
+        tabBarActiveTintColor: Colors[activeTheme].tabIcon,
+        tabBarInactiveTintColor: Colors[activeTheme].tabIcon,
+
+        tabBarStyle: {
+          backgroundColor: Colors[activeTheme].tabBackground,
+        },
+
         sceneStyle: {
-          backgroundColor: Colors[theme ?? "light"].background,
+          backgroundColor: Colors[activeTheme].background,
         },
       }}
     >
@@ -34,7 +46,7 @@ export default function TabLayout() {
             <Ionicons
               name={focused ? "home-sharp" : "home-outline"}
               size={24}
-              color="#005b89"
+              color={Colors[activeTheme].tabIcon}
             />
           ),
         }}
@@ -47,7 +59,7 @@ export default function TabLayout() {
             <Ionicons
               name={focused ? "person-sharp" : "person-outline"}
               size={24}
-              color="#005b89"
+              color={Colors[activeTheme].tabIcon}
             />
           ),
         }}
@@ -95,7 +107,7 @@ export default function TabLayout() {
             <Ionicons
               name={focused ? "chatbubbles" : "chatbubbles-outline"}
               size={24}
-              color="#005b89"
+              color={Colors[activeTheme].tabIcon}
             />
           ),
         }}
@@ -120,7 +132,7 @@ export default function TabLayout() {
             <Ionicons
               name={focused ? "settings" : "settings-outline"}
               size={24}
-              color="#005b89"
+              color={Colors[activeTheme].tabIcon}
             />
           ),
         }}

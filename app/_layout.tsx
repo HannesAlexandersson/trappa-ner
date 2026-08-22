@@ -23,19 +23,19 @@ export default function RootLayout() {
   const systemTheme = useColorScheme();
   const theme = useThemeStore((state) => state.theme);
 
+  const activeTheme =
+    theme === "system"
+      ? systemTheme ?? "light"
+      : theme;
+
 
   const [loaded] = useFonts({
     Roboto: require("../assets/fonts/Roboto/Roboto-Regular.ttf"),
   });
 
   useEffect(() => {
-    const activeTheme =
-      theme === "system"
-        ? systemTheme ?? "light"
-        : theme;
-
     colorScheme.set(activeTheme);
-  }, [theme, systemTheme]);
+  }, [activeTheme]);
 
 
   useEffect(() => {
@@ -58,7 +58,9 @@ export default function RootLayout() {
           <Stack.Screen name="onboarding" options={{ headerShown: false }} />
           <Stack.Screen name="+not-found" />
         </Stack>
-        <StatusBar style={systemTheme === "dark" ? "light" : "dark"} />
+        <StatusBar
+          style={activeTheme === "dark" ? "light" : "dark"}
+        />
       </AuthProvider>
     </GestureHandlerRootView>
   );

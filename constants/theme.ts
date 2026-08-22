@@ -38,6 +38,11 @@ export const Colors = {
     vgrBlue: "#005b89",
     icon: "#687076",
     pickerText: "#000000",
+    tabIcon: "#005b89",
+    tabBackground: "#fff",
+    headerBackground: "#fff",
+    tabText: "#11181C",
+    activityIndicator: "#2563eb"
   },
 
   dark: {
@@ -49,6 +54,11 @@ export const Colors = {
     vgrBlue: "#005b89",
     icon: "#9BA1A6",
     pickerText: "#FFFFFF",
+    tabIcon: "#FFF",
+    tabBackground: "#151718",
+    headerBackground: "#151718",
+    tabText: "#ECEDEE",
+    activityIndicator: "#1b9e99"
   },
 };
 
