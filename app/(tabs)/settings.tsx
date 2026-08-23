@@ -43,6 +43,8 @@ export default function SettingsScreen() {
   const [showHelp, setShowHelp] = useState(false);
   const [helpKey, setHelpKey] = useState("");
 
+  const [isPickerOpen, setIsPickerOpen] = useState(false);
+
   if (!user) {
     return (
       <View className="flex-1 justify-center items-center">
@@ -130,6 +132,10 @@ export default function SettingsScreen() {
     }
   };
 
+  const selectedLanguage = Object.entries(languageOptions).find(
+    ([locale]) => locale === language
+  )?.[1];
+
   return (
     <ScrollView className="flex-1 p-6">
 
@@ -139,7 +145,7 @@ export default function SettingsScreen() {
         </Text>
 
         <TouchableOpacity onPress={() => openHelp("systemSettingsHelp")}>
-          {theme == "dark" ? (
+          {activeTheme == "dark" ? (
             <Ionicons
               name="information-circle-outline"
               size={24}
@@ -173,7 +179,7 @@ export default function SettingsScreen() {
         </View>
         <View className="flex flex-col items-center justify-center">
           <TouchableOpacity onPress={() => updateTheme("dark")} className="bg-vgrBlue dark:bg-white rounded-md p-2">
-            {theme == "dark" ? (
+            {activeTheme == "dark" ? (
               <Ionicons
                 name="moon-sharp"
                 size={50}
@@ -198,16 +204,29 @@ export default function SettingsScreen() {
 
       <View className="border border-grey300 dark:border-grey50 rounded-lg mb-6 overflow-hidden ">
         <Picker
+          /* mode="dropdown" */
+          prompt="Select language"
           selectedValue={language}
           onValueChange={(value) => setLanguage(value)}
+          selectionColor={activeTheme == "dark" ? "#fff" : "#000"}
+          dropdownIconColor={activeTheme == "dark" ? "#fff" : "#000"}
+          dropdownIconRippleColor={activeTheme == "dark" ? "#fff" : "#000"}
 
+          onFocus={() => setIsPickerOpen(true)}
+          onBlur={() => setIsPickerOpen(false)}
         >
           {Object.entries(languageOptions).map(([locale, option]) => (
             <Picker.Item
               key={locale}
               label={`${option.flag}  ${option.name}`}
               value={locale}
-              color={Colors[activeTheme].vgrBlue}
+              fontFamily="Roboto"
+              /* color={Colors[activeTheme].pickerText} */
+              color={
+                isPickerOpen
+                  ? "#005b89"
+                  : Colors[activeTheme].pickerText
+              }
             />
           ))}
         </Picker>
@@ -219,7 +238,7 @@ export default function SettingsScreen() {
         </Text>
 
         <TouchableOpacity onPress={() => openHelp("profileSettingsHelp")}>
-          {theme == "dark" ? (
+          {activeTheme == "dark" ? (
             <Ionicons
               name="information-circle-outline"
               size={24}

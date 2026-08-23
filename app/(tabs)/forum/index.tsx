@@ -47,14 +47,14 @@ export default function ForumScreen() {
   return (
     <View className="flex-1 p-6">
       <View className="flex-row justify-between ">
-        <Typography size="h1" weight="700" className="mb-8 text-vgrBlue dark:text-blue-300 font-roboto">
+        <Typography size="h1" weight="700" className="mb-8 text-vgrBlue dark:text-white font-roboto">
           {i18n.t("forum.header")}
         </Typography>
         <TouchableOpacity onPress={() => openHelp("forumBasicHelp")}>
           <Ionicons
             name="information-circle-outline"
             size={24}
-            color={activeTheme == "dark" ? "#93c5fd" : "#005b89"}
+            color={activeTheme == "dark" ? "#fff" : "#005b89"}
           />
         </TouchableOpacity>
       </View>
