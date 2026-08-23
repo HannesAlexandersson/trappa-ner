@@ -1,8 +1,38 @@
 import i18n, { translations } from "@/constants/dictonarys/i18n";
 import { getLocales } from "expo-localization";
+import * as Notifications from "expo-notifications";
+import { Platform } from "react-native";
 import Toast from "react-native-toast-message";
 import { EventProps } from "./types";
 
+export const requestNotificationPermission = async (): Promise<boolean> => {
+  if (Platform.OS === "android") {
+    await Notifications.setNotificationChannelAsync("default", {
+      name: "Default",
+      importance: Notifications.AndroidImportance.DEFAULT,
+    });
+  }
+
+  const existingPermissions =
+    await Notifications.getPermissionsAsync();
+
+  if (
+    existingPermissions.granted ||
+    existingPermissions.ios?.status ===
+    Notifications.IosAuthorizationStatus.PROVISIONAL
+  ) {
+    return true;
+  }
+
+  const requestedPermissions =
+    await Notifications.requestPermissionsAsync();
+
+  return (
+    requestedPermissions.granted ||
+    requestedPermissions.ios?.status ===
+    Notifications.IosAuthorizationStatus.PROVISIONAL
+  );
+};
 
 export const setUserLocale = (language: string | null) => {
   if (language && language in translations) {

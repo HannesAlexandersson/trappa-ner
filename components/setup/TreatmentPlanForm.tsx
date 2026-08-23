@@ -1,17 +1,17 @@
 import { Button, HelpModal, Typography } from "@/components";
 import i18n from "@/constants/dictonarys/i18n";
+import { useColorScheme } from "@/hooks/use-color-scheme";
 import { updateUserProfile } from "@/lib/apiHelper";
 import { useAuth } from "@/providers/authProviders";
+import { useThemeStore } from "@/stores/themeStore";
 import { OnboardingData } from "@/utils/types";
-import { timeOptions } from "@/utils/utils";
+import { requestNotificationPermission, timeOptions } from "@/utils/utils";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import Slider from "@react-native-community/slider";
-/* import * as Notifications from "expo-notifications"; */
-import { useColorScheme } from "@/hooks/use-color-scheme";
-import { useThemeStore } from "@/stores/themeStore";
 import { useRouter } from "expo-router";
 import React, { useState } from "react";
 import {
+  Alert,
   Modal,
   ScrollView,
   Switch,
@@ -70,30 +70,34 @@ export default function TreatmentPlanForm() {
 
   const handleFinalSave = async () => {
     setLoading(true);
+
     try {
-      // 1. Request  permissions to send notifications
-      /*   const { status: existingStatus } = await Notifications.getPermissionsAsync();
-        let finalStatus = existingStatus;
-  
-        if (existingStatus !== "granted") {
-          const { status } = await Notifications.requestPermissionsAsync();
-          finalStatus = status;
-        } */
-
-      // 2. Prepare payload (calculates reductionRate, startDate, endDate using your updated helper)
+      // 1. Prepare and save treatment plan
       const payload = prepareTreatmentPlanPayload(formData);
-
-      // 3. Save to backend/database
       await createTreatmentPlan(payload);
 
-      // 4. Redirect to main app flow
+      // 2. Request notification permission
+      Alert.alert(
+        "Notifications",
+        "This app heavyily relies on notifications to let you know when it is time for your next dose. Please allow notifications to use this feature."
+      );
+
+      const notificationsAllowed = await requestNotificationPermission();
+
+      if (!notificationsAllowed) {
+        Alert.alert(
+          "Notifications disabled",
+          "If you change your mind, you can enable notifications later in your phone's settings."
+        );
+      }
+
+      // 3. Enter the main app
       router.replace("/(tabs)");
     } catch (error) {
-      console.error("Failed to save treatment plan:", error);
+      console.error("Failed to complete onboarding:", error);
       // TOAST ALERT TO USER!!!!!!!!!!
     } finally {
       setLoading(false);
-
     }
   };
 
