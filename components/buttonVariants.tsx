@@ -8,6 +8,8 @@ const buttonVariants = {
   blue: "bg-vgrBlue border border-vgrBlue",
   outlined: "bg-white border border-black active:bg-blue active:text-white",
   white: "bg-white border border-white",
+  darkThemedSelected: "bg-darkSurface border border-white",
+  darkThemedUnselected: "bg-semiDarkBg border-white text-darkTextSecondary"
 };
 
 const buttonSizes = {

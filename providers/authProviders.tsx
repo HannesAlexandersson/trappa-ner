@@ -1,6 +1,7 @@
 import { prepareTreatmentPlanPayload } from "@/components/setup/TreatmentPlanForm.utils";
 import { saveTreatmentPlanToDB } from "@/lib/apiHelper";
 import { useUserStore } from "@/stores";
+import { useThemeStore } from "@/stores/themeStore";
 import { supabase } from "@/utils/supabase";
 import { AuthContextType, User } from "@/utils/types";
 import { setUserLocale } from "@/utils/utils";
@@ -21,10 +22,8 @@ export const useAuth = () => {
 };
 // AuthProvider component that wraps the app and provides authentication state and functions
 export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
-  const [user, setUser] = React.useState<User | null>(null);
-  const router = useRouter();
-
-  //global user states & functions from the zustand stores
+  // Global states & Stores
+  const { setTheme } = useThemeStore();
   const {
     first_name,
     last_name,
@@ -32,6 +31,10 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     updateUser,
     clearUser,
   } = useUserStore();
+  // Local states
+  const [user, setUser] = React.useState<User | null>(null);
+  const router = useRouter();
+
 
   // keep user logged in with supabase on/off state feature
   React.useEffect(() => {
@@ -72,12 +75,15 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     setUserLocale(updatedUser.language);
     //set the user to the updated user in context
     setUser(updatedUser);
+    // Set the theme
+    setTheme(updatedUser.theme);
     // and in the zustand store
     updateUser({
       id: updatedUser.id,
       first_name: updatedUser.first_name,
       last_name: updatedUser.last_name,
       user_email: updatedUser.email,
+      theme: updatedUser.theme,
     });
 
     // THE GATEKEEPER LOGIC:
@@ -198,9 +204,29 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     // Update local AuthContext user state with the returned profile data
     setUser(updatedProfile);
   };
+
+  const updateTheme = async (theme: "light" | "dark" | "system") => {
+    if (!user?.id) return;
+
+    const { error } = await supabase
+      .from("profiles")
+      .update({ theme })
+      .eq("id", user.id);
+
+    if (error) {
+      console.error("Theme update failed:", error);
+      return;
+    }
+
+    setTheme(theme);
+
+    updateUser({ theme });
+  };
+
+
   return (
     <AuthContext.Provider
-      value={{ user, setUser, signIn, signOut, signUp, editUser, createTreatmentPlan }}
+      value={{ user, setUser, signIn, signOut, signUp, editUser, createTreatmentPlan, updateTheme }}
     >
       {children}
     </AuthContext.Provider>

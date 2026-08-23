@@ -1,4 +1,4 @@
-import { ForumCategory, ForumReply, ForumThread, mediaDataProps } from "@/utils/types";
+import { ForumCategory, ForumReply, ForumThread, mediaDataProps, ThemeMode } from "@/utils/types";
 
 
 
@@ -49,7 +49,13 @@ export interface UserStore {
     first_name: string;
     last_name: string;
     user_email: string;
+    theme: ThemeMode;
     getUserData: (id: string) => Promise<void>;
     updateUser: (updates: Partial<UserStore>) => void;
     clearUser: () => void;
 }
+
+export type ThemeStore = {
+    theme: ThemeMode;
+    setTheme: (theme: ThemeMode) => void;
+};

@@ -7,6 +7,8 @@ import { timeOptions } from "@/utils/utils";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import Slider from "@react-native-community/slider";
 /* import * as Notifications from "expo-notifications"; */
+import { useColorScheme } from "@/hooks/use-color-scheme";
+import { useThemeStore } from "@/stores/themeStore";
 import { useRouter } from "expo-router";
 import React, { useState } from "react";
 import {
@@ -22,6 +24,14 @@ export default function TreatmentPlanForm() {
   // Global states & Contexts
   const router = useRouter();
   const { createTreatmentPlan, user } = useAuth();
+  const systemTheme = useColorScheme();
+  const theme = useThemeStore((state) => state.theme);
+
+  const activeTheme =
+    theme === "system"
+      ? systemTheme ?? "light"
+      : theme;
+
   // Local states
   const [step, setStep] = useState(1);
   const [showHelp, setShowHelp] = useState(false);
@@ -108,8 +118,8 @@ export default function TreatmentPlanForm() {
 
   return (
     <ScrollView
-      className="flex-1 bg-white"
-      contentContainerStyle={{ paddingBottom: 80 }}
+      className="flex-1 bg-white dark:bg-slate-800 pb-80 w-full"
+      /* contentContainerStyle={{ paddingBottom: 80, width: "100%", }} */
       showsVerticalScrollIndicator={false}
       maximumZoomScale={3}
       minimumZoomScale={1}
@@ -118,38 +128,38 @@ export default function TreatmentPlanForm() {
       {/* STEP 1: INTRO */}
       {step === 1 && (
         <View className="p-4">
-          <Typography variant="black" className="text-[25px] text-center mb-3" weight="700">
+          <Typography className="text-[25px] text-center mb-3 text-black dark:text-white font-roboto" weight="700">
             {i18n.t("onboarding.step1Title")}
           </Typography>
 
-          <Typography className="text-gray-500 mb-8" size="lg">
+          <Typography className="text-grey500 dark:text-grey200 mb-8" size="lg">
             {i18n.t("onboarding.step1Subtitle")}
           </Typography>
 
-          <View className="bg-greyBg rounded-3xl p-5 mb-6 border border-grey100">
-            <Typography className="mb-4 leading-6 text-gray-700">
+          <View className="bg-grey50 dark:bg-semiDarkBg rounded-3xl p-5 mb-6 border border-grey100">
+            <Typography className="mb-4 leading-6 text-gray-700 dark:text-grey200">
               {i18n.t("onboarding.step1Info1")}
             </Typography>
 
-            <Typography className="mb-4 leading-6 text-gray-700">
+            <Typography className="mb-4 leading-6 text-gray-700 dark:text-grey200">
               {i18n.t("onboarding.step1Info2")}
             </Typography>
 
-            <Typography className="mb-4 leading-6 text-gray-700">
+            <Typography className="mb-4 leading-6 text-gray-700 dark:text-grey200">
               {i18n.t("onboarding.step1Info3")}
             </Typography>
 
-            <Typography className="mb-4 leading-6 text-gray-700">
+            <Typography className="mb-4 leading-6 text-gray-700 dark:text-grey200">
               {i18n.t("onboarding.step1Info4")}
             </Typography>
 
-            <Typography className="leading-6 text-gray-700">
+            <Typography className="leading-6 text-gray-700 dark:text-grey200">
               {i18n.t("onboarding.step1Info5")}
             </Typography>
           </View>
 
           <View className="items-center mb-4">
-            <Typography className="text-gray-400">
+            <Typography className="text-gray-400 dark:text-white">
               1 / 5 {i18n.t("onboarding.pages")}
             </Typography>
           </View>
@@ -170,10 +180,9 @@ export default function TreatmentPlanForm() {
 
       {/* STEP 2: The Core Data */}
       {step === 2 && (
-        <View className="flex-1 w-full px-4 py-4">
+        <View className="w-full px-4 py-4">
           <Typography
-            variant="black"
-            className="font-roboto mb-4 w-full"
+            className="font-roboto mb-4 w-full text-black dark:text-white"
             weight="700"
             size="xl"
           >
@@ -181,38 +190,42 @@ export default function TreatmentPlanForm() {
           </Typography>
 
           <Typography
-            variant="black"
             weight="300"
             size="lg"
-            className="mb-6 w-full"
+            className="mb-6 w-full text-black dark:text-white"
           >
             {i18n.t("onboarding.step2Subtitle")}
           </Typography>
 
           {/* TOGGLE BUTTONS */}
-          <View className="flex-row justify-around w-full mb-6 gap-2">
+          {/* <View className="flex-row justify-around w-full mb-6 gap-2"> */}
+          <View className="flex-row w-full mb-6 gap-2">
             <Button
-              variant={formData.consumptionType === "smoker" ? "blue" : "white"}
+              variant={activeTheme == "dark" ? formData.consumptionType === "smoker" ? "darkThemedSelected" : "darkThemedUnselected" : formData.consumptionType === "smoker" ? "blue" : "white"}
               onPress={() =>
                 setFormData({ ...formData, consumptionType: "smoker" })
               }
+              className="flex-1"
             >
               <Typography
-                variant={
-                  formData.consumptionType === "smoker" ? "white" : "blue"
+                className={activeTheme == "dark" ? formData.consumptionType === "smoker" ? "text-darkTextSecondary" : "text-white"
+                  : formData.consumptionType === "smoker" ? "text-white" : "text-darkTextSecondary"
                 }
               >
                 {i18n.t("onboarding.cig")}
               </Typography>
             </Button>
             <Button
-              variant={formData.consumptionType === "snus" ? "blue" : "white"}
+              variant={activeTheme == "dark" ? formData.consumptionType === "snus" ? "darkThemedSelected" : "darkThemedUnselected" : formData.consumptionType === "snus" ? "blue" : "white"}
               onPress={() =>
                 setFormData({ ...formData, consumptionType: "snus" })
               }
+              className="flex-1"
             >
               <Typography
-                variant={formData.consumptionType === "snus" ? "white" : "blue"}
+                className={activeTheme == "dark" ? formData.consumptionType === "snus" ? "text-darkTextSecondary" : "text-white"
+                  : formData.consumptionType === "snus" ? "text-white" : "text-darkTextSecondary"
+                }
               >
                 {i18n.t("onboarding.snus")}
               </Typography>
@@ -220,9 +233,9 @@ export default function TreatmentPlanForm() {
           </View>
 
           {/* MG NICOTINE SLIDER - DATA CENTERED */}
-          <View className="mb-8 bg-vgrBlue p-6 rounded-3xl border border-grey100 w-full">
-            {/* Header Row Fixed */}
-            <View className="flex-row items-center justify-center mb-4 w-full px-2">
+          <View className="mb-8 bg-vgrBlue dark:bg-semiDarkBg p-6 rounded-3xl border border-grey100 w-full">
+
+            <View className="flex-row justify-around mb-4 w-full px-2">
               <Typography
                 size="sm"
                 className="text-grey200 text-center mb-2 uppercase tracking-widest flex-shrink"
@@ -252,7 +265,7 @@ export default function TreatmentPlanForm() {
             </View>
             <View className="w-full">
               <Slider
-                /* style={{ width: "100%", height: 50 }} */
+                /*   style={{ width: "100%", height: 50 }} */
                 className="w-full h-14"
                 minimumValue={5}
                 maximumValue={100}
@@ -267,10 +280,10 @@ export default function TreatmentPlanForm() {
               />
             </View>
             <View className="flex-row justify-between mt-2">
-              <Typography size="sm" className="text-gray-400">
+              <Typography size="sm" className="text-gray-400 dark:text-white">
                 5 mg ({i18n.t("onboarding.or less")})
               </Typography>
-              <Typography size="sm" className="text-gray-400">
+              <Typography size="sm" className="text-gray-400 dark:text-white">
                 100+ mg
               </Typography>
             </View>
@@ -279,16 +292,15 @@ export default function TreatmentPlanForm() {
           {/* UNITS PER DAY STEPPER */}
           <View className="mb-10">
             <Typography
-              className="mb-2 text-center"
+              className="mb-4 text-center text-black dark:text-white"
               size="lg"
-              variant="black"
               weight="400"
             >
               {i18n.t("onboarding.step2unitsPerDay")}
             </Typography>
-            <View className="flex-row items-center justify-between bg-grey100 p-2 rounded-xl">
+            <View className="flex-row items-center justify-between bg-grey100 dark:bg-darkBorder p-2 rounded-xl">
               <Button
-                variant="white"
+                variant={activeTheme == "dark" ? "darkThemedUnselected" : "white"}
                 className="w-12 h-12 rounded-lg"
                 onPress={() =>
                   setFormData({
@@ -297,10 +309,10 @@ export default function TreatmentPlanForm() {
                   })
                 }
               >
-                <Typography className="text-2xl">-</Typography>
+                <Typography className="text-2xl text-black dark:text-white">-</Typography>
               </Button>
 
-              <Typography weight="700" className="text-xl">
+              <Typography weight="700" className="text-xl text-black dark:text-white">
                 {formData.unitsPerDay >= 50 ? "50+" : formData.unitsPerDay}{" "}
                 {formData.consumptionType === "snus"
                   ? i18n.t("onboarding.snus")
@@ -308,7 +320,7 @@ export default function TreatmentPlanForm() {
               </Typography>
 
               <Button
-                variant="white"
+                variant={activeTheme == "dark" ? "darkThemedUnselected" : "white"}
                 className="w-12 h-12 rounded-lg"
                 onPress={() =>
                   setFormData({
@@ -317,21 +329,21 @@ export default function TreatmentPlanForm() {
                   })
                 }
               >
-                <Typography className="text-2xl">+</Typography>
+                <Typography className="text-2xl text-black dark:text-white">+</Typography>
               </Button>
             </View>
           </View>
 
           {/* WAKE UP TIME & AWAKE HOURS */}
-          <View className="mb-10 bg-greyBg p-5 rounded-3xl border border-grey100 w-full">
-            <Typography variant="black" weight="700" size="lg" className="mb-4 uppercase">
-              {i18n.t("onboarding.scheduleTitle")} {/* Din dagsrutin */}
+          <View className="mb-10 bg-grey50 dark:bg-semiDarkBg p-5 rounded-3xl border border-grey100 w-full">
+            <Typography weight="700" size="lg" className="mb-4 uppercase text-black dark:text-white">
+              {i18n.t("onboarding.scheduleTitle")}
             </Typography>
 
             {/* Wake-up time picker or simple input */}
             <View className="mb-4 w-full">
-              <Typography size="md" className="text-grey600 mb-2">
-                {i18n.t("onboarding.wakeUpTime")} {/* När vaknar du vanligtvis? */}
+              <Typography size="md" className="text-grey600 dark:text-grey200 mb-2">
+                {i18n.t("onboarding.wakeUpTime")}
               </Typography>
               <View className="flex-row items-center bg-white p-3 rounded-xl border border-grey200 w-full">
                 <Ionicons name="time-outline" size={20} color="#6b7280" className="mr-2" />
@@ -351,7 +363,7 @@ export default function TreatmentPlanForm() {
               {/* Label Row - flex-1 on text allows wrapping and prevents horizontal overflow */}
               <View className="flex-row items-center justify-between mb-2 w-full">
                 <View className="flex-row items-center flex-1 pr-2">
-                  <Typography size="md" className="text-grey600 flex-1">
+                  <Typography size="md" className="text-grey600 dark:text-grey200 flex-1">
                     {i18n.t("onboarding.awakeHours")}
                   </Typography>
                   {/* TOOLTIP ICON */}
@@ -359,11 +371,11 @@ export default function TreatmentPlanForm() {
                     <Ionicons
                       name="information-circle-outline"
                       size={24}
-                      color="#005b89"
+                      color={activeTheme == "light" ? "#005b89" : "#fff"}
                     />
                   </TouchableOpacity>
                 </View>
-                <Typography weight="700" variant="blue" className="shrink-0 text-lg">
+                <Typography weight="700" variant={activeTheme == "light" ? "blue" : "white"} className="shrink-0 text-lg">
                   {formData.awakeHours || 16} h
                 </Typography>
               </View>
@@ -393,22 +405,22 @@ export default function TreatmentPlanForm() {
           <View className="flex-row justify-between mt-4">
             <TouchableOpacity
               onPress={prevStep}
-              className="flex-row items-center ml-2 bg-vgrBlue rounded-full"
+              className="flex-row items-center ml-2 bg-vgrBlue dark:bg-white rounded-full"
             >
               <Ionicons
                 name="arrow-back-circle-sharp"
                 size={50}
-                color="white"
+                color={activeTheme == "dark" ? "#1f2937" : "white"}
               />
             </TouchableOpacity>
-            <Typography className="text-gray-400 text-xl font-bold flex-1 text-center font-roboto shadow-slate-800 shadow-lg">
+            <Typography className="text-grey400 dark:text-grey100 text-xl font-bold flex-1 text-center font-roboto shadow-slate-800 shadow-lg">
               {step}/5 {i18n.t("onboarding.pages")}
             </Typography>
             <TouchableOpacity
               onPress={nextStep}
-              className="flex-row items-center mr-4  bg-vgrBlue rounded-full"
+              className="flex-row items-center mr-4  bg-vgrBlue dark:bg-white rounded-full"
             >
-              <Ionicons name="arrow-forward-circle" size={50} color="white" />
+              <Ionicons name="arrow-forward-circle" size={50} color={activeTheme == "dark" ? "#1f2937" : "white"} />
             </TouchableOpacity>
           </View>
         </View>
@@ -417,29 +429,37 @@ export default function TreatmentPlanForm() {
       {/* STEP 3: Support Tools */}
       {step === 3 && (
         <View className="p-4 flex-1">
-          <Typography
-            variant="black"
-            className="text-[25px] text-center mb-2"
-            weight="700"
-          >
-            {i18n.t("onboarding.step3Title")}
-          </Typography>
-
-          <Typography size="sm" className="text-gray-500 text-center mb-6 px-4">
-            Användning av nikotinläkemedel (som plåster eller tuggummi) dämpar abstinensen avsevärt och ökar chansen att lyckas.
+          <View className="flex flex-row justify-between px-4">
+            <Typography
+              className="text-[25px] font-roboto text-center mb-2 text-black dark:text-white"
+              weight="700"
+            >
+              {i18n.t("onboarding.step3Title")}
+            </Typography>
+            {/* TOOLTIP ICON */}
+            <TouchableOpacity onPress={() => openHelp("supportToolsHelp")}>
+              <Ionicons
+                name="information-circle-outline"
+                size={24}
+                color={activeTheme == "light" ? "#005b89" : "#fff"}
+              />
+            </TouchableOpacity>
+          </View>
+          <Typography size="sm" className="text-grey500 dark:text-grey200  mb-6 px-4">
+            {i18n.t("onboarding.step3SubTitle")}
           </Typography>
 
           {/* MASTER TOGGLE CARD */}
-          <View className="bg-greyBg p-5 rounded-2xl border border-grey200 mb-6">
+          <View className="bg-grey50 p-5 rounded-2xl border border-grey200 mb-6">
             <View className="flex-row items-center justify-between">
               <View className="flex-1 mr-3">
                 <Typography weight="700" size="md">
-                  Vill du använda hjälpmedel?
+                  {i18n.t("onboarding.step3SupportToolsCard")}
                 </Typography>
-                <Typography size="sm" className="text-gray-500 mt-1">
+                <Typography size="sm" className="text-grey500 mt-1">
                   {formData.useExternalTools
-                    ? "Ja, jag vill använda plåster eller tuggummi."
-                    : "Nej, jag vill bara trappa ner min nuvarande produkt."}
+                    ? i18n.t("onboarding.step3SupportToolsCardYes")
+                    : i18n.t("onboarding.step3SupportToolsCardNo")}
                 </Typography>
               </View>
               <Switch
@@ -455,14 +475,17 @@ export default function TreatmentPlanForm() {
           {formData.useExternalTools && (
             <View className="space-y-4 mb-6">
               {/* --- PATCH SECTION --- */}
-              <View className="p-4 bg-blue50/60 rounded-2xl border border-blue100 mb-4">
+              <Typography weight="700" className="text-lg font-roboto text-vgrBlue dark:text-white ml-1">
+                {i18n.t("onboarding.step3SupportToolWhat")}
+              </Typography>
+              <View className="p-4 bg-blue50/60 dark:bg-blue-400/50 rounded-2xl border border-blue100 mb-4">
                 <View className="flex-row justify-between items-center">
                   <View className="flex-1 mr-2">
-                    <Typography weight="700" variant="blue">
-                      Nikotinplåster
+                    <Typography weight="700" variant={activeTheme == "light" ? "blue" : "white"}>
+                      {i18n.t("onboarding.step3Patch")}
                     </Typography>
-                    <Typography size="sm" className="text-gray-500">
-                      Ger en jämn basdos under hela dagen.
+                    <Typography size="sm" className="text-grey500 dark:text-grey200">
+                      {i18n.t("onboarding.step3PatchDescription")}
                     </Typography>
                   </View>
                   <Switch
@@ -475,8 +498,8 @@ export default function TreatmentPlanForm() {
 
                 {formData.usePatch && (
                   <View className="mt-3 pt-3 border-t border-blue100">
-                    <Typography size="sm" className="text-gray-500 mb-2">
-                      Välj styrka på ditt plåster:
+                    <Typography size="sm" className="text-grey500  dark:text-grey200 mb-2">
+                      {i18n.t("onboarding.step3PatchStrenghtSelection")}
                     </Typography>
                     <View className="flex-row justify-between">
                       {[21, 14, 7].map((mg) => (
@@ -503,14 +526,14 @@ export default function TreatmentPlanForm() {
               </View>
 
               {/* --- GUM SECTION --- */}
-              <View className="p-4 bg-purple-50/60 rounded-2xl border border-purple-100 mb-4">
+              <View className="p-4 bg-purple-50/60 dark:bg-purple-500/50 rounded-2xl border border-purple-100 dark:border-purple-400 mb-4">
                 <View className="flex-row justify-between items-center">
                   <View className="flex-1 mr-2">
-                    <Typography weight="700" variant="blue">
-                      Nikotintuggummi / Sugtablett
+                    <Typography weight="700" variant={activeTheme == "light" ? "blue" : "white"}>
+                      {i18n.t("onboarding.step3Gum")}
                     </Typography>
-                    <Typography size="sm" className="text-gray-500">
-                      För tillfälliga, skarpa begär.
+                    <Typography size="sm" className="text-grey500 dark:text-grey200">
+                      {i18n.t("onboarding.step3GumDescription")}
                     </Typography>
                   </View>
                   <Switch
@@ -522,9 +545,9 @@ export default function TreatmentPlanForm() {
                 </View>
 
                 {formData.useGum && (
-                  <View className="mt-3 pt-3 border-t border-purple-100">
-                    <Typography size="sm" className="text-gray-500 mb-2">
-                      Välj styrka på tuggummi/tablett:
+                  <View className="mt-3 pt-3 border-t border-purple-100 dark:border-purple-400">
+                    <Typography size="sm" className="text-grey500 dark:text-grey200 mb-2">
+                      {i18n.t("onboarding.step3GumDescription")}
                     </Typography>
                     <View className="flex-row justify-center">
                       {[4, 2].map((mg) => (
@@ -553,7 +576,7 @@ export default function TreatmentPlanForm() {
           )}
 
           {/* NAVIGATION BUTTONS */}
-          <Typography className="text-gray-400 text-xl font-bold flex-1 text-center font-roboto shadow-slate-800 shadow-lg">
+          <Typography className="text-gray-400 dark:text-grey50 text-xl font-bold flex-1 text-center font-roboto shadow-slate-800 shadow-lg">
             {step}/5 {i18n.t("onboarding.pages")}
           </Typography>
           <View className="flex-row justify-between pt-4">
@@ -572,33 +595,33 @@ export default function TreatmentPlanForm() {
       {/* step 4 Present the treatmentplan */}
       {step === 4 && (
         <View className="w-full p-4 ">
-          <Typography variant="black" weight="700" size="xl" className="mb-2">
+          <Typography weight="700" size="xl" className="mb-2 text-black dark:text-white">
             {i18n.t("onboarding.summaryTitle")}
           </Typography>
-          <Typography size="sm" className="text-grey600 mb-6">
+          <Typography size="sm" className="text-grey600 dark:text-grey200 mb-6">
             {i18n.t("onboarding.summarySubtitle")}
           </Typography>
 
           {/* PLAN HIGHLIGHT CARD */}
-          <View className="bg-greyBg p-5 rounded-3xl border border-grey100 w-full mb-6">
+          <View className="bg-grey50 dark:bg-grey300/50 p-5 rounded-3xl border border-grey100 w-full mb-6">
             {/* Target Goal */}
             <View className="flex-row justify-between items-center pb-4 border-b border-grey200">
-              <Typography size="sm" className="text-grey600">{i18n.t("onboarding.summaryEndgoal")}</Typography>
-              <Typography weight="700" variant="blue">{i18n.t("onboarding.summarySupremGoal")}</Typography>
+              <Typography size="sm" className="text-grey600 dark:text-grey200">{i18n.t("onboarding.summaryEndgoal")}</Typography>
+              <Typography weight="700" variant={activeTheme == "light" ? "blue" : "white"}>{i18n.t("onboarding.summarySupremGoal")}</Typography>
             </View>
 
             {/* Estimated Duration */}
             <View className="flex-row justify-between items-center py-4 border-b border-grey200">
-              <Typography size="sm" className="text-grey600">{i18n.t("onboarding.summaryCalculatedTime")}</Typography>
-              <Typography weight="700" variant="black">
+              <Typography size="sm" className="text-grey600 dark:text-grey200">{i18n.t("onboarding.summaryCalculatedTime")}</Typography>
+              <Typography weight="700" className="text-black dark:text-white">
                 {calculatePlanSummary(formData).totalDays} {i18n.t("general.days")}
               </Typography>
             </View>
 
             {/* END DATE */}
             <View className="flex-row justify-between items-center py-4 border-b border-grey200">
-              <Typography size="sm" className="text-grey600">{i18n.t("onboarding.summaryEndDate")}</Typography>
-              <Typography weight="700" variant="black">
+              <Typography size="sm" className="text-grey600 dark:text-grey200">{i18n.t("onboarding.summaryEndDate")}</Typography>
+              <Typography weight="700" className="text-black dark:text-white">
                 {/*  format the ISO datestring into readable format */}
                 {new Date(calculatePlanSummary(formData).endDate).toLocaleDateString(undefined, {
                   year: "numeric",
@@ -611,8 +634,8 @@ export default function TreatmentPlanForm() {
             {/* Active Aids from Step 3 */}
             {(formData.usePatch || formData.useGum) && (
               <View className="flex-row justify-between items-center py-4 border-b border-grey200">
-                <Typography size="sm" className="text-grey600">{i18n.t("onboarding.Aid")}</Typography>
-                <Typography weight="700" variant="black" className="text-right flex-1 ml-4">
+                <Typography size="sm" className="text-grey600 dark:text-grey200">{i18n.t("onboarding.Aid")}</Typography>
+                <Typography weight="700" className="text-black dark:text-white text-right flex-1 ml-4">
                   {[
                     formData.usePatch ? `Plåster (${formData.patchStrength}mg)` : null,
                     formData.useGum ? `Tuggummi (${formData.gumStrength}mg)` : null,
@@ -623,21 +646,21 @@ export default function TreatmentPlanForm() {
 
             {/* First Dose Time */}
             <View className="flex-row justify-between items-center pt-4">
-              <Typography size="sm" className="text-grey600">{i18n.t("onboarding.summaryFirstDoseToday")}</Typography>
-              <Typography weight="700" variant="black">
+              <Typography size="sm" className="text-grey600 dark:text-grey200">{i18n.t("onboarding.summaryFirstDoseToday")}</Typography>
+              <Typography weight="700" className="text-black dark:text-white">
                 Kl. {formData.wakeUpTime || "07:00"}
               </Typography>
             </View>
           </View>
 
           {/* PUSH NOTIFICATION PERMISSION CARD */}
-          <View className="bg-blue50 p-5 rounded-3xl border border-blue100 w-full mb-6 flex-row items-center">
-            <Ionicons name="notifications-outline" size={28} color="#0056B3" className="mr-4" />
+          <View className="bg-blue50 dark:bg-semiDarkBg p-5 rounded-3xl border border-blue-600 w-full mb-6 flex-row items-center">
+            <Ionicons name="notifications-outline" size={28} color={activeTheme == "light" ? "#0056B3" : "#fff"} className="mr-4" />
             <View className="flex-1 pr-2">
-              <Typography weight="700" size="sm" className="text-blue-900 mb-1">
+              <Typography weight="700" size="sm" className="text-blue-900 dark:text-white mb-1">
                 {i18n.t("onboarding.summaryNotificationsImportant")}
               </Typography>
-              <Typography size="sm" className="text-blue-700">
+              <Typography size="sm" className="text-blue-700 dark:text-blue-200">
                 {i18n.t("onboarding.summaryNotificationsSchedule")}
               </Typography>
             </View>
@@ -660,33 +683,33 @@ export default function TreatmentPlanForm() {
       {/* STEP 5: TOS */}
       {step === 5 && (
         <View className="p-4">
-          <Typography variant="black" className="text-xl mb-4" weight="700">
+          <Typography className="text-xl mb-4 text-black dark:text-white" weight="700">
             {i18n.t("onboarding.tos.title")}
           </Typography>
 
-          {/* Removed fixed h-40 so the card grows dynamically with text */}
-          <View className="bg-greyBg p-4 mb-6 rounded-2xl border border-grey200">
+
+          <View className="bg-grey50 p-4 mb-6 rounded-2xl border border-grey200">
             <Typography size="md" className="text-gray-700 mb-2">
               {i18n.t("onboarding.tos.subtitle")}
             </Typography>
-            <Typography size="sm" className="text-gray-500 mt-2">
+            <Typography size="sm" className="text-grey500 mt-2">
               1. {i18n.t("onboarding.tos.1")}
             </Typography>
-            <Typography size="sm" className="text-gray-500 mt-2">
+            <Typography size="sm" className="text-grey500 mt-2">
               2. {i18n.t("onboarding.tos.2")}
             </Typography>
-            <Typography size="sm" className="text-gray-500 mt-2">
+            <Typography size="sm" className="text-grey500 mt-2">
               3. {i18n.t("onboarding.tos.3")}
             </Typography>
-            <Typography size="sm" className="text-gray-500 mt-2">
+            <Typography size="sm" className="text-grey500 mt-2">
               4. {i18n.t("onboarding.tos.4")}
             </Typography>
-            <Typography size="sm" className="text-gray-500 mt-2">
+            <Typography size="sm" className="text-grey500 mt-2">
               5. {i18n.t("onboarding.tos.5")}
             </Typography>
           </View>
 
-          {/* Side-by-side button row placed cleanly below the text card */}
+
           <View className="flex-row justify-between">
             <Button
               onPress={prevStep}
@@ -712,11 +735,11 @@ export default function TreatmentPlanForm() {
       {/* STEP 6: HOW TO USE THE APP */}
       {step === 6 && (
         <View className="p-4">
-          <Typography variant="black" className="text-2xl text-center mb-2" weight="700">
+          <Typography className=" text-black dark:text-white text-2xl text-center mb-2" weight="700">
             {i18n.t("onboarding.step5header")}
           </Typography>
 
-          <Typography size="sm" className="text-gray-500 text-center mb-6 px-4">
+          <Typography size="sm" className="text-grey500 dark:text-grey200 text-center mb-6 px-4">
             {i18n.t("onboarding.step5subHeader")}
           </Typography>
 
@@ -731,71 +754,71 @@ export default function TreatmentPlanForm() {
 
           {/* FEATURE CARDS / QUICK GUIDE */}
           <View className="space-y-3 mb-8 gap-3">
-            <View className="bg-greyBg p-4 rounded-2xl border border-grey100 flex-row items-center">
+            <View className="bg-grey50 dark:bg-slate-400 p-4 rounded-2xl border border-grey100 flex-row items-center">
               <View className="bg-orange-100 p-3 rounded-xl mr-4">
                 <Ionicons name="notifications" size={24} color="#ea580c" />
               </View>
               <View className="flex-1">
-                <Typography weight="700" size="md">{i18n.t("onboarding.featureCard1Header")}</Typography>
-                <Typography size="sm" className="text-gray-500">
+                <Typography weight="700" size="md" className="text-black dark:text-white">{i18n.t("onboarding.featureCard1Header")}</Typography>
+                <Typography size="sm" className="text-grey500 dark:text-grey200">
                   {i18n.t("onboarding.featureCard1Para")}
                 </Typography>
               </View>
             </View>
-            <View className="bg-greyBg p-4 rounded-2xl border border-grey100 flex-row items-center">
+            <View className="bg-grey50 dark:bg-slate-400 p-4 rounded-2xl border border-grey100 flex-row items-center">
               <View className="bg-red-100 p-3 rounded-xl mr-4">
                 <Ionicons name="flash" size={24} color="#FF0600" />
               </View>
               <View className="flex-1">
-                <Typography weight="700" size="md">{i18n.t("onboarding.featureCard2Header")}</Typography>
-                <Typography size="sm" className="text-gray-500">
+                <Typography weight="700" size="md" className="text-black dark:text-white">{i18n.t("onboarding.featureCard2Header")}</Typography>
+                <Typography size="sm" className="text-grey500  dark:text-grey200">
                   {i18n.t("onboarding.featureCard2Para")}
                 </Typography>
               </View>
             </View>
-            <View className="bg-greyBg p-4 rounded-2xl border border-grey100 flex-row items-center">
+            <View className="bg-grey50 dark:bg-slate-400 p-4 rounded-2xl border border-grey100 flex-row items-center">
               <View className="bg-pink-100 p-3 rounded-xl mr-4">
                 <Ionicons name="analytics" size={24} color="#be185d" />
               </View>
               <View className="flex-1">
-                <Typography weight="700" size="md">{i18n.t("onboarding.featureCard3Header")}</Typography>
-                <Typography size="sm" className="text-gray-500">
+                <Typography weight="700" size="md" className="text-black dark:text-white">{i18n.t("onboarding.featureCard3Header")}</Typography>
+                <Typography size="sm" className="text-grey500  dark:text-grey200">
                   {i18n.t("onboarding.featureCard3Para")}
                 </Typography>
               </View>
             </View>
             {/*NEW OLD CARDS */}
-            <View className="bg-greyBg p-4 rounded-2xl border border-grey100 flex-row items-center">
+            <View className="bg-grey50 dark:bg-slate-400 p-4 rounded-2xl border border-grey100 flex-row items-center">
               <View className="bg-blue100 p-3 rounded-xl mr-4">
                 <Ionicons name="stats-chart" size={24} color="#0056B3" />
               </View>
               <View className="flex-1">
-                <Typography weight="700" size="md">{i18n.t("onboarding.featureCard4Header")}</Typography>
-                <Typography size="sm" className="text-gray-500">
+                <Typography weight="700" size="md" className="text-black dark:text-white">{i18n.t("onboarding.featureCard4Header")}</Typography>
+                <Typography size="sm" className="text-grey500  dark:text-grey200">
                   {i18n.t("onboarding.featureCard4Para")}
                 </Typography>
               </View>
             </View>
 
-            <View className="bg-greyBg p-4 rounded-2xl border border-grey100 flex-row items-center">
+            <View className="bg-grey50 dark:bg-slate-400 p-4 rounded-2xl border border-grey100 flex-row items-center">
               <View className="bg-green-100 p-3 rounded-xl mr-4">
                 <Ionicons name="trophy" size={24} color="#2E7D32" />
               </View>
               <View className="flex-1">
-                <Typography weight="700" size="md">{i18n.t("onboarding.featureCard5Header")}</Typography>
-                <Typography size="sm" className="text-gray-500">
+                <Typography weight="700" size="md" className="text-black dark:text-white">{i18n.t("onboarding.featureCard5Header")}</Typography>
+                <Typography size="sm" className="text-grey500 dark:text-grey200">
                   {i18n.t("onboarding.featureCard5Para")}
                 </Typography>
               </View>
             </View>
 
-            <View className="bg-greyBg p-4 rounded-2xl border border-grey100 flex-row items-center">
+            <View className="bg-grey50 dark:bg-slate-400 p-4 rounded-2xl border border-grey100 flex-row items-center">
               <View className="bg-purple-100 p-3 rounded-xl mr-4">
                 <Ionicons name="medkit" size={24} color="#6A1B9A" />
               </View>
               <View className="flex-1">
-                <Typography weight="700" size="md">{i18n.t("onboarding.featureCard6Header")}</Typography>
-                <Typography size="sm" className="text-gray-500">
+                <Typography weight="700" size="md" className="text-black dark:text-white">{i18n.t("onboarding.featureCard6Header")}</Typography>
+                <Typography size="sm" className="text-grey500 dark:text-grey200">
                   {i18n.t("onboarding.featureCard6Para")}
                 </Typography>
               </View>

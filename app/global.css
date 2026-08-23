@@ -8,4 +8,14 @@
 
 .greyBg {
   background-color: #f9fafb;
+
+}
+
+.testClass {
+  darkBg: #111827;
+  semiDarkBg: #0c3043;
+  darkSurface: #1f2937;
+  darkBorder: #374151;
+  darkText: #f9fafb;
+  darkTextSecondary: #d1d5db;
 }

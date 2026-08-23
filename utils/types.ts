@@ -71,6 +71,7 @@ export type User = {
   email: string;
   first_time: boolean;
   language: string;
+  theme: ThemeMode;
 };
 
 export type EventSource = {
@@ -116,6 +117,7 @@ export type AuthContextType = {
   /* fetchUserEntries: (limitEntries: boolean, id: string | null) => Promise<DiaryEntry[] | undefined>; */
   // Returns the updated user object or throws an error
   createTreatmentPlan: (formData: any) => Promise<void>;
+  updateTheme: (theme: ThemeMode) => Promise<void>;
 };
 
 export type OnboardingText = {
@@ -200,7 +202,7 @@ export type TypographyProps = {
 
 
 export interface ButtonProps extends TouchableOpacityProps {
-  variant?: "black" | "blue" | "outlined" | "white";
+  variant?: "black" | "blue" | "outlined" | "white" | "darkThemedUnselected" | "darkThemedSelected";
   size?: "sm" | "md" | "lg";
   loading?: boolean;
   disabled?: boolean;
@@ -254,3 +256,5 @@ export type ForumReply = {
   created_at: string;
   updated_at: string;
 };
+
+export type ThemeMode = "system" | "light" | "dark";

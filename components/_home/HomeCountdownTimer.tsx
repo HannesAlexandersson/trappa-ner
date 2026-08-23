@@ -62,26 +62,26 @@ export const HomeCountdownTimer: React.FC<HomeCountdownTimerProps> = ({ initialD
         }
     };
     return (
-        <View className="p-6 bg-white rounded-3xl border border-grey100 items-center justify-center shadow-sm my-4">
-            <Typography variant="black" size="sm" className="text-grey400 uppercase tracking-widest mb-2">
+        <View className="p-6 bg-white dark:bg-grey500 rounded-3xl border border-grey100 dark:border-grey400 items-center justify-center shadow-sm my-4">
+            <Typography variant="black" size="sm" className="text-grey400 dark:text-white uppercase tracking-widest mb-2">
                 {i18n.t("home.countdownTimer.nextDoseInterval")}
             </Typography>
 
             {/* Main Countdown Header */}
             {secondsLeft > 0 ? (
-                <Typography variant="black" size="h1" weight="700" className=" font-extrabold text-blue-600 my-2">
+                <Typography variant="black" size="h1" weight="700" className=" font-extrabold text-blue-600 dark:text-[#85a8f2] my-2">
                     {formatTime(secondsLeft)}
                 </Typography>
             ) : (
                 <View className="items-center my-2 w-full">
-                    <Typography variant="black" className="text-2xl font-extrabold text-green-600 mb-3 text-center">
+                    <Typography variant="black" className="text-2xl font-extrabold text-green-600 dark:text-green-300 mb-3 text-center">
                         {i18n.t("home.countdownTimer.canTakeNextDose")}
                     </Typography>
 
                     <TouchableOpacity
                         onPress={() => setIsModalVisible(true)}
                         activeOpacity={0.8}
-                        className="bg-green-600 px-6 py-3 rounded-2xl w-full items-center justify-center shadow-sm"
+                        className="bg-green-600 dark:bg-green-500 px-6 py-3 rounded-2xl w-full items-center justify-center shadow-sm"
                     >
                         <Typography weight="700" className="text-white text-base">
                             {i18n.t("home.countdownTimer.takeDoseButton")}
@@ -92,7 +92,7 @@ export const HomeCountdownTimer: React.FC<HomeCountdownTimerProps> = ({ initialD
 
             {/* Primary Subtext */}
             {secondsLeft > 0 && (
-                <Typography size="sm" className="text-grey600 mt-1 mb-4 text-center">
+                <Typography size="sm" className="text-grey600 dark:text-white mt-1 mb-4 text-center">
                     {secondsLeft < 3600
                         ? i18n.t("home.countdownTimer.hoursLeftToNextDose")
                         : i18n.t("home.countdownTimer.hoursLeftToNextDoseOverOneHour", {
@@ -104,13 +104,13 @@ export const HomeCountdownTimer: React.FC<HomeCountdownTimerProps> = ({ initialD
 
             {/* Secondary Stats Row */}
             <View className="mt-4 pt-4 border-t border-grey100 w-full flex-row justify-around">
-                <Typography size="sm" className="text-grey500">
+                <Typography size="sm" className="text-grey500 dark:text-white">
                     {i18n.t("home.countdownTimer.todayTaken")}
-                    <Typography size="sm" weight="700" className="text-gray-800">{data.unitsTakenToday}</Typography>
+                    <Typography size="sm" weight="700" className="text-gray-800 dark:text-white">{data.unitsTakenToday}</Typography>
                 </Typography>
-                <Typography size="sm" className="text-grey500">
+                <Typography size="sm" className="text-grey500 dark:text-white">
                     {i18n.t("home.countdownTimer.remainingToday")}
-                    <Typography size="sm" weight="700" className="text-gray-800">{data.unitsRemainingToday}</Typography>
+                    <Typography size="sm" weight="700" className="text-gray-800 dark:text-white">{data.unitsRemainingToday}</Typography>
                 </Typography>
             </View>
 

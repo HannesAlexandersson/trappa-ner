@@ -1,7 +1,10 @@
 import { HomeCountdownTimer, HomeHeader, Typography } from "@/components";
+import { Colors } from "@/constants/theme";
+import { useColorScheme } from "@/hooks/use-color-scheme";
 import { useAuth } from "@/providers/authProviders";
 import { fetchHomeCountdownData } from "@/services/treatmentPlanService";
 import { useUserStore } from "@/stores";
+import { useThemeStore } from "@/stores/themeStore";
 import { HomeCountdownData } from "@/utils/types";
 import { useFocusEffect } from "@react-navigation/native";
 import React, { useCallback, useEffect, useState } from "react";
@@ -12,6 +15,9 @@ export default function HomeScreen() {
   // Global states & contexts
   const { user } = useAuth();
   const { first_name } = useUserStore();
+  const systemTheme = useColorScheme();
+  const theme = useThemeStore((state) => state.theme);
+
   // Local states
   const [countdownData, setCountdownData] = useState<HomeCountdownData | null>(null);
   const [loading, setLoading] = useState(true);
@@ -52,13 +58,18 @@ export default function HomeScreen() {
     loadDashboardData();
   }, [user?.id]);
 
+  const activeTheme =
+    theme === "system"
+      ? systemTheme ?? "light"
+      : theme;
+
   return (
-    <ScrollView className="flex-1 bg-grey50 p-4">
+    <ScrollView className="flex-1 p-4">
       <HomeHeader first_name={first_name} />
 
       {loading ? (
         <View className="p-8 items-center justify-center">
-          <ActivityIndicator size="large" color="#2563eb" />
+          <ActivityIndicator size="large" color={Colors[activeTheme].activityIndicator} />
         </View>
       ) : error || !countdownData ? (
         <View className="p-4 bg-red-50 border border-red-200 rounded-2xl">

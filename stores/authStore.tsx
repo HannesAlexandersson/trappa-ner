@@ -7,6 +7,7 @@ export const useUserStore = create<UserStore>((set) => ({
   first_name: "",
   last_name: "",
   user_email: "",
+  theme: "system",
 
   updateUser: (updates) => set((state) => ({ ...state, ...updates })),
   getUserData: async (id: string) => {
@@ -19,8 +20,9 @@ export const useUserStore = create<UserStore>((set) => ({
       first_name: data.first_name,
       last_name: data.last_name,
       user_email: data.email,
+      theme: data.theme,
     });
   },
   clearUser: () =>
-    set({ id: null, first_name: "", last_name: "", user_email: "" }),
+    set({ id: null, first_name: "", last_name: "", user_email: "", theme: "system", }),
 }));
