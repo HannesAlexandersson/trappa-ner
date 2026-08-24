@@ -1,4 +1,5 @@
 import { Typography } from "@/components";
+import ForumActionButton from "@/components/ui/ForumActionButton";
 import i18n from "@/constants/dictonarys/i18n";
 import { useColorScheme } from "@/hooks/use-color-scheme";
 import { useForumStore } from "@/stores/forumStore";
@@ -16,8 +17,9 @@ import {
 
 
 export default function ForumThreadScreen() {
-    const { threadId } = useLocalSearchParams<{
+    const { threadId, categoryId } = useLocalSearchParams<{
         threadId: string;
+        categoryId: string;
     }>();
 
     const {
@@ -48,7 +50,12 @@ export default function ForumThreadScreen() {
     }, [threadId, fetchThread, fetchReplies]);
 
     const handleGoBack = () => {
-        router.navigate("/(tabs)/forum");
+        router.replace({
+            pathname: "/forum/[categoryId]",
+            params: {
+                categoryId,
+            },
+        });
     };
 
     const handlePreviousPage = () => {
@@ -77,9 +84,17 @@ export default function ForumThreadScreen() {
         );
     }
 
+    const handleReplyToThread = () => {
+        console.log("new thread");
+    }
+
+    const searchThread = () => {
+        console.log("Search")
+    };
+
     return (
         <ScrollView className="flex-1 px-6">
-            <View className="flex-row justify-start mt-4">
+            <View className="flex-row items-center justify-between my-4 gap-3">
                 <Pressable
                     onPress={handleGoBack}
                     className="bg-vgrBlue dark:bg-white rounded-full"
@@ -90,6 +105,19 @@ export default function ForumThreadScreen() {
                         color={activeTheme == "dark" ? "#111827" : "#fff"}
                     />
                 </Pressable>
+                <View className="flex-row justify-between gap-4 mr-4">
+                    <ForumActionButton
+                        icon="create-outline"
+                        label={i18n.t("forum.replyToThread")}
+                        onPress={handleReplyToThread}
+                    />
+
+                    <ForumActionButton
+                        icon="search-outline"
+                        label={i18n.t("forum.searchThread")}
+                        onPress={searchThread}
+                    />
+                </View>
             </View>
 
             <View className="flex-1 pt-6 pb-12 mb-12">
@@ -100,7 +128,7 @@ export default function ForumThreadScreen() {
                     weight="700"
                     className="text-vgrBlue dark:text-darkThemeText"
                 >
-                    {thread.title}
+                    {thread.title} h
                 </Typography>
 
                 <Typography size="sm" className="mb-4 dark:text-darkThemeText">

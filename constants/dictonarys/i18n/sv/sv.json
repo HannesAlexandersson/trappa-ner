@@ -208,6 +208,12 @@
     "threads": {
       "replies": "svar",
       "lastReply": "Sista svaret"
-    }
+    },
+    "replyToThread": "Svara",
+    "newThread": "Ny post",
+    "newThreadInCategory": "Ny tråd",
+    "searchThread": "Sök i tråden",
+    "searchForum": "Sök",
+    "searchInCategorys": "Sök i kategorin"
   }
 }

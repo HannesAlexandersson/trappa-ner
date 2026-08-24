@@ -1,4 +1,5 @@
 import { Typography } from "@/components";
+import ForumActionButton from "@/components/ui/ForumActionButton";
 import i18n from "@/constants/dictonarys/i18n";
 import { useColorScheme } from "@/hooks/use-color-scheme";
 import { getForumThreads } from "@/services/forumService";
@@ -12,7 +13,7 @@ import { useEffect, useState } from "react";
 import { ActivityIndicator, Pressable, TouchableOpacity, View } from "react-native";
 
 export default function ForumCategoryScreen() {
-    const { categoryId } = useLocalSearchParams<{ categoryId: string }>();
+    const { categoryId, } = useLocalSearchParams<{ categoryId: string }>();
 
     const categories = useForumStore((state) => state.categories);
     const systemTheme = useColorScheme();
@@ -58,10 +59,17 @@ export default function ForumCategoryScreen() {
         );
     }
 
+    const handleNewThreadInCategory = () => {
+        console.log("new thread in cat")
+    }
+    const handleSearchCategory = () => {
+        console.log("search in cat")
+    }
+
     return (
         <View className="flex-1 p-2">
             {/* NAVIGATION */}
-            <View className="flex-row justify-start mt-4">
+            <View className="flex-row justify-between mt-4">
                 <TouchableOpacity
                     onPress={handleGoBack}
                     className="flex-row items-center ml-4 bg-vgrBlue dark:bg-white rounded-full"
@@ -72,6 +80,21 @@ export default function ForumCategoryScreen() {
                         color={activeTheme == "dark" ? "#111827" : "#fff"}
                     />
                 </TouchableOpacity>
+                {category && (
+                    <View className="flex-row gap-4 mr-4">
+                        <ForumActionButton
+                            icon="create-outline"
+                            label={i18n.t("forum.newThreadInCategory")}
+                            onPress={handleNewThreadInCategory}
+                        />
+
+                        <ForumActionButton
+                            icon="search-outline"
+                            label={i18n.t("forum.searchInCategorys")}
+                            onPress={handleSearchCategory}
+                        />
+                    </View>
+                )}
             </View>
 
             <View className="flex-1 p-6">
@@ -86,6 +109,7 @@ export default function ForumCategoryScreen() {
                 )}
 
                 {threads.map((thread) => (
+                    category &&
                     <Pressable
                         key={thread.id}
                         onPress={() =>
@@ -93,11 +117,14 @@ export default function ForumCategoryScreen() {
                                 pathname: "/forum/thread/[threadId]",
                                 params: {
                                     threadId: thread.id,
-                                },
+                                    categoryId: category.id,
+                                }
                             })
                         }
+
                         className="border border-grey300 dark:border-darkThemeText rounded-lg p-5 mb-4"
                     >
+
                         <Typography size="lg" weight="600" className="dark:text-darkThemeText">
                             {thread.title}
                         </Typography>

@@ -1,3 +1,4 @@
+import Ionicons from "@expo/vector-icons/Ionicons";
 import { TouchableOpacityProps } from "react-native";
 import { Image } from "react-native-reanimated/lib/typescript/Animated";
 
@@ -258,3 +259,9 @@ export type ForumReply = {
 };
 
 export type ThemeMode = "system" | "light" | "dark";
+
+export type ForumActionButtonProps = {
+  icon: keyof typeof Ionicons.glyphMap;
+  label: string;
+  onPress: () => void;
+};
