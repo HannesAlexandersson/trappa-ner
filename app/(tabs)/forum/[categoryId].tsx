@@ -26,9 +26,11 @@ export default function ForumCategoryScreen() {
     const [threads, setThreads] = useState<ForumThread[]>([]);
     const [isLoading, setIsLoading] = useState(true);
     const [showNewThreadModal, setShowNewThreadModal] = useState(false);
+    const [refreshComponent, setRefreshComponent] = useState<boolean>(false);
     // new thread states
     const [newTitle, setNewTitle] = useState<string>("");
     const [newBody, setNewBody] = useState<string>("");
+
 
     const category = categories.find(
         (item) => item.id === categoryId
@@ -49,7 +51,7 @@ export default function ForumCategoryScreen() {
         };
 
         loadThreads();
-    }, [categoryId]);
+    }, [categoryId, refreshComponent]);
 
     const handleGoBack = () => {
         router.navigate("/(tabs)/forum");
@@ -66,18 +68,25 @@ export default function ForumCategoryScreen() {
     const handleSearchCategory = () => {
         console.log("search in cat")
     }
-    const handleSaveNewThread = () => {
+    const handleSaveNewThread = async () => {
         const title = newTitle;
         const body = newBody;
         try {
-            createForumThread(categoryId, title, body);
-            setShowNewThreadModal(false);
+            const newThread = await createForumThread(categoryId, title, body);
+            if (newThread) {
+                setShowNewThreadModal(false);
+            } else {
+                throw new Error("Error While saving to database");
+
+            }
         } catch (error) {
-            console.log("Error while creating new thread");
+            console.error(error);
+        } finally {
+            setNewTitle("");
+            setNewBody("");
+            setRefreshComponent(true);
         }
-        finally {
-            router.reload;
-        }
+
     }
     return (
         <View className="flex-1 p-2">
