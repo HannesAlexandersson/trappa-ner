@@ -2,7 +2,7 @@ import { Button, Typography } from "@/components";
 import ForumActionButton from "@/components/ui/ForumActionButton";
 import i18n from "@/constants/dictonarys/i18n";
 import { useColorScheme } from "@/hooks/use-color-scheme";
-import { getForumThreads } from "@/services/forumService";
+import { createForumThread, getForumThreads } from "@/services/forumService";
 import { useForumStore } from "@/stores/forumStore";
 import { useThemeStore } from "@/stores/themeStore";
 import { ForumThread } from "@/utils/types";
@@ -63,19 +63,21 @@ export default function ForumCategoryScreen() {
         );
     }
 
-    const handleNewThreadInCategory = () => {
-
-        //open module for writing new thread
-        // module should have input fields for these properties, while categoryID is whatever the catId is for this slugpage
-        /*  const newTitle = "New Thread";
-         const newBody = "New body "
-         const newThread = createForumThread(categoryId, newTitle, newBody) */
-    }
     const handleSearchCategory = () => {
         console.log("search in cat")
     }
     const handleSaveNewThread = () => {
-        console.log("new thread in cat")
+        const title = newTitle;
+        const body = newBody;
+        try {
+            createForumThread(categoryId, title, body);
+            setShowNewThreadModal(false);
+        } catch (error) {
+            console.log("Error while creating new thread");
+        }
+        finally {
+            router.reload;
+        }
     }
     return (
         <View className="flex-1 p-2">
@@ -163,39 +165,54 @@ export default function ForumCategoryScreen() {
                     activeOpacity={1}
                     onPress={() => setShowNewThreadModal(false)}
                 >
-                    <View className="bg-white rounded-3xl p-6 w-full max-w-sm">
-                        <Typography weight="700" size="lg" className="mb-4 text-center">
+                    <View className="bg-white dark:bg-black rounded-3xl p-6 w-full flex flex-col items-center justify-between h-full">
+                        <Typography weight="700" variant={activeTheme == "dark" ? "white" : "blue"} size="xl" className="mt-6 text-center">
                             {i18n.t("forum.createNewThread")}
                         </Typography>
-                        <View className="flex-1 flex-col items-center justify-center w-full p-4">
-                            <Typography weight="700" variant="black" className="text-2xl mb-4">
-                                {i18n.t("forum.newThread")}
-                            </Typography>
-                            <TextInput
-                                placeholder={i18n.t("forum.newTitle_placeholder")}
-                                className="bg-white rounded-lg p-4 mb-4 border-gray-300 w-full text-vgrBlue"
-                                value={newTitle}
-                                onChangeText={setNewTitle}
-                            />
-                            <TextInput
-                                placeholder={i18n.t("forum.newBody_placeholder")}
-                                className="bg-white rounded-lg p-4 mb-4 border-gray-300 w-full text-vgrBlue"
-                                value={newBody}
-                                onChangeText={setNewBody}
-                            />
+                        <View className="flex-1 flex-col items-center justify-center w-full h-full p-4">
+                            <View className="flex flex-col items-start w-full">
+                                <Typography weight="700" variant={activeTheme == "dark" ? "white" : "blue"} className="text-2xl mb-4">
+                                    {i18n.t("forum.newThreadTitle")}
+                                </Typography>
+                                <TextInput
+                                    placeholder={i18n.t("forum.newTitle_placeholder")}
+                                    className="dark:bg-white bg-slate-500  rounded-lg p-4 mb-4 border-gray-300 w-full text-white"
+                                    value={newTitle}
+                                    onChangeText={setNewTitle}
+                                    autoFocus={true}
+                                    clearTextOnFocus
+                                />
+                            </View>
+                            <View className="flex flex-col items-start w-full">
+                                <Typography weight="700" variant={activeTheme == "dark" ? "white" : "blue"} className="text-2xl mb-4">
+                                    {i18n.t("forum.newThreadBody")}
+                                </Typography>
+                                <TextInput
+                                    placeholder={i18n.t("forum.newBody_placeholder")}
+                                    className="dark:bg-white bg-slate-500 active:bg-slate500/50 rounded-lg p-4 mb-4 border-gray-300 w-full text-white"
+                                    value={newBody}
+                                    multiline
+                                    style={{
+                                        height: 175,
+                                        textAlignVertical: "top",
+                                    }}
+                                    onChangeText={setNewBody}
+                                    clearTextOnFocus
+                                />
+                            </View>
                             <Button
-                                variant="white"
+                                variant={activeTheme == "light" ? "blue" : "blue"}
                                 size="md"
-                                className="rounded"
+                                className="rounded w-full"
                                 onPress={handleSaveNewThread}
                             >
                                 <Typography
-                                    variant="black"
+                                    variant={activeTheme == "light" ? "white" : "white"}
                                     size="md"
                                     weight="700"
                                     className="text-lg"
                                 >
-                                    {i18n.t("forum.newThread.save")}
+                                    {i18n.t("forum.newThreadSave")}
                                 </Typography>
                             </Button>
                         </View>

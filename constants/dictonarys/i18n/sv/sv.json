@@ -217,6 +217,9 @@
     "searchInCategorys": "Sök i kategorin",
     "createNewThread": "Skapa ny tråd",
     "newTitle_placeholder": "Skriv titel här",
-    "newBody_placeholder": "Skriv tråd texten här"
+    "newBody_placeholder": "Skriv tråd texten här",
+    "newThreadSave": "Posta tråd",
+    "newThreadTitle": "Titel",
+    "newThreadBody": "Text"
   }
 }
