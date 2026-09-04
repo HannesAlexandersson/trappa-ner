@@ -1,4 +1,4 @@
-import { Typography } from "@/components";
+import { Button, Typography } from "@/components";
 import ForumActionButton from "@/components/ui/ForumActionButton";
 import i18n from "@/constants/dictonarys/i18n";
 import { useColorScheme } from "@/hooks/use-color-scheme";
@@ -10,7 +10,7 @@ import { formatDateTime } from "@/utils/utils";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import { router, useLocalSearchParams } from "expo-router";
 import { useEffect, useState } from "react";
-import { ActivityIndicator, Pressable, TouchableOpacity, View } from "react-native";
+import { ActivityIndicator, Modal, Pressable, TextInput, TouchableOpacity, View } from "react-native";
 
 export default function ForumCategoryScreen() {
     const { categoryId, } = useLocalSearchParams<{ categoryId: string }>();
@@ -25,6 +25,10 @@ export default function ForumCategoryScreen() {
 
     const [threads, setThreads] = useState<ForumThread[]>([]);
     const [isLoading, setIsLoading] = useState(true);
+    const [showNewThreadModal, setShowNewThreadModal] = useState(false);
+    // new thread states
+    const [newTitle, setNewTitle] = useState<string>("");
+    const [newBody, setNewBody] = useState<string>("");
 
     const category = categories.find(
         (item) => item.id === categoryId
@@ -60,12 +64,19 @@ export default function ForumCategoryScreen() {
     }
 
     const handleNewThreadInCategory = () => {
-        console.log("new thread in cat")
+
+        //open module for writing new thread
+        // module should have input fields for these properties, while categoryID is whatever the catId is for this slugpage
+        /*  const newTitle = "New Thread";
+         const newBody = "New body "
+         const newThread = createForumThread(categoryId, newTitle, newBody) */
     }
     const handleSearchCategory = () => {
         console.log("search in cat")
     }
-
+    const handleSaveNewThread = () => {
+        console.log("new thread in cat")
+    }
     return (
         <View className="flex-1 p-2">
             {/* NAVIGATION */}
@@ -85,7 +96,7 @@ export default function ForumCategoryScreen() {
                         <ForumActionButton
                             icon="create-outline"
                             label={i18n.t("forum.newThreadInCategory")}
-                            onPress={handleNewThreadInCategory}
+                            onPress={() => setShowNewThreadModal(true)}
                         />
 
                         <ForumActionButton
@@ -140,6 +151,58 @@ export default function ForumCategoryScreen() {
                     </Pressable>
                 ))}
             </View>
+            <Modal
+                visible={showNewThreadModal}
+                transparent={true}
+                animationType="fade"
+
+                onRequestClose={() => setShowNewThreadModal(false)}
+            >
+                <TouchableOpacity
+                    className="flex-1 bg-black/50 dark:bg-white/50 justify-center items-center p-6"
+                    activeOpacity={1}
+                    onPress={() => setShowNewThreadModal(false)}
+                >
+                    <View className="bg-white rounded-3xl p-6 w-full max-w-sm">
+                        <Typography weight="700" size="lg" className="mb-4 text-center">
+                            {i18n.t("forum.createNewThread")}
+                        </Typography>
+                        <View className="flex-1 flex-col items-center justify-center w-full p-4">
+                            <Typography weight="700" variant="black" className="text-2xl mb-4">
+                                {i18n.t("forum.newThread")}
+                            </Typography>
+                            <TextInput
+                                placeholder={i18n.t("forum.newTitle_placeholder")}
+                                className="bg-white rounded-lg p-4 mb-4 border-gray-300 w-full text-vgrBlue"
+                                value={newTitle}
+                                onChangeText={setNewTitle}
+                            />
+                            <TextInput
+                                placeholder={i18n.t("forum.newBody_placeholder")}
+                                className="bg-white rounded-lg p-4 mb-4 border-gray-300 w-full text-vgrBlue"
+                                value={newBody}
+                                onChangeText={setNewBody}
+                            />
+                            <Button
+                                variant="white"
+                                size="md"
+                                className="rounded"
+                                onPress={handleSaveNewThread}
+                            >
+                                <Typography
+                                    variant="black"
+                                    size="md"
+                                    weight="700"
+                                    className="text-lg"
+                                >
+                                    {i18n.t("forum.newThread.save")}
+                                </Typography>
+                            </Button>
+                        </View>
+                    </View>
+                </TouchableOpacity>
+
+            </Modal>
         </View>
     );
 }

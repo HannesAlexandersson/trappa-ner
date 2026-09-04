@@ -23,6 +23,7 @@ const ForumActionButton = ({
             onPress={onPress}
             className="flex-row items-center bg-vgrBlue dark:bg-white rounded-full px-4 py-2"
         >
+
             <Ionicons
                 name={icon}
                 size={22}
@@ -31,12 +32,13 @@ const ForumActionButton = ({
 
             <Typography
                 size="sm"
-                weight="600"
-                className="ml-2 text-white dark:text-gray-900"
+                weight="700"
+                className="ml-2 text-white dark:text-gray-900 font-roboto"
             >
                 {label}
             </Typography>
         </Pressable>
+
     );
 };
 
