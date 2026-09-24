@@ -220,6 +220,8 @@
     "newBody_placeholder": "Skriv tråd texten här",
     "newThreadSave": "Posta tråd",
     "newThreadTitle": "Titel",
-    "newThreadBody": "Text"
+    "newThreadBody": "Text",
+    "replyToThreadActual": "Svara på tråd",
+    "newReplyToThreadBody": "Skriv ditt svar här:"
   }
 }
