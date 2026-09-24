@@ -208,6 +208,20 @@
     "threads": {
       "replies": "svar",
       "lastReply": "Sista svaret"
-    }
+    },
+    "replyToThread": "Svara",
+    "newThread": "Ny post",
+    "newThreadInCategory": "Ny tråd",
+    "searchThread": "Sök i tråden",
+    "searchForum": "Sök",
+    "searchInCategorys": "Sök i kategorin",
+    "createNewThread": "Skapa ny tråd",
+    "newTitle_placeholder": "Skriv titel här",
+    "newBody_placeholder": "Skriv tråd texten här",
+    "newThreadSave": "Posta tråd",
+    "newThreadTitle": "Titel",
+    "newThreadBody": "Text",
+    "replyToThreadActual": "Svara på tråd",
+    "newReplyToThreadBody": "Skriv ditt svar här:"
   }
 }
