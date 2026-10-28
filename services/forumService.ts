@@ -124,3 +124,12 @@ export const createForumReply = async (
     return data;
 };
 
+export const deleteForumThread = async (threadId: string) => {
+    const { error } = await supabase.rpc("soft_delete_forum_thread", { _thread_id: threadId });
+    if (error) throw error;
+};
+
+export const deleteForumReply = async (replyId: string) => {
+    const { error } = await supabase.rpc("soft_delete_forum_reply", { _reply_id: replyId });
+    if (error) throw error;
+};

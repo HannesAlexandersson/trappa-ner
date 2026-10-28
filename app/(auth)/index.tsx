@@ -20,7 +20,7 @@ export default function Auth() {
   return (
     <View className="flex-1 items-center justify-between bg-vgrBlue">
       <View className="flex-1 flex-col items-center justify-center w-full p-4">
-        <Typography weight="700" variant="black" className="text-2xl mb-4">
+        <Typography weight="700" variant="white" className="text-3xl mb-4">
           {i18n.t("auth.welcome_to")}
         </Typography>
         <TextInput

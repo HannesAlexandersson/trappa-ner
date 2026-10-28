@@ -2,6 +2,7 @@ import Typography from "@/components/Typography";
 import { useColorScheme } from "@/hooks/use-color-scheme";
 import { useThemeStore } from "@/stores/themeStore";
 import { ForumActionButtonProps } from "@/utils/types";
+import { cn } from "@/utils/utils";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import { Pressable } from "react-native";
 
@@ -9,6 +10,7 @@ const ForumActionButton = ({
     icon,
     label,
     onPress,
+    btnDisabled
 }: ForumActionButtonProps) => {
     const systemTheme = useColorScheme();
     const theme = useThemeStore((state) => state.theme);
@@ -18,10 +20,12 @@ const ForumActionButton = ({
             ? systemTheme ?? "light"
             : theme;
 
+
     return (
         <Pressable
+            disabled={btnDisabled ? true : false}
             onPress={onPress}
-            className="flex-row items-center bg-vgrBlue dark:bg-white rounded-full px-4 py-2 active:scale-75"
+            className={cn(btnDisabled ? "bg-gray-500 dark:bg-gray-400" : "bg-vgrBlue dark:bg-white", "flex-row items-center  rounded-full px-4 py-2 active:scale-75")}
         >
 
             <Ionicons
