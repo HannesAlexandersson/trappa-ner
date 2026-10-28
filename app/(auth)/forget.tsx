@@ -80,7 +80,7 @@ export default function ForgetPassword() {
                 </Typography>
               ) : (
                 <Typography variant="black" weight="700" className="text-lg">
-                  {i18n.t("utilities.skicka")}
+                  {i18n.t("utilities.send")}
                 </Typography>
               )}
             </Button>

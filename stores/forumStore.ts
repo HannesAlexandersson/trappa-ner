@@ -60,6 +60,7 @@ export const useForumStore = create<ForumStore>((set, get) => ({
                         author_id: thread.author_id,
                         title: thread.title,
                         created_at: thread.created_at,
+                        deleted_at: thread.deleted_at
                     })),
                 },
             }));

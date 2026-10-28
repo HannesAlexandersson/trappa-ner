@@ -69,7 +69,8 @@
     "saving": "Sparar...",
     "logOut": "Logga ut",
     "previus": "Föregående",
-    "next": "Nästa"
+    "next": "Nästa",
+    "cancel": "Avbryt"
   },
   "not-found": {
     "message": "Den här sidan finns inte.",
@@ -83,7 +84,8 @@
     "home": "Hem"
   },
   "general": {
-    "days": "dagar"
+    "days": "dagar",
+    "delete": "ta bort"
   },
   "onboarding": {
     "header1": "Din Plan",
@@ -97,6 +99,7 @@
     "nextBtn": "Nästa",
     "prevBtn": "Tillbaka",
     "pages": "Sidor",
+    "startPlan": "Starta din plan",
     "step2Title": "Berätta om din konsumtion",
     "step2Subtitle": "Röker du eller snusar du?",
     "cig": "Cigaretter",
@@ -200,6 +203,11 @@
   },
   "forum": {
     "header": "Forum",
+    "delete": "ta bort",
+    "deleteTitle": "Ta bort inlägg?",
+    "deleteConfirm": "Det här går inte att ångra",
+    "threadDeleted": "Den här tråden har tagits bort.",
+    "replyDeleted": "Det här svaret har tagits bort",
     "categories": {
       "abstinence-support": "Abstinenshjälp",
       "tools": "Hjälpmedel",

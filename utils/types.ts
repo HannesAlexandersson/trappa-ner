@@ -247,6 +247,7 @@ export type ForumThread = {
   body: string;
   created_at: string;
   updated_at: string;
+  deleted_at: string | null;
 };
 
 export type ForumReply = {
@@ -256,6 +257,7 @@ export type ForumReply = {
   body: string;
   created_at: string;
   updated_at: string;
+  deleted_at: string | null;
 };
 
 export type ThemeMode = "system" | "light" | "dark";
@@ -264,4 +266,5 @@ export type ForumActionButtonProps = {
   icon: keyof typeof Ionicons.glyphMap;
   label: string;
   onPress: () => void;
+  btnDisabled?: boolean;
 };

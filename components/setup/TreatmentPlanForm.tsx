@@ -842,7 +842,7 @@ export default function TreatmentPlanForm() {
               className="flex-1 ml-2"
               loading={loading}
             >
-              <Typography variant="white">Starta din plan</Typography>
+              <Typography variant="white">{i18n.t("onboarding.startPlan")}</Typography>
             </Button>
           </View>
         </View>

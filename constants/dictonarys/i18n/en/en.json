@@ -30,17 +30,52 @@
   },
   "home": {
     "greeting": "Welcome back, %{name}!",
+    "countdownTimer": {
+      "nextDoseInterval": "Next dose interval",
+      "canTakeNextDose": "You can take your next dose!",
+      "hoursLeftToNextDose": "Less than 1 hour until your next dose!",
+      "hoursLeftToNextDoseOverOneHour": "%{hours} hours until your next dose!",
+      "todayTaken": "Used today: ",
+      "remainingToday": "Remaining today: ",
+      "takeDoseButton": "Take dose now",
+      "doseModal": {
+        "title": "Withdrawal information",
+        "subTitle": "How much withdrawal are you experiencing?",
+        "cravingLabel": "Select your withdrawal level",
+        "saveButton": "Log dose WITH withdrawal information",
+        "skipButton": "Log dose WITHOUT withdrawal information"
+      }
+    },
     "alerts": {
       "backWarning": "Warning! You are trying to return to processes that you have already completed. You have already completed the onboarding process, so you can safely ignore this warning. If you want to go back to the onboarding process, are you trying to close the app?",
       "no": "No, please bring me back to the app.",
       "yes": "Yes, I want to exit the app."
     }
   },
+  "settings": {
+    "systemSettings": "System settings",
+    "profileSettings": "Profile settings",
+    "firstName": "First name",
+    "lastName": "Last name",
+    "email": "Email",
+    "language": "Language",
+    "newPassword": "New password",
+    "confirmPassword": "Confirm new password",
+    "theme": "Theme",
+    "light": "Light",
+    "dark": "Dark"
+  },
   "utilities": {
     "loading": "Loading...",
     "error": "An error occurred, please try again later",
     "send": "Send",
-    "create": "Create"
+    "create": "Create",
+    "saveChanges": "Save changes",
+    "saving": "Saving...",
+    "logOut": "Log out",
+    "previus": "Previous",
+    "next": "Next",
+    "cancel": "Cancel"
   },
   "not-found": {
     "message": "This page does not exist.",
@@ -48,65 +83,161 @@
   },
   "tabs": {
     "panic": "ABSTINENCE",
-    "help": "Support",
-    "account": "Profile",
+    "forum": "Forum",
+    "plan": "Plan",
     "settings": "Settings",
-    "home": "Home"
+    "home": "Home",
+    "help": "Support",
+    "account": "Profile"
+  },
+  "general": {
+    "days": "days",
+    "delete": "delete"
   },
   "onboarding": {
     "header1": "Your Plan",
-    "step1Title": "Welcome to the onboarding process!",
-    "step1Subtitle": "Before we begin, here’s a quick overview of how the setup works.",
-    "step1Info1": "During this onboarding process, we’ll ask a few questions about your nicotine usage habits. This information helps us create a personalized treatment plan tailored to your needs.",
-    "step1Info2": "Whether you use cigarettes, snus, or other nicotine products, the app uses your answers to calculate a gradual and realistic reduction plan.",
-    "step1Info3": "The onboarding consists of 3 simple steps, each containing a few short questions. The process only takes a couple of minutes to complete.",
-    "step1Info4": "If you want to change an answer from a previous step, you can always navigate back using the buttons at the bottom of the screen.",
-    "step1Info5": "Once completed, your personalized treatment plan will be generated automatically.",
+    "step1Title": "Your journey to a nicotine-free life starts here!",
+    "step1Subtitle": "Here's some information about the app and how it works.",
+    "step1Info1": "During this onboarding process, we'll ask a few questions about your nicotine habits. This information helps us create a personalized treatment plan tailored to your needs.",
+    "step1Info2": "Whether you smoke, use snus, or use other nicotine products, the app uses your answers to calculate a gradual and realistic tapering plan.",
+    "step1Info3": "The onboarding consists of a few simple steps, each containing a few short questions. The process only takes a couple of minutes to complete.",
+    "step1Info4": "If you want to change an answer from a previous step, you can always go back using the buttons at the bottom of the screen.",
+    "step1Info5": "Once you're done, your personalized treatment plan will be generated automatically.",
     "nextBtn": "Next",
     "prevBtn": "Back",
-    "pages": "pages",
+    "pages": "Pages",
+    "startPlan": "Start your plan",
     "step2Title": "Tell us about your consumption",
     "step2Subtitle": "Do you smoke or use snus?",
     "cig": "Cigarettes",
-    "snus": "pouches",
-    "smoker": "smoker",
-    "snusUser": "snus user",
+    "snus": "Snus",
+    "smoker": "Smoker",
+    "snusUser": "Snus user",
     "day": "day",
     "or less": "or less",
-    "step2mgNicotinePerDay": "How many mg of nicotine do you consume per day in total?",
-    "step2unitsPerDay": "How many units (cigs/pouches) do you consume per day?",
-    "step3Title": "Treatment plan",
-    "step3Aggressiveness": "Aggressiveness (1-5)",
-    "step3AggSubtitle": "Higher level = Faster tapering",
-    "step3SupportTools": "Do you want to use nicotine replacement therapy, like patches or gum?",
+    "step2mgNicotinePerDay": "How many mg of nicotine do you consume in total per day?",
+    "step2unitsPerDay": "How many units (cigarettes/snus pouches) do you consume per day?",
+    "step3Title": "Support tools",
+    "step3SubTitle": "Nicotine replacement therapy (such as patches or gum) significantly reduces withdrawal symptoms and increases your chances of success.",
+    "step3Aggressiveness": "Aggressiveness (1–5)",
+    "step3AggSubtitle": "How quickly do you want to taper down? 1 = slowly, 5 = quickly",
+    "step3SupportToolsCard": "Do you want to use support tools?",
+    "step3SupportToolsCardYes": "Yes, I want to use patches or gum.",
+    "step3SupportToolsCardNo": "No, I only want to taper down my current product.",
     "step3SupportToolsSubtitle": "We STRONGLY recommend using it, as it can significantly increase your chances of success",
-    "step3SupportToolWhat": "What kind of support tools do you want to use?",
+    "step3SupportToolWhat": "Which support tool would you like to use?",
     "step3Patch": "Nicotine patch",
-    "step3Gum": "Nicotine gum",
+    "step3PatchDescription": "Provides a steady dose of nicotine throughout the day.",
+    "step3PatchStrenghtSelection": "Choose your patch strength:",
+    "step3Gum": "Nicotine gum / lozenge",
+    "step3GumDescription": "For occasional, intense cravings.",
+    "step3GumStrengthSelection": "Choose your gum/lozenge strength:",
+    "scheduleTitle": "Your daily routine",
+    "wakeUpTime": "When do you usually wake up?",
+    "awakeHours": "Hours awake",
+    "summaryTitle": "Your personal plan",
+    "summarySubtitle": "All set! Here's an overview of your tapering plan.",
+    "summaryEndgoal": "End goal",
+    "summarySupremGoal": "Nicotine-free (0 units)",
+    "summaryCalculatedTime": "Estimated duration",
+    "summaryEndDate": "Estimated end date",
+    "summaryFirstDoseToday": "First dose today",
+    "summaryNotificationsImportant": "Reminders are essential",
+    "summaryNotificationsSchedule": "The app sends notifications when it's time for your next dose to help you stay on track.",
+    "Aid": "Support tools",
     "tos": {
       "title": "Terms of Service",
-      "subtitle": "Our Terms of Service: By using this app, you agree to the following terms and conditions:",
+      "subtitle": "By using this app, you agree to the following terms and conditions:",
       "1": "Data Collection: We collect data on your nicotine consumption and treatment plan to provide you with personalized support and to improve our services. This data is stored securely and is not shared with third parties without your consent.",
       "2": "Privacy: We are committed to protecting your privacy. Your data is anonymized and used only for the purposes of providing you with support and improving our services.",
       "3": "User Responsibility: You are responsible for following the treatment plan provided by the app. The app is a tool to assist you in quitting nicotine, but it is not a substitute for professional medical advice. Always consult with a healthcare provider before making any changes to your treatment plan.",
       "4": "Limitation of Liability: We are not liable for any damages or losses that may occur as a result of using this app. The app is provided \"as is\" and we make no warranties or guarantees regarding its effectiveness.",
       "5": "Changes to Terms: We reserve the right to update our Terms of Service at any time. We will notify you of any changes by posting the new Terms of Service on this page. You are advised to review this page periodically for any changes."
     },
-    "confirm": "Confirm & Create Plan"
+    "confirm": "Accept terms of service",
+    "step5header": "How the app works",
+    "step5subHeader": "Here's a quick overview to help you get the most out of your tapering plan.",
+    "featureCard1Header": "1. Follow your notifications",
+    "featureCard1Para": "The app calculates the time interval and sends a notification when it's time for your next dose.",
+    "featureCard2Header": "2. Acute withdrawal? Use the red button",
+    "featureCard2Para": "In the menu bar, you'll find a red button with exercises and support for when cravings are at their strongest.",
+    "featureCard3Header": "3. Adjust your plan when needed",
+    "featureCard3Para": "You can view and adjust your tapering plan in your profile at any time.",
+    "featureCard4Header": "4. Log your consumption",
+    "featureCard4Para": "Register each snus pouch or cigarette in the app throughout the day.",
+    "featureCard5Header": "5. Follow your plan",
+    "featureCard5Para": "Keep track of your daily limits and see your progress in real time.",
+    "featureCard6Header": "6. Use your support tools",
+    "featureCard6Para": "Don't be afraid to use patches or gum when withdrawal symptoms hit.",
+    "StartJourney": "Start your journey towards a nicotine-free life",
+    "step3SupportTools": "Do you want to use nicotine replacement therapy, like patches or gum?"
   },
   "help": {
     "nicotineHelp": {
-      "title": "How to calculate your daily nicotine intake?",
-      "body": "Check the back of your pouch. Does it say something like 12mg/g? A pouch usually weighs around 0.8g. \n\n12mg × 0.8 = 9.6mg per pouch. \n\nIf you use 10 such pouches per day, adjust the slider to 96mg.",
+      "title": "How do I calculate the amount?",
+      "body": "Check the back of your snus can. Does it say something like 12 mg/g? A pouch usually weighs around 0.8 g. \n\n12 mg × 0.8 = 9.6 mg per pouch. \n\nIf you use 10 of these per day, set the slider to 96 mg.",
       "btnText": "Got it!"
+    },
+    "awakeTimeHelp": {
+      "title": "Hours awake per day",
+      "body": "Approximately how many hours are you awake per day, on average?",
+      "btnText": "OK!"
+    },
+    "logDoseHelp": {
+      "title": "Withdrawal level when taking a dose",
+      "body": "You can either enter how much withdrawal you're experiencing when you take your dose, OR log your dose WITHOUT entering a withdrawal level. In that case, only the time you take the dose will be logged.",
+      "btnText": "OK!"
+    },
+    "profileSettingsHelp": {
+      "title": "Profile settings",
+      "body": "Here you can change settings and personal details such as your name and email. You can also make changes to your treatment plan here!",
+      "btnText": "Got it!"
+    },
+    "systemSettingsHelp": {
+      "title": "System settings",
+      "body": "Here you can configure settings such as language and appearance. Choose between light and dark themes, or why not try our 'Autumn' theme? There's something for everyone!",
+      "btnText": "OK!"
+    },
+    "forumBasicHelp": {
+      "title": "The forum",
+      "body": "Here you can share tips and tricks that have worked for you in your struggle with withdrawal. The more people share their successes, the easier it becomes for others to succeed too! Choose a suitable category and start posting. Please follow common etiquette!",
+      "btnText": "Got it!"
+    },
+    "supportToolsHelp": {
+      "title": "Would you like to use support tools?",
+      "body": "We strongly recommend using support tools such as patches or gum, as they can increase your chances of success.",
+      "btnText": "Sounds good!"
     }
   },
   "forum": {
     "header": "Forum",
+    "delete": "delete",
+    "deleteTitle": "Delete post?",
+    "deleteConfirm": "This is irreversible.",
+    "threadDeleted": "This thread have been deleted",
+    "replyDeleted": "This reply have been deleted",
     "categories": {
-      "abstinence-support": "Abstinence support",
-      "tools": "Assistance tools",
+      "abstinence-support": "Withdrawal support",
+      "tools": "Support tools",
       "other": "Other"
-    }
+    },
+    "threads": {
+      "replies": "replies",
+      "lastReply": "Last reply"
+    },
+    "replyToThread": "Reply",
+    "newThread": "New post",
+    "newThreadInCategory": "New thread",
+    "searchThread": "Search thread",
+    "searchForum": "Search",
+    "searchInCategorys": "Search category",
+    "createNewThread": "Create new thread",
+    "newTitle_placeholder": "Enter a title here",
+    "newBody_placeholder": "Enter the thread text here",
+    "newThreadSave": "Post thread",
+    "newThreadTitle": "Title",
+    "newThreadBody": "Text",
+    "replyToThreadActual": "Reply to thread",
+    "newReplyToThreadBody": "Write your reply here:"
   }
 }

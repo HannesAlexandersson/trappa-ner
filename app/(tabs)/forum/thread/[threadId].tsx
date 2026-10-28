@@ -3,7 +3,7 @@ import ForumActionButton from "@/components/ui/ForumActionButton";
 import i18n from "@/constants/dictonarys/i18n";
 import { useColorScheme } from "@/hooks/use-color-scheme";
 import { useAuth } from "@/providers/authProviders";
-import { createForumReply } from "@/services/forumService";
+import { createForumReply, deleteForumReply, deleteForumThread } from "@/services/forumService";
 import { useForumStore } from "@/stores/forumStore";
 import { useThemeStore } from "@/stores/themeStore";
 import { formatDateTime } from "@/utils/utils";
@@ -12,12 +12,13 @@ import { router, useLocalSearchParams } from "expo-router";
 import { useEffect, useState } from "react";
 import {
     ActivityIndicator,
+    Alert,
     Modal,
     Pressable,
     ScrollView,
     TextInput,
     TouchableOpacity,
-    View,
+    View
 } from "react-native";
 
 
@@ -122,6 +123,23 @@ export default function ForumThreadScreen() {
             setRefreshComponent(true);
         }
     }
+    const handleDeleteReply = async (replyId: string) => {
+        // call the forumservice method to delete the users own reply, take the reply id 
+    }
+
+    const confirmDelete = (onConfirm: () => Promise<void>) =>
+        Alert.alert(i18n.t("forum.deleteTitle"), i18n.t("forum.deleteConfirm"), [
+            { text: i18n.t("utilities.cancel"), style: "cancel" },
+            {
+                text: i18n.t("forum.delete"),
+                style: "destructive",
+                onPress: async () => {
+                    try { await onConfirm(); setRefreshComponent((r) => !r); }
+                    catch (e) { console.error(e); }
+                },
+            },
+        ]);
+
     return (
         <ScrollView className="flex-1 px-6">
             <View className="flex-row items-center justify-between my-4 gap-3">
@@ -136,11 +154,22 @@ export default function ForumThreadScreen() {
                     />
                 </Pressable>
                 <View className="flex-row justify-between gap-4 mr-4">
-                    <ForumActionButton
-                        icon="create-outline"
-                        label={i18n.t("forum.replyToThread")}
-                        onPress={() => setShowReplyToThreadModal(true)}
-                    />
+                    {thread.deleted_at ? (
+                        <ForumActionButton
+                            btnDisabled={true}
+                            icon="create-outline"
+                            label={i18n.t("forum.replyToThread")}
+                            onPress={() => setShowReplyToThreadModal(true)}
+                        />
+                    ) : (
+                        <ForumActionButton
+                            btnDisabled={false}
+                            icon="create-outline"
+                            label={i18n.t("forum.replyToThread")}
+                            onPress={() => setShowReplyToThreadModal(true)}
+                        />
+                    )}
+
 
                     <ForumActionButton
                         icon="search-outline"
@@ -158,7 +187,7 @@ export default function ForumThreadScreen() {
                     weight="700"
                     className="text-vgrBlue dark:text-darkThemeText"
                 >
-                    {thread.title} h
+                    {thread.deleted_at ? i18n.t("forum.threadDeleted") : thread.title}
                 </Typography>
 
                 <Typography size="sm" className="mb-4 dark:text-darkThemeText">
@@ -167,9 +196,15 @@ export default function ForumThreadScreen() {
 
                 <View className="border border-grey300 dark:border-white rounded-lg p-5 mb-6">
                     <Typography size="md" className="dark:text-darkThemeText">
-                        {thread.body}
+                        {thread.deleted_at ? i18n.t("forum.threadDeleted") : thread.body}
                     </Typography>
+                    {!thread.deleted_at && user?.id === thread.author_id && (
+                        <Pressable onPress={() => confirmDelete(() => deleteForumThread(thread.id))} className="mt-3 self-end">
+                            <Ionicons name="trash-outline" size={20} color={activeTheme == "dark" ? "#fff" : "#b91c1c"} />
+                        </Pressable>
+                    )}
                 </View>
+
 
                 {/* REPLIES */}
 
@@ -191,8 +226,15 @@ export default function ForumThreadScreen() {
                         </Typography>
 
                         <Typography size="md" className="dark:text-darkThemeText">
-                            {reply.body}
+                            {reply.deleted_at ? i18n.t("forum.replyDeleted") : reply.body}
                         </Typography>
+                        {!reply.deleted_at && user?.id === reply.author_id && (
+                            <Pressable onPress={() => confirmDelete(() => deleteForumReply(reply.id))} className="mt-2 self-end">
+                                <Ionicons name="trash-outline" size={18} color={activeTheme == "dark" ? "#fff" : "#b91c1c"} />
+                            </Pressable>
+                        )}
+
+
                     </View>
                 ))}
 

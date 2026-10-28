@@ -148,13 +148,13 @@ export default function ForumCategoryScreen() {
                     >
 
                         <Typography size="lg" weight="600" className="dark:text-darkThemeText">
-                            {thread.title}
+                            {thread.deleted_at ? i18n.t("forum.threadDeleted") : thread.title}
                         </Typography>
 
                         <Typography size="sm" className="mt-2 dark:text-darkThemeText" >
                             {formatDateTime(thread.created_at)}
                         </Typography>
-                        {/*  WE NEED TO ADD AUTHOR NAME ALSO!!!
+                        {/* TODO:  WE NEED TO ADD AUTHOR NAME ALSO!!!
                        
                        <Typography size="sm" className="mt-2 dark:text-darkThemeText" >
                             {formatDateTime(thread.author_name)}
